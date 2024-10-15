@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.KunalSuman.Angry_Bird.Main;
 
-public class Level3 extends ScreenAdapter {
+public class Level2 extends ScreenAdapter {
     public Main main ;
     public SpriteBatch batch ;
     public Texture background;
-    public Level3(){
+    public Level2(Main main){
         this.main = new Main();
         this.background = new Texture("Level3.png");
     }
@@ -18,5 +18,4 @@ public class Level3 extends ScreenAdapter {
         batch.draw(background, 0, 0);
         batch.end();
     }
-
 }
