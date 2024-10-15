@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,12 +18,16 @@ public class Main extends Game {
     private Texture Loading_page;
     private Texture Main_menu_page ;
     int page_number ;
+    public Pixmap pm;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
+        pm = new Pixmap(Gdx.files.internal("CURSORS_SHEET_1.png"));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         setScreen(new Loading_page(this));
         page_number = 0;
+
     }
 
     @Override
@@ -42,5 +47,6 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        pm.dispose();
     }
 }
