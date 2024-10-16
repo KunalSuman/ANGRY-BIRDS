@@ -26,7 +26,7 @@ public class Level_selector extends ScreenAdapter {
     public Level_selector(Main main) {
         this.main = main;
         this.batch = new SpriteBatch();
-        this.levels_page = new Texture("LEVEL_PAGE.png");
+        this.levels_page = new Texture("levels_page.png");
         this.stage = new Stage();
         this.t1 = new Table();
 //       Gdx.input.setInputProcessor(stage);
