@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.Level1;
 import io.github.KunalSuman.Angry_Bird.Levels.Level2;
+import io.github.KunalSuman.Angry_Bird.Levels.Level3;
 import io.github.KunalSuman.Angry_Bird.Levels.Level_selector;
 
 import static com.badlogic.gdx.graphics.g3d.particles.ParticleShader.AlignMode.Screen;
@@ -42,7 +43,7 @@ public class Menu_page extends ScreenAdapter {
             y = 1;
         }
         if(y == 1){
-            main.setScreen(new Level2(main));
+            main.setScreen(new Level3(main));
         }
         else{
 
