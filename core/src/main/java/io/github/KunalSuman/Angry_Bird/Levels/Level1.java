@@ -29,7 +29,7 @@ public class Level1 extends ScreenAdapter {
         stage = new Stage();
         map = new TmxMapLoader().load("LEVEL1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-        this.camera = new OrthographicCamera();
+        camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);  // Match camera to window size
 
         //stage.addActor(elements).width(2).height(4);
