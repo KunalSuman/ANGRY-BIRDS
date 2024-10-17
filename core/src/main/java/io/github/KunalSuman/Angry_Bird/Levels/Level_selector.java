@@ -1,6 +1,7 @@
 package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,12 +24,18 @@ public class Level_selector extends ScreenAdapter {
     public TextButton b1 ;
     public TextButton b2 ;
     public TextButton b3 ;
+    int x1 ;
+    int x2 ;
+    int x3 ;
     public Level_selector(Main main) {
         this.main = main;
         this.batch = new SpriteBatch();
-        this.levels_page = new Texture("levels_page.png");
+        this.levels_page = new Texture("Levels_page.png");
         this.stage = new Stage();
         this.t1 = new Table();
+        x1 = 0 ;
+        x2 = 0 ;
+        x3 = 0 ;
 //       Gdx.input.setInputProcessor(stage);
 //        Skin mySkin = new Skin("BACKGROUNDS_GE_1.png");
 //        Skin skin = null ;
@@ -43,7 +50,28 @@ public class Level_selector extends ScreenAdapter {
     }
     public void render(float delta){
         batch.begin();
-        batch.draw(levels_page,0,0);
+        if(x1 == 1){
+            main.setScreen(new Level1(main));
+        }
+        if(x2 == 1){
+            main.setScreen(new Level2(main));
+        }
+        if(x3 == 1){
+            main.setScreen(new Level3(main));
+        }
+        else{
+            batch.draw(levels_page,0,0);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
+            x1 =1 ;
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.CAPS_LOCK)){
+            x2 =1 ;
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            x3 =1 ;
+        }
+
 //        stage.act(delta);
 //        stage.draw();
         batch.end();

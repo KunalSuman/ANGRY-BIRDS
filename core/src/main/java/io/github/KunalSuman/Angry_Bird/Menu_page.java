@@ -43,7 +43,7 @@ public class Menu_page extends ScreenAdapter {
             y = 1;
         }
         if(y == 1){
-            main.setScreen(new Level3(main));
+            main.setScreen(new Level_selector(main));
         }
         else{
 
