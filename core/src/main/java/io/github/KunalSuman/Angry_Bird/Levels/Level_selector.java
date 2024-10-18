@@ -1,19 +1,20 @@
 package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Main;
 import io.github.KunalSuman.Angry_Bird.Menu_page;
+import io.github.KunalSuman.Angry_Bird.Settings_page;
 
 import java.awt.*;
 
@@ -33,19 +34,14 @@ public class Level_selector extends ScreenAdapter {
     public TextButton b1 ;
     public TextButton b2 ;
     public TextButton b3 ;
-    int x1 ;
-    int x2 ;
-    int x3 ;
-    public OrthographicCamera camera ;
     public Level_selector(Main main) {
         this.main = main;
         this.batch = new SpriteBatch();
         this.levels_page = new Texture("Levels_page.png");
-        this.stage = new Stage();
+        this.stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        backButtonTexture = new Texture("backButton.png");
         this.t1 = new Table();
-        x1 = 0 ;
-        x2 = 0 ;
-        x3 = 0 ;
         bbW = 100;
         bbH = 100;
         bbX= 0;
@@ -53,8 +49,6 @@ public class Level_selector extends ScreenAdapter {
         l1X=100;l1Y=550;l1W=50;l1H=50;
         l2X=340;l2Y=550;l2W=50;l2H=50;
         l3X=550;l3Y=500;l3W=50;l3H=50;
-        camera =new OrthographicCamera();
-        camera.setToOrtho(false,1920,1080);
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -85,34 +79,16 @@ public class Level_selector extends ScreenAdapter {
 //        stage.addActor(t1);
     }
     public void render(float delta){
-        camera.update();
         batch.begin();
-//        if(x1 == 1){
-//            main.setScreen(new Level1(main));
-//        }
-//        if(x2 == 1){
-//            main.setScreen(new Level2(main));
-//        }
-//        if(x3 == 1){
-//            main.setScreen(new Level3(main));
-//        }
-//        else{
-//            batch.draw(levels_page,0,0);
-//        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
-//            x1 =1 ;
-//        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.CAPS_LOCK)){
-//            x2 =1 ;
-//        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-//            x3 =1 ;
-//        }
         batch.draw(levels_page,0,0);
         batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
         batch.end();
+
         stage.act(delta);
         stage.draw();
-
+    }
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
     }
 }

@@ -55,7 +55,7 @@ public class Unlocked_birds_page extends ScreenAdapter {
         stage.draw();
     }
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height){
         stage.getViewport().update(width, height, true);
     }
     public void dispose() {

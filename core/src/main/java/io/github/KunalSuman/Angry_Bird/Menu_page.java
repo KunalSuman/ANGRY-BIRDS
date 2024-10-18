@@ -26,25 +26,32 @@ public class Menu_page extends ScreenAdapter {
     private Texture playButtonTexture;
     private Texture settingsButtonTexture;
     private float sW,sH,sX,sY;
-    private float pbW, pbH, pbX, pbY;  // Variables for Play button size and position
-
+    private float pbW, pbH, pbX, pbY;
+    private float ubW,ubH,ubX,ubY;
+    private Texture unlockedBirdButton;
     public Main main;
     public Menu_page(Main main) {
         this.main = main;
         this.assetManager = new AssetManager();
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        background = new Texture("BACKGROUNDS_GE_1.png");
+        background = new Texture("MENUE_page.png");
         this.batch = new SpriteBatch();
         settingsButtonTexture = new Texture("settings_button.png");
-        sW = Gdx.graphics.getWidth() * 0.1f;  // Settings button width is 10% of screen width
-        sH = Gdx.graphics.getHeight() * 0.1f; // Settings button height is 10% of screen height
+        sW = Gdx.graphics.getWidth() * 0.1f;
+        sH = Gdx.graphics.getHeight() * 0.1f;
         sX = 0;  // Position at bottom-left corner
         sY = 0;
-        pbW = Gdx.graphics.getWidth() * 0.2f;  // Play button width is 20% of screen width
-        pbH = Gdx.graphics.getHeight() * 0.2f; // Play button height is 20% of screen height
-        pbX = (Gdx.graphics.getWidth() - pbW) / 2f; // Center Play button horizontally
-        pbY = (Gdx.graphics.getHeight() - pbH) / 2f; // Center Play button vertically
+        pbW = Gdx.graphics.getWidth() * 0.2f;
+        pbH = Gdx.graphics.getHeight() * 0.2f;
+        pbX = (Gdx.graphics.getWidth() - pbW) / 2f;
+        pbY = (Gdx.graphics.getHeight() - pbH) / 2f;
+
+        ubW = Gdx.graphics.getWidth() * 0.2f;
+        ubH = Gdx.graphics.getHeight() * 0.2f;
+        ubX = (Gdx.graphics.getWidth() - ubW) ;
+        ubY = (0);
+
         playButtonTexture = new Texture("BUTTONS_SHEET_1.png");
         TextureRegionDrawable playButtonDrawable = new TextureRegionDrawable(new TextureRegion(playButtonTexture));
         TextureRegionDrawable playButtonClickedDrawable = new TextureRegionDrawable(new TextureRegion(settingsButtonTexture));
@@ -56,8 +63,17 @@ public class Menu_page extends ScreenAdapter {
         playButton.setPosition(pbX, pbY);
 //        pW =700;
 //        pH = 400;
-//        pbX = (Gdx.graphics.getWidth() - pW) / 2f; // Center horizontally
-//        pbY = (Gdx.graphics.getHeight() - pH) / 2f; // Center vertically
+//        pbX = (Gdx.graphics.getWidth() - pW) / 2f;
+//        pbY = (Gdx.graphics.getHeight() - pH) / 2f;
+
+        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
+        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
+        ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
+        unlockedBirdButtonStyle.up = unlockedBirdButtonDrawable;
+        ImageButton unlockedBirdButton = new ImageButton(unlockedBirdButtonStyle);
+        stage.addActor(unlockedBirdButton);
+        unlockedBirdButton.setSize(ubW, ubH);
+        unlockedBirdButton.setPosition(ubX, ubY);
 
         stage.addListener(new ClickListener(){
             @Override
@@ -76,6 +92,12 @@ public class Menu_page extends ScreenAdapter {
                 main.setScreen(new Level_selector(main));
             }
         });
+        unlockedBirdButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Unlocked_birds_page(main));
+            }
+        });
     }
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -85,6 +107,7 @@ public class Menu_page extends ScreenAdapter {
         batch.draw(settingsButtonTexture, sX, sY, sW, sH);
         batch.end();
 
+        // Render the stage (buttons, if any)
         stage.act(delta);
         stage.draw();
     }
@@ -95,8 +118,7 @@ public class Menu_page extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
         background.dispose();
-        playButtonTexture.dispose(); // Dispose the button texture
+        playButtonTexture.dispose();
         batch.dispose();
     }
-
 }
