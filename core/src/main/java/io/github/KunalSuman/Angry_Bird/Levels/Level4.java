@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -14,40 +13,34 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Main;
 
-public class Level2 extends ScreenAdapter {
+public class Level4 extends ScreenAdapter {
     public Main main ;
-    public SpriteBatch batch ;
-    public Texture background;
+    public Texture elements;
     public Stage stage ;
     public Stage pauseStage;
+    public TiledMap map;
     public Texture pauseTexture;
     private boolean isPaused = false;
     private int pause;
     public Texture closeButton;
-    public Texture backButtonTexture;
     public Texture pauseButton;
+    public Texture backButtonTexture;
+    private float pbX,pbY,pbW,pbH;
     public OrthographicCamera camera ;
-    public TiledMap tiledMap ;
     public OrthogonalTiledMapRenderer renderer ;
-    public Level2(Main main){
-        this.main = new Main();
-        pause =0;
-        stage = new Stage(new ScreenViewport());
-        pauseStage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-        pauseButton = new Texture("pauseButton.png");
-        //this.background = new Texture("Level3.png");
+    public Level4(Main main){
+        this.main = main;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1920, 1080);
-        tiledMap = new TmxMapLoader().load("LEVEL2.tmx");
-        renderer = new OrthogonalTiledMapRenderer(tiledMap);
+        renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL4"));
+        camera.setToOrtho(false, 1920, 1080);  // Match camera to window size
         TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
         ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();
         pauseButtonStyle.up = drawablePauseButton;
         ImageButton pauseButton = new ImageButton(pauseButtonStyle);
+        float menuX = (Gdx.graphics.getWidth() - pauseButton.getWidth()) / 2;  // Center horizontally
+        float menuY = (Gdx.graphics.getHeight() - pauseButton.getHeight()) / 2; // Center vertically
         stage.addActor(pauseButton);
         pauseButton.setSize(100,100);
         pauseButton.setPosition(0, 0);
@@ -61,7 +54,6 @@ public class Level2 extends ScreenAdapter {
         backButton.setSize(100,100);
         backButton.setPosition(0,Gdx.graphics.getHeight()-backButton.getHeight());
 
-        closeButton = new Texture("closeButton.png");
         TextureRegionDrawable drawablecloseButton = new TextureRegionDrawable(new TextureRegion(closeButton));
         ImageButton.ImageButtonStyle closeButtonStyle = new ImageButton.ImageButtonStyle();
         closeButtonStyle.up = drawablecloseButton;
@@ -69,6 +61,7 @@ public class Level2 extends ScreenAdapter {
         pauseStage.addActor(closeButton);
         closeButton.setSize(100,100);
         closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
+
 
         pauseButton.addListener(new ClickListener(){
             @Override
@@ -92,7 +85,7 @@ public class Level2 extends ScreenAdapter {
         });
         pauseTexture = new Texture("SETTINGS.png");
     }
-    public void render(float delta){
+    public void render(float delta) {
         camera.update();
         renderer.setView(camera);
         renderer.render();
@@ -107,8 +100,6 @@ public class Level2 extends ScreenAdapter {
             pauseStage.getBatch().end();
             pauseStage.draw();
         }
-        //batch.begin();
-//        batch.draw(background, 0, 0);
-        //batch.end();
     }
 }
+
