@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Main;
 
 public class Level4 extends ScreenAdapter {
@@ -33,7 +34,11 @@ public class Level4 extends ScreenAdapter {
     public Level4(Main main){
         this.main = main;
         camera = new OrthographicCamera();
-        renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL4"));
+        pauseButton = new Texture("pauseButton.png");
+        closeButton = new Texture("closeButton.png");
+        stage = new Stage(new ScreenViewport());
+        pauseStage = new Stage(new ScreenViewport());
+        renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL4.tmx"));
         camera.setToOrtho(false, 1920, 1080);  // Match camera to window size
         TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
         ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();

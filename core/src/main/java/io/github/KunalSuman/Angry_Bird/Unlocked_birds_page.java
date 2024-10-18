@@ -46,7 +46,7 @@ public class Unlocked_birds_page extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        batch.draw(playButtonTexture, pbX, pbY, pW, pH);// Draw the button
+//      batch.draw(playButtonTexture, pbX, pbY, pW, pH);// Draw the button
         batch.draw(settingsButtonTexture, sX, sY, sW, sH);
         batch.end();
 

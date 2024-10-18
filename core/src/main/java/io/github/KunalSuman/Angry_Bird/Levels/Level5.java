@@ -38,6 +38,7 @@ public class Level5 extends ScreenAdapter {
         this.main = main ;
         camera = new OrthographicCamera();
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL5.tmx"));
+        camera.setToOrtho(false, 1920, 1080);
         this.main = new Main();
         this.batch = new SpriteBatch();
         pause =0;

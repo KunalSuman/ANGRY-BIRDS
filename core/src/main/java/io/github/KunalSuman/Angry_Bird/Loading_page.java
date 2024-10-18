@@ -15,7 +15,7 @@ public class Loading_page extends ScreenAdapter{
     public SpriteBatch Batch;
     public Main main;
     public AssetManager assetManager;
-    public int x  ;
+    public int x ;
     private Stage stage;
     private ProgressBar progressBar;
     public Loading_page(Main main) {

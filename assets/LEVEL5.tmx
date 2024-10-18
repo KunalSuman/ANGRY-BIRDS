@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="4" nextobjectid="1">
- <tileset firstgid="1" source="C:/Users/Kunal/Downloads/INGAME_BLOCKS_1.tsx"/>
+ <tileset firstgid="1" source="INGAME_BLOCKS_1.tsx"/>
  <tileset firstgid="47971" source="INGAME_BIRDS_1.tsx"/>
- <tileset firstgid="92132" source="C:/Users/Kunal/Downloads/INGAME_BLOCKS_2.tsx"/>
+ <tileset firstgid="92132" source="INGAME_BLOCKS_2.tsx"/>
  <tileset firstgid="135132" source="INGAME_BLOCKS_2.tsx"/>
- <tileset firstgid="178132" source="C:/Users/Kunal/Downloads/INGAME_BIRDS_1.tsx"/>
+ <tileset firstgid="178132" source="INGAME_BIRDS_1.tsx"/>
  <tileset firstgid="218469" source="INGAME_BLOCKS_1.tsx"/>
- <tileset firstgid="266439" source="C:/Users/Kunal/Downloads/GOLDEN_EGGS_SHEET_1.tsx"/>
+ <tileset firstgid="266439" source="GOLDEN_EGGS_SHEET_1.tsx"/>
  <imagelayer id="2" name="LEVEL5">
   <image source="level5.png" width="1920" height="1080"/>
  </imagelayer>
