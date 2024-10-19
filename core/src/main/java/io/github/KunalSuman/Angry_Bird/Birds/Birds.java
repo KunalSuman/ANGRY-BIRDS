@@ -6,4 +6,5 @@ public interface Birds {
     void bird_velocity();
     void bird_texture();
     void bird_name();
+    void is_locked();
 }

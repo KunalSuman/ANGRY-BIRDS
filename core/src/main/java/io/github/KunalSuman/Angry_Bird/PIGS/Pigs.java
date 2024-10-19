@@ -4,4 +4,5 @@ public interface Pigs {
     void hitpoints() ;
     void pig_texture();
     void pig_armor();
+    void is_dead();
 }

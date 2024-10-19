@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Blue_bird extends Birds_schema implements Birds{
 
-    Blue_bird(Texture texture , int ability , int hitpoints , int velocity , String name){
-        super(texture , ability , hitpoints , velocity , name);
+    Blue_bird(Texture texture , int ability , int hitpoints , int velocity , String name , int locked){
+        super(texture , hitpoints , velocity , ability , name , locked);
     }
 
     public void bird_ability() {
@@ -30,5 +30,10 @@ public class Blue_bird extends Birds_schema implements Birds{
     @Override
     public void bird_name() {
         this.name = "BLUES" ;
+    }
+
+    @Override
+    public void is_locked() {
+        this.locked = 1 ;
     }
 }

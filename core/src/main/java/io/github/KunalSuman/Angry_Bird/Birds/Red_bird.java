@@ -3,8 +3,8 @@ package io.github.KunalSuman.Angry_Bird.Birds;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Red_bird extends Birds_schema implements Birds{
-    Red_bird(Texture texture , int velocity , int ability , int hitpoints , String name){
-        super(texture , velocity , ability , hitpoints , name);
+    Red_bird(Texture texture , int velocity , int ability , int hitpoints , String name , int locked){
+        super(texture , hitpoints , velocity , ability , name ,locked);
 
     }
     @Override
@@ -30,5 +30,10 @@ public class Red_bird extends Birds_schema implements Birds{
     @Override
     public void bird_name() {
         this.name = "RED";
+    }
+
+    @Override
+    public void is_locked() {
+        this.locked = 0;
     }
 }
