@@ -5,9 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -23,29 +26,36 @@ public class Menu_page extends ScreenAdapter {
     public AssetManager assetManager;
     private Stage stage;
     public SpriteBatch batch;
+    public int birdnumber=1;
     private Texture playButtonTexture;
+    public ImageButton playButton;
     private Texture settingsButtonTexture;
     private float sW,sH,sX,sY;
     private float pbW, pbH, pbX, pbY;
     private float ubW,ubH,ubX,ubY;
     private Texture unlockedBirdButton;
     public Main main;
+    public OrthographicCamera camera ;
+    public OrthogonalTiledMapRenderer renderer ;
     public Menu_page(Main main) {
         this.main = main;
         this.assetManager = new AssetManager();
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        background = new Texture("MENUE_page.png");
+        //background = new Texture("MENUE_page.png");
         this.batch = new SpriteBatch();
         settingsButtonTexture = new Texture("settings_button.png");
-        sW = Gdx.graphics.getWidth() * 0.1f;
+        camera = new OrthographicCamera();
+        renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("MENUE_PAGE.tmx"));
+        camera.setToOrtho(false, 1920, 1080);
+        sW = Gdx.graphics.getWidth() * 0.075f;
         sH = Gdx.graphics.getHeight() * 0.1f;
         sX = 0;  // Position at bottom-left corner
-        sY = 0;
-        pbW = Gdx.graphics.getWidth() * 0.2f;
+        sY = 50;
+        pbW = Gdx.graphics.getWidth() * 0.18f;
         pbH = Gdx.graphics.getHeight() * 0.2f;
         pbX = (Gdx.graphics.getWidth() - pbW) / 2f;
-        pbY = (Gdx.graphics.getHeight() - pbH) / 2f;
+        pbY = (Gdx.graphics.getHeight() - pbH) / 3f;
 
         ubW = Gdx.graphics.getWidth() * 0.2f;
         ubH = Gdx.graphics.getHeight() * 0.2f;
@@ -57,7 +67,7 @@ public class Menu_page extends ScreenAdapter {
         TextureRegionDrawable playButtonClickedDrawable = new TextureRegionDrawable(new TextureRegion(settingsButtonTexture));
         ImageButton.ImageButtonStyle playButtonStyle = new ImageButton.ImageButtonStyle();
         playButtonStyle.up = playButtonDrawable;
-        ImageButton playButton = new ImageButton(playButtonStyle);
+        playButton = new ImageButton(playButtonStyle);
         stage.addActor(playButton);
         playButton.setSize(pbW, pbH);
         playButton.setPosition(pbX, pbY);
@@ -71,7 +81,7 @@ public class Menu_page extends ScreenAdapter {
         ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
         unlockedBirdButtonStyle.up = unlockedBirdButtonDrawable;
         ImageButton unlockedBirdButton = new ImageButton(unlockedBirdButtonStyle);
-        stage.addActor(unlockedBirdButton);
+        //stage.addActor(unlockedBirdButton);
         unlockedBirdButton.setSize(ubW, ubH);
         unlockedBirdButton.setPosition(ubX, ubY);
 
@@ -95,14 +105,28 @@ public class Menu_page extends ScreenAdapter {
         unlockedBirdButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Unlocked_birds_page(main));
+                if (birdnumber<=4) {
+                    birdnumber++;
+                }
+                if (birdnumber == 1){
+                    background = new Texture("BACKGROUNDS_GE_1.png");
+                }else if (birdnumber == 2){
+                    background = new Texture("BACKGROUNDS_GE_1.png");
+                }else if (birdnumber == 3){
+                    background = new Texture("BACKGROUNDS_GE_1.png");
+                }else if (birdnumber == 4){
+                    background = new Texture("BACKGROUNDS_GE_1.png");
+                }
             }
         });
     }
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+        renderer.setView(camera);
+        renderer.render();
         batch.begin();
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        batch.draw(playButtonTexture, pbX, pbY, pW, pH);// Draw the button
         batch.draw(settingsButtonTexture, sX, sY, sW, sH);
         batch.end();
@@ -113,7 +137,15 @@ public class Menu_page extends ScreenAdapter {
     }
     @Override
     public void resize(int width, int height) {
+
         stage.getViewport().update(width, height, true);
+        pbW = Gdx.graphics.getWidth() * 0.18f;
+        pbH = Gdx.graphics.getHeight() * 0.2f;
+        pbX = (Gdx.graphics.getWidth() - pbW) / 1.9f;
+        pbY = (Gdx.graphics.getHeight() - pbH) / 4.25f;
+
+        playButton.setSize(pbW, pbH);
+        playButton.setPosition(pbX, pbY);
     }
     public void dispose() {
         stage.dispose();

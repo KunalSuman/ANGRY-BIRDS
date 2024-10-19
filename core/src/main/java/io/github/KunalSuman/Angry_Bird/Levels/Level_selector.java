@@ -2,8 +2,11 @@ package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,29 +39,25 @@ public class Level_selector extends ScreenAdapter {
     public TextButton b1 ;
     public TextButton b2 ;
     public TextButton b3 ;
+    public OrthographicCamera camera ;
+    public OrthogonalTiledMapRenderer renderer ;
+
     public Level_selector(Main main) {
         this.main = main;
         this.batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL_SELECTOR.tmx"));
+        camera.setToOrtho(false, 1920, 1080);
         this.levels_page = new Texture("Levels_page.png");
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         backButtonTexture = new Texture("backButton.png");
         this.t1 = new Table();
-        bbW = 100;
-        bbH = 100;
-        bbX= 0;
-        bbY = 0;
-        l1X=100;l1Y=550;l1W=50;l1H=50;
-        l2X=340;l2Y=550;l2W=50;l2H=50;
-        l3X=550;l3Y=500;l3W=50;l3H=50;
-        l4X=760;l4Y=500;l4W=70;l4H=70;
-        l5X=970;l5Y=500;l5W=70;l5H=70;
+
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 float adjustedY = Gdx.graphics.getHeight() - y;
-//                if (x>=pbX && x<=pbX+pW && y>=pbY && y<=pbY+pH){
-//                    main.setScreen(new Level_selector(main));}
                 if (x>=bbX && x<=bbX+bbW && adjustedY>=bbY && y<=bbY+bbH){
                     main.setScreen(new Menu_page(main));
                 }else if (x>=l1X && x<=l1X+l1W && adjustedY>=l1Y && y<=l1Y+l1H){
@@ -89,11 +88,14 @@ public class Level_selector extends ScreenAdapter {
 //        stage.addActor(t1);
     }
     public void render(float delta){
+        camera.update();
+        renderer.setView(camera);
+        renderer.render();
         batch.begin();
-        batch.draw(levels_page,0,0);
+        ///batch.draw(levels_page,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
         batch.draw(backButtonTexture, l4X, l4Y, l4W,l4H);
-        batch.draw(backButtonTexture, l5X, l5Y, l5W,l5H);
+//        batch.draw(backButtonTexture, l5X, l5Y, l5W,l5H);
         batch.end();
 
         stage.act(delta);
@@ -102,5 +104,16 @@ public class Level_selector extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        bbW = 100;
+        bbH = 100;
+        bbX= 0;
+        bbY = 0;
+        System.out.println((int)(Gdx.graphics.getWidth()/19.2));
+        System.out.println((int)(Gdx.graphics.getHeight()/1.96363636364));
+        l1X=(int)(Gdx.graphics.getWidth()/19.2);l1Y=(int)(Gdx.graphics.getHeight()/1.96363636364);l1W=100;l1H=100;
+        l2X=(int)(Gdx.graphics.getWidth()/5.64705882353);l2Y=(int)(Gdx.graphics.getHeight()/1.96363636364);l2W=100;l2H=100;
+        l3X=(int)(Gdx.graphics.getWidth()/3.49090909091);l3Y=(int)(Gdx.graphics.getHeight()/2.16);l3W=100;l3H=100;
+        l4X=(int)(Gdx.graphics.getWidth()/2.52631578947);l4Y=500;l4W=100;l4H=1080;
+        l5X=(int)(Gdx.graphics.getWidth()/2.13333333333);l5Y=(int)(Gdx.graphics.getHeight()/2.84210526316);l5W=100;l5H=100;
     }
 }
