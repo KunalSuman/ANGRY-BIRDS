@@ -7,5 +7,23 @@ public class Helmet_pig extends Pigs_schema implements Pigs{
         super(armour , hitpoints ,texture , dead);
     }
 
+    @Override
+    public void hitpoints() {
 
+    }
+
+    @Override
+    public void pig_texture() {
+
+    }
+
+    @Override
+    public void pig_armor() {
+
+    }
+
+    @Override
+    public void is_dead() {
+
+    }
 }
