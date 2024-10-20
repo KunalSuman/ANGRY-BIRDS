@@ -1,6 +1,7 @@
 package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,10 +31,19 @@ public class Level5 extends ScreenAdapter {
     private int pause;
     public Texture closeButton;
     public Texture pauseButton;
+    public Texture MenuButton ;
     public Texture backButtonTexture;
     private float pbX,pbY,pbW,pbH;
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer renderer ;
+    public Stage lostStage;
+    public Texture retryTexture ;
+    public Texture tomenue ;
+    public Stage winStage;
+    public Texture winTexture ;
+    public Texture MenuButtonTexture ;
+    public Texture Nextlevel ;
+    public int x = 0 ;
     public Level5(Main main){
         this.main = main ;
         camera = new OrthographicCamera();
@@ -42,6 +52,8 @@ public class Level5 extends ScreenAdapter {
         this.main = new Main();
         this.batch = new SpriteBatch();
         pause =0;
+        lostStage = new Stage(new ScreenViewport());
+        winStage = new Stage(new ScreenViewport());
         //this.background = new Texture("Level3.png");
         this.elements = new Texture("libgdx.png");
         stage = new Stage(new ScreenViewport());
@@ -49,6 +61,10 @@ public class Level5 extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         pauseButton = new Texture("pauseButton.png");
         closeButton = new Texture("closeButton.png");
+        MenuButtonTexture = new Texture("Menu_button.png");
+        retryTexture = new Texture("Level_failed.png");
+        winTexture = new Texture("Level_complete.png");
+        Nextlevel = new Texture("Next_level_button.png");
         //map = new TmxMapLoader().load("LEVEL1.tmx");
         //renderer = new OrthogonalTiledMapRenderer(map);
         //camera = new OrthographicCamera();
@@ -81,6 +97,22 @@ public class Level5 extends ScreenAdapter {
         closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
 
 
+        TextureRegionDrawable To_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
+        ImageButton.ImageButtonStyle Menu_button = new ImageButton.ImageButtonStyle();
+        Menu_button.up = To_menu;
+        ImageButton Menubutton = new ImageButton(Menu_button);
+        winStage.addActor(Menubutton);
+        Menubutton.setSize(400,175);
+        Menubutton.setPosition(550,75);
+
+        TextureRegionDrawable next_level = new TextureRegionDrawable(new TextureRegion(Nextlevel));
+        ImageButton.ImageButtonStyle Next_button = new ImageButton.ImageButtonStyle();
+        Next_button.up = next_level;
+        ImageButton Nextbutton = new ImageButton(next_level);
+        winStage.addActor(Nextbutton);
+        Nextbutton.setSize(, 175);
+        Nextbutton.setPosition(900,75);
+
         pauseButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -101,23 +133,56 @@ public class Level5 extends ScreenAdapter {
                 Gdx.input.setInputProcessor(stage);
             }
         });
+        Menubutton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Level_selector(main));
+            }
+        });
         pauseTexture = new Texture("SETTINGS.png");
     }
     public void render(float delta) {
+
         camera.update();
         renderer.setView(camera);
         renderer.render();
-        if (!isPaused){
+        batch.begin();
+        if(x==1){
+            lostStage.act(delta);
+            lostStage.getBatch().begin();
+            lostStage.getBatch().draw(retryTexture,(Gdx.graphics.getWidth()-retryTexture.getWidth())/2f,(Gdx.graphics.getHeight()-retryTexture.getHeight())/2f);
+            lostStage.getBatch().end();
+            lostStage.draw();
+        }
+        if(x==2){
             stage.act(delta);
             stage.draw();
+            winStage.act(delta);
+            winStage.getBatch().begin();
+            winStage.getBatch().draw(winTexture,(Gdx.graphics.getWidth()-winTexture.getWidth())/2f,(Gdx.graphics.getHeight()-winTexture.getHeight())/2f);
+            winStage.getBatch().end();
+            winStage.draw();
         }
-        if (isPaused){
-            pauseStage.act(delta);
-            pauseStage.getBatch().begin();
-            pauseStage.getBatch().draw(pauseTexture,(Gdx.graphics.getWidth()-pauseTexture.getWidth())/2f,(Gdx.graphics.getHeight()-pauseTexture.getHeight())/2f);
-            pauseStage.getBatch().end();
-            pauseStage.draw();
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            x =1 ;
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            x =2 ;
+        }
+        if(x==0) {
+            if (!isPaused) {
+                stage.act(delta);
+                stage.draw();
+            }
+            if (isPaused) {
+                pauseStage.act(delta);
+                pauseStage.getBatch().begin();
+                pauseStage.getBatch().draw(pauseTexture, (Gdx.graphics.getWidth() - pauseTexture.getWidth()) / 2f, (Gdx.graphics.getHeight() - pauseTexture.getHeight()) / 2f);
+                pauseStage.getBatch().end();
+                pauseStage.draw();
+            }
+        }
+        batch.end();
     }
 }
 

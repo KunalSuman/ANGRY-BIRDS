@@ -1,6 +1,7 @@
 package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +32,12 @@ public class Level4 extends ScreenAdapter {
     private float pbX,pbY,pbW,pbH;
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer renderer ;
+    public Stage lostStage;
+    public Texture retryTexture ;
+    public Texture tomenue ;
+    public Stage winStage;
+    public Texture winTexture ;
+    public int x = 0 ;
     public Level4(Main main){
         this.main = main;
         camera = new OrthographicCamera();
@@ -39,6 +46,8 @@ public class Level4 extends ScreenAdapter {
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL4.tmx"));
+        lostStage = new Stage(new ScreenViewport());
+        winStage = new Stage(new ScreenViewport());
         camera.setToOrtho(false, 1920, 1080);  // Match camera to window size
         TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
         ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();
@@ -49,6 +58,8 @@ public class Level4 extends ScreenAdapter {
         stage.addActor(pauseButton);
         pauseButton.setSize(100,100);
         pauseButton.setPosition(0, 0);
+        retryTexture = new Texture("Level_failed.png");
+        winTexture = new Texture("Level_complete.png");
 
         backButtonTexture = new Texture("backButton.png");
         TextureRegionDrawable drawablebackButton = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
@@ -91,6 +102,26 @@ public class Level4 extends ScreenAdapter {
         pauseTexture = new Texture("SETTINGS.png");
     }
     public void render(float delta) {
+        if(x==1){
+            lostStage.act(delta);
+            lostStage.getBatch().begin();
+            lostStage.getBatch().draw(retryTexture,(Gdx.graphics.getWidth()-retryTexture.getWidth())/2f,(Gdx.graphics.getHeight()-retryTexture.getHeight())/2f);
+            lostStage.getBatch().end();
+            lostStage.draw();
+        }
+        if(x==2){
+            winStage.act(delta);
+            winStage.getBatch().begin();
+            winStage.getBatch().draw(winTexture,(Gdx.graphics.getWidth()-winTexture.getWidth())/2f,(Gdx.graphics.getHeight()-winTexture.getHeight())/2f);
+            winStage.getBatch().end();
+            winStage.draw();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            x =1 ;
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            x =2 ;
+        }
         camera.update();
         renderer.setView(camera);
         renderer.render();
