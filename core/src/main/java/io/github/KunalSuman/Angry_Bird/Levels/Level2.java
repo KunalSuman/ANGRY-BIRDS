@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Completed_Level;
 import io.github.KunalSuman.Angry_Bird.Main;
+import io.github.KunalSuman.Angry_Bird.Pause;
 
 public class Level2 extends ScreenAdapter {
     public Main main ;
@@ -42,6 +43,7 @@ public class Level2 extends ScreenAdapter {
     public Texture Nextlevel ;
     public Texture retryButtonTexture;
     public int x  =0 ;
+    public Pause pause_render ;
     public Level2(Main main){
         this.main = new Main();
         pause =0;
@@ -192,11 +194,12 @@ public class Level2 extends ScreenAdapter {
             stage.draw();
         }
         if (isPaused){
-            pauseStage.act(delta);
-            pauseStage.getBatch().begin();
-            pauseStage.getBatch().draw(pauseTexture,(Gdx.graphics.getWidth()-pauseTexture.getWidth())/2f,(Gdx.graphics.getHeight()-pauseTexture.getHeight())/2f);
-            pauseStage.getBatch().end();
-            pauseStage.draw();
+            pause_render.render(delta);
+//            pauseStage.act(delta);
+//            pauseStage.getBatch().begin();
+//            pauseStage.getBatch().draw(pauseTexture,(Gdx.graphics.getWidth()-pauseTexture.getWidth())/2f,(Gdx.graphics.getHeight()-pauseTexture.getHeight())/2f);
+//            pauseStage.getBatch().end();
+//            pauseStage.draw();
         }
         //batch.begin();
 //        batch.draw(background, 0, 0);

@@ -48,6 +48,7 @@ public class Level5 extends ScreenAdapter {
     public Texture Nextlevel ;
     public Texture retryButtonTexture;
     public int x = 0 ;
+    public Pause pause_render ;
     public Level5(Main main){
         this.main = main ;
         camera = new OrthographicCamera();
@@ -64,14 +65,14 @@ public class Level5 extends ScreenAdapter {
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
-//        pauseButton = new Texture("pauseButton.png");
-//        closeButton = new Texture("closeButton.png");
-//        MenuButtonTexture = new Texture("Menu_button.png");
-//        retryButtonTexture = new Texture("Retry_button.png");
-//        retryTexture = new Texture("Level_failed.png");
-//        winTexture = new Texture("Level_complete.png");
-//        Nextlevel = new Texture("Next_level_button.png");
+        pause_render = new Pause(main ,map ,5);
+        pauseButton = new Texture("pauseButton.png");
+        closeButton = new Texture("closeButton.png");
+        MenuButtonTexture = new Texture("Menu_button.png");
+        retryButtonTexture = new Texture("Retry_button.png");
+        retryTexture = new Texture("Level_failed.png");
+        winTexture = new Texture("Level_complete.png");
+        Nextlevel = new Texture("Next_level_button.png");
         //map = new TmxMapLoader().load("LEVEL1.tmx");
         //renderer = new OrthogonalTiledMapRenderer(map);
         //camera = new OrthographicCamera();
@@ -173,7 +174,6 @@ public class Level5 extends ScreenAdapter {
 //                main.setScreen(new Completed_Level(main , 5));
 //        });
         pauseTexture = new Texture("SETTINGS.png");
-        ImageButton pauseButton=New_pause.pause(pauseStage,stage);
     }
     public void render(float delta) {
 
@@ -197,6 +197,21 @@ public class Level5 extends ScreenAdapter {
             winStage.getBatch().end();
             winStage.draw();
         }
+        if(x==0) {
+            if (!isPaused) {
+                stage.act(delta);
+                stage.draw();
+            }
+            if (isPaused) {
+                //Gdx.input.setInputProcessor(pauseStage);
+                pause_render.render(delta);
+//                pauseStage.act(delta);
+//                pauseStage.getBatch().begin();
+//                pauseStage.getBatch().draw(pauseTexture, (Gdx.graphics.getWidth() - pauseTexture.getWidth()) / 2f, (Gdx.graphics.getHeight() - pauseTexture.getHeight()) / 2f);
+//                pauseStage.getBatch().end();
+//                pauseStage.draw();
+            }
+        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             x =1 ;
 
@@ -206,26 +221,13 @@ public class Level5 extends ScreenAdapter {
             x =2 ;
             Gdx.input.setInputProcessor(winStage);
             }
-        if(x==0) {
-            if (!isPaused) {
-                stage.act(delta);
-                stage.draw();
-            }
-            if (isPaused) {
-                  //Pause.pause(main ,map);
-                pauseStage.act(delta);
-                pauseStage.getBatch().begin();
-                pauseStage.getBatch().draw(pauseTexture, (Gdx.graphics.getWidth() - pauseTexture.getWidth()) / 2f, (Gdx.graphics.getHeight() - pauseTexture.getHeight()) / 2f);
-                pauseStage.getBatch().end();
-                pauseStage.draw();
-            }
-        }
+
         batch.end();
     }
     public void dispose() {
-        stage.dispose();
+        //stage.dispose();
         background.dispose();
         batch.dispose();
-        pauseStage.dispose();
+        //pauseStage.dispose();
     }
 }
