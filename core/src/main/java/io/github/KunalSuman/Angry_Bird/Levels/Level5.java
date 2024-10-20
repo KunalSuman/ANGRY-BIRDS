@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Completed_Level;
 import io.github.KunalSuman.Angry_Bird.Main;
+import io.github.KunalSuman.Angry_Bird.New_pause;
+import io.github.KunalSuman.Angry_Bird.Pause;
 
 public class Level5 extends ScreenAdapter {
     public Main main ;
@@ -49,7 +51,8 @@ public class Level5 extends ScreenAdapter {
     public Level5(Main main){
         this.main = main ;
         camera = new OrthographicCamera();
-        renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL5.tmx"));
+        map = new TmxMapLoader().load("LEVEL5.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
         camera.setToOrtho(false, 1920, 1080);
         this.main = new Main();
         this.batch = new SpriteBatch();
@@ -62,13 +65,13 @@ public class Level5 extends ScreenAdapter {
         pauseStage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        pauseButton = new Texture("pauseButton.png");
-        closeButton = new Texture("closeButton.png");
-        MenuButtonTexture = new Texture("Menu_button.png");
-        retryButtonTexture = new Texture("Retry_button.png");
-        retryTexture = new Texture("Level_failed.png");
-        winTexture = new Texture("Level_complete.png");
-        Nextlevel = new Texture("Next_level_button.png");
+//        pauseButton = new Texture("pauseButton.png");
+//        closeButton = new Texture("closeButton.png");
+//        MenuButtonTexture = new Texture("Menu_button.png");
+//        retryButtonTexture = new Texture("Retry_button.png");
+//        retryTexture = new Texture("Level_failed.png");
+//        winTexture = new Texture("Level_complete.png");
+//        Nextlevel = new Texture("Next_level_button.png");
         //map = new TmxMapLoader().load("LEVEL1.tmx");
         //renderer = new OrthogonalTiledMapRenderer(map);
         //camera = new OrthographicCamera();
@@ -170,6 +173,7 @@ public class Level5 extends ScreenAdapter {
 //                main.setScreen(new Completed_Level(main , 5));
 //        });
         pauseTexture = new Texture("SETTINGS.png");
+        ImageButton pauseButton=New_pause.pause(pauseStage,stage);
     }
     public void render(float delta) {
 
@@ -208,6 +212,7 @@ public class Level5 extends ScreenAdapter {
                 stage.draw();
             }
             if (isPaused) {
+                  //Pause.pause(main ,map);
                 pauseStage.act(delta);
                 pauseStage.getBatch().begin();
                 pauseStage.getBatch().draw(pauseTexture, (Gdx.graphics.getWidth() - pauseTexture.getWidth()) / 2f, (Gdx.graphics.getHeight() - pauseTexture.getHeight()) / 2f);
@@ -216,5 +221,11 @@ public class Level5 extends ScreenAdapter {
             }
         }
         batch.end();
+    }
+    public void dispose() {
+        stage.dispose();
+        background.dispose();
+        batch.dispose();
+        pauseStage.dispose();
     }
 }
