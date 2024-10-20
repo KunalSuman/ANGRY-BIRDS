@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,7 @@ import static com.badlogic.gdx.Gdx.input;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
+    public static Music music;
     private SpriteBatch batch;
     private Texture Loading_page;
     private Texture Main_menu_page ;
@@ -38,10 +40,14 @@ public class Main extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
+        music = Gdx.audio.newMusic(Gdx.files.internal("title_theme.mp3"));
         pm = new Pixmap(Gdx.files.internal("CURSORS_SHEET_1.png"));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         setScreen(new Loading_page(this));
         page_number = 0;
+        music.setVolume(1f);
+        music.setLooping(true);
+        music.play();
 
     }
 
