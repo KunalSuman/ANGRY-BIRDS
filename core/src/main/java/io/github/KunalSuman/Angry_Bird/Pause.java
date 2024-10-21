@@ -123,7 +123,7 @@ public class Pause extends ScreenAdapter {
 
         quit_button.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-
+                main.setScreen(new Quit(main , renderer));
             }
         });
 
@@ -135,7 +135,7 @@ public class Pause extends ScreenAdapter {
 
         Save_quit.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Save_quit(main , return_number ,0));
+                main.setScreen(new Save_quit(main , return_number ,0, T1));
             }
         });
 
@@ -198,5 +198,8 @@ public class Pause extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         //stage.getBatch().draw(pause_menu, (Gdx.graphics.getWidth() - pause_menu.getWidth()) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()) / 2f);
         stage.draw();
+    }
+    public void dispose(){
+        stage.dispose();
     }
 }

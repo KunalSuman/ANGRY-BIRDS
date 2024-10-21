@@ -44,6 +44,7 @@ public class Main extends Game {
         pm = new Pixmap(Gdx.files.internal("CURSORS_SHEET_1.png"));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         setScreen(new Loading_page(this));
+
         page_number = 0;
         music.setVolume(1f);
         music.setLooping(true);

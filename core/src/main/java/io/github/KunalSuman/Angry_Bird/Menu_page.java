@@ -142,7 +142,7 @@ public class Menu_page extends ScreenAdapter {
         pbW = Gdx.graphics.getWidth() * 0.18f;
         pbH = Gdx.graphics.getHeight() * 0.2f;
         pbX = (Gdx.graphics.getWidth() - pbW) / 1.9f;
-        pbY = (Gdx.graphics.getHeight() - pbH) / 4.25f;
+        pbY = (Gdx.graphics.getHeight() - pbH) / 6.25f;
 
         playButton.setSize(pbW, pbH);
         playButton.setPosition(pbX, pbY);
