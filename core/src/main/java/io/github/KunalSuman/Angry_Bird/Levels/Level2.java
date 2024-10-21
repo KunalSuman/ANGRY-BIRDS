@@ -63,6 +63,9 @@ public class Level2 extends ScreenAdapter {
         winTexture = new Texture("Level_complete.png");
         Nextlevel = new Texture("Next_level_button.png");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+        pause_render = new Pause(main ,tiledMap ,2);
+
         TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
         ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();
         pauseButtonStyle.up = drawablePauseButton;

@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Completed_Level;
 import io.github.KunalSuman.Angry_Bird.Main;
+import io.github.KunalSuman.Angry_Bird.Pause;
 
 public class Level3 extends ScreenAdapter {
     public Main main ;
@@ -42,6 +43,7 @@ public class Level3 extends ScreenAdapter {
     public Texture MenuButtonTexture ;
     public Texture retryButtonTexture ;
     public int x  =0 ;
+    public Pause pause_render;
     public Level3(Main main) {
         this.main = new Main();
         pause =0;
@@ -82,6 +84,7 @@ public class Level3 extends ScreenAdapter {
 
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
+        pause_render = new Pause(main ,map ,3);
 
         closeButton = new Texture("closeButton.png");
         TextureRegionDrawable drawablecloseButton = new TextureRegionDrawable(new TextureRegion(closeButton));
@@ -91,9 +94,6 @@ public class Level3 extends ScreenAdapter {
         pauseStage.addActor(closeButton);
         closeButton.setSize(100,100);
         closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
-
-        retryTexture = new Texture("Level_failed.png");
-        winTexture = new Texture("Level_complete.png");
 
         TextureRegionDrawable lost_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
         ImageButton.ImageButtonStyle lost_Menu_button = new ImageButton.ImageButtonStyle();
@@ -204,11 +204,12 @@ public class Level3 extends ScreenAdapter {
                 stage.draw();
             }
             if (isPaused){
-                pauseStage.act(delta);
-                pauseStage.getBatch().begin();
-                pauseStage.getBatch().draw(pauseTexture,(Gdx.graphics.getWidth()-pauseTexture.getWidth())/2f,(Gdx.graphics.getHeight()-pauseTexture.getHeight())/2f);
-                pauseStage.getBatch().end();
-                pauseStage.draw();
+                pause_render.render(delta);
+//                pauseStage.act(delta);
+//                pauseStage.getBatch().begin();
+//                pauseStage.getBatch().draw(pauseTexture,(Gdx.graphics.getWidth()-pauseTexture.getWidth())/2f,(Gdx.graphics.getHeight()-pauseTexture.getHeight())/2f);
+//                pauseStage.getBatch().end();
+//                pauseStage.draw();
             }
         }
         batch.end();

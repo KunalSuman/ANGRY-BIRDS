@@ -27,7 +27,7 @@ public class Settings_page extends ScreenAdapter {
         this.stage = new Stage(new ScreenViewport());
         assetManager = new AssetManager();
         background = new Texture("BACKGROUNDS_GE_1.png");
-        settings_page_texture = new Texture("SETTINGS.png");
+        settings_page_texture = new Texture("Settings_page.png");
         backButtonTexture = new Texture("backButton.png");
         batch = new SpriteBatch();
         stage = new Stage();

@@ -16,10 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import io.github.KunalSuman.Angry_Bird.Completed_Level;
-import io.github.KunalSuman.Angry_Bird.LostLevel;
-import io.github.KunalSuman.Angry_Bird.Main;
-import io.github.KunalSuman.Angry_Bird.Menu_page;
+import io.github.KunalSuman.Angry_Bird.*;
 
 public class Level1 extends ScreenAdapter {
     public Main main ;
@@ -47,7 +44,7 @@ public class Level1 extends ScreenAdapter {
     public Texture Nextlevel ;
     public Texture retryButtonTexture;
     public int x = 0 ;
-
+    public Pause pause_render;
     public Level1(Main main){
         this.main = new Main();
         this.batch = new SpriteBatch();
@@ -99,6 +96,7 @@ public class Level1 extends ScreenAdapter {
 
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
+        pause_render = new Pause(main ,map ,1);
 
         TextureRegionDrawable lost_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
         ImageButton.ImageButtonStyle lost_Menu_button = new ImageButton.ImageButtonStyle();
@@ -210,11 +208,12 @@ public class Level1 extends ScreenAdapter {
                 stage.draw();
             }
             if (isPaused) {
-                pauseStage.act(delta);
-                pauseStage.getBatch().begin();
-                pauseStage.getBatch().draw(pauseTexture, (Gdx.graphics.getWidth() - pauseTexture.getWidth()) / 2f, (Gdx.graphics.getHeight() - pauseTexture.getHeight()) / 2f);
-                pauseStage.getBatch().end();
-                pauseStage.draw();
+                pause_render.render(delta);
+//                pauseStage.act(delta);
+//                pauseStage.getBatch().begin();
+//                pauseStage.getBatch().draw(pauseTexture, (Gdx.graphics.getWidth() - pauseTexture.getWidth()) / 2f, (Gdx.graphics.getHeight() - pauseTexture.getHeight()) / 2f);
+//                pauseStage.getBatch().end();
+//                pauseStage.draw();
             }
         }
         batch.end();
