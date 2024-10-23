@@ -5,15 +5,18 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Main;
 import io.github.KunalSuman.Angry_Bird.Menu_page;
@@ -36,11 +39,12 @@ public class Level_selector extends ScreenAdapter {
     private float l5X,l5Y,l5W,l5H;
     public Stage stage;
     public Table t1 ;
-    public TextButton b1 ;
+    public Texture Load_button1 ;
+    public Texture Load_button2 ;
     public TextButton b2 ;
-
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer renderer ;
+
     public Level_selector(Main main) {
         this.main = main;
         this.batch = new SpriteBatch();
@@ -48,10 +52,40 @@ public class Level_selector extends ScreenAdapter {
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         backButtonTexture = new Texture("backButton.png");
+        Load_button1 = new Texture("Load_button.png");
+        Load_button2 = new Texture("Load_button.png");
         this.t1 = new Table();
         camera = new OrthographicCamera();
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL_SELECTOR.tmx"));
         camera.setToOrtho(false, 1920, 1080);
+
+        TextureRegionDrawable drawable_load1 = new TextureRegionDrawable(new TextureRegion(Load_button1));
+        ImageButton.ImageButtonStyle Load_button1Style = new ImageButton.ImageButtonStyle();
+        Load_button1Style.up = drawable_load1;
+        ImageButton Load_button1 = new ImageButton(Load_button1Style);
+        stage.addActor(Load_button1);
+        Load_button1.setSize(200,100);
+        Load_button1.setPosition((Gdx.graphics.getWidth() - Load_button1.getWidth()*0.05f), (Gdx.graphics.getHeight() - Load_button1.getHeight()*0.85f) / 2f);
+
+        TextureRegionDrawable drawable_load2 = new TextureRegionDrawable(new TextureRegion(Load_button2));
+        ImageButton.ImageButtonStyle Load_button2Style = new ImageButton.ImageButtonStyle();
+        Load_button2Style.up = drawable_load2;
+        ImageButton Load_button2 = new ImageButton(Load_button2Style);
+        stage.addActor(Load_button2);
+        Load_button2.setSize(200,100);
+        Load_button2.setPosition((Gdx.graphics.getWidth() - Load_button1.getWidth()*.005f) / 2f, (Gdx.graphics.getHeight() - Load_button1.getHeight()*1.85f) / 2f);
+
+        Load_button1.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Level4(main));
+            }
+        });
+        Load_button2.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Level5(main));
+            }
+        });
+
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -90,12 +124,13 @@ public class Level_selector extends ScreenAdapter {
         renderer.setView(camera);
         renderer.render();
         batch.begin();
+        stage.act(delta);
+        stage.draw();
         ///batch.draw(levels_page,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
         batch.end();
 
-        stage.act(delta);
-        stage.draw();
+
     }
     @Override
     public void resize(int width, int height) {

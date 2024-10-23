@@ -37,6 +37,12 @@ public class Menu_page extends ScreenAdapter {
     public Main main;
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer renderer ;
+    public int x = 0 ;
+    public int y = 0 ;
+    public int z = 0 ;
+    public OrthogonalTiledMapRenderer Bomb_unlocked ;
+    public OrthogonalTiledMapRenderer Chuck_unlocked;
+    public OrthogonalTiledMapRenderer Blues_unlocked ;
     public Menu_page(Main main) {
         this.main = main;
         this.assetManager = new AssetManager();
@@ -92,7 +98,7 @@ public class Menu_page extends ScreenAdapter {
 //                if (x>=pbX && x<=pbX+pW && y>=pbY && y<=pbY+pH){
 //                    main.setScreen(new Level_selector(main));}
                 if (x>=sX && x<=sX+sW && adjustedY>=sY && y<=sY+sH){
-                    main.setScreen(new Settings_page(main));
+                    main.setScreen(new Settings_page(main , renderer));
                 }
             }
         });
@@ -102,29 +108,41 @@ public class Menu_page extends ScreenAdapter {
                 main.setScreen(new Level_selector(main));
             }
         });
-        unlockedBirdButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (birdnumber<=4) {
-                    birdnumber++;
-                }
-                if (birdnumber == 1){
-                    background = new Texture("BACKGROUNDS_GE_1.png");
-                }else if (birdnumber == 2){
-                    background = new Texture("BACKGROUNDS_GE_1.png");
-                }else if (birdnumber == 3){
-                    background = new Texture("BACKGROUNDS_GE_1.png");
-                }else if (birdnumber == 4){
-                    background = new Texture("BACKGROUNDS_GE_1.png");
-                }
-            }
-        });
+//        unlockedBirdButton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                if (birdnumber<=4) {
+//                    birdnumber++;
+//                }
+//                if (birdnumber == 1){
+//                    background = new Texture("BACKGROUNDS_GE_1.png");
+//                }else if (birdnumber == 2){
+//                    background = new Texture("BACKGROUNDS_GE_1.png");
+//                }else if (birdnumber == 3){
+//                    background = new Texture("BACKGROUNDS_GE_1.png");
+//                }else if (birdnumber == 4){
+//                    background = new Texture("BACKGROUNDS_GE_1.png");
+//                }
+//            }
+//        });
     }
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         renderer.setView(camera);
         renderer.render();
+        if(x == 1){
+            Bomb_unlocked.setView(camera);
+            Bomb_unlocked.render();
+        }
+        if(y==1){
+            Chuck_unlocked.setView(camera);
+            Chuck_unlocked.render();
+        }
+        if(z == 1){
+            Blues_unlocked.setView(camera);
+            Blues_unlocked.render();
+        }
         batch.begin();
         //batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        batch.draw(playButtonTexture, pbX, pbY, pW, pH);// Draw the button

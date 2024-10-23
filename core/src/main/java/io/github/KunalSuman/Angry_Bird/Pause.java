@@ -117,7 +117,7 @@ public class Pause extends ScreenAdapter {
 
         settings.addListener(new ClickListener() {
            public void clicked(InputEvent event, float x, float y) {
-               main.setScreen(new Settings_page(main));
+               main.setScreen(new Settings_page(main , renderer));
            }
         });
 
