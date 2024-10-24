@@ -21,7 +21,7 @@ public class Pause extends ScreenAdapter {
     public static Texture to_menu_texture ;
     public static Texture retry_button_texture;
     public static Texture Save_quit_texture;
-    public static Texture quit_button;
+    public static Texture quit_button_texture;
     public static Texture settings ;
     public Main main ;
     public static Stage stage;
@@ -38,11 +38,11 @@ public class Pause extends ScreenAdapter {
         System.out.println("done") ;
         stage = new Stage(new ScreenViewport());
 
-        pause_menu = new Texture(Gdx.files.internal("Pause_menu.png"));
-        to_menu = new Texture("Menu_button.png");
-        retry_button = new Texture("Restart_button.png");
-        Save_quit = new Texture("SaveandExit_button.png");
-        quit_button = new Texture("Quit_button.png");
+       pause_menu = new Texture(Gdx.files.internal("Pause_menu.png"));
+        to_menu_texture = new Texture("Menu_button.png");
+        retry_button_texture = new Texture("Restart_button.png");
+        Save_quit_texture = new Texture("SaveandExit_button.png");
+        quit_button_texture = new Texture("Quit_button.png");
         settings = new Texture("Settings_button_text.png");
         return_button = new Texture("Return.png");
 
@@ -58,15 +58,7 @@ public class Pause extends ScreenAdapter {
 
         ImageButton retry_button = Main.createButton(retry_button_texture,stage,300,150,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,625);
 
-        TextureRegionDrawable drawablequit_button = new TextureRegionDrawable(new TextureRegion(Save_quit));
-        ImageButton.ImageButtonStyle Save_quitStyle = new ImageButton.ImageButtonStyle();
-        Save_quitStyle.up = drawablequit_button;
-        ImageButton Save_quit = new ImageButton(Save_quitStyle);
-        float menuX3 = (Gdx.graphics.getWidth() - Save_quit.getWidth()) / 2;  // Center horizontally
-        float menuY3 = (Gdx.graphics.getHeight() - Save_quit.getHeight()) / 2; // Center vertically
-        stage.addActor(Save_quit);
-        Save_quit.setSize(200,100);
-        Save_quit.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 525);
+        ImageButton Save_quit = Main.createButton(Save_quit_texture,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,500);
 
         TextureRegionDrawable draweble_quit_button = new TextureRegionDrawable(new TextureRegion(quit_button));
         ImageButton.ImageButtonStyle quit_buttonStyle = new ImageButton.ImageButtonStyle();
