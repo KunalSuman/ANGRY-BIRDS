@@ -74,31 +74,6 @@ public class Settings_page extends ScreenAdapter {
                 System.exit(0);
             }
         });
-//        background = new Texture("BACKGROUNDS_GE_1.png");
-//        settings_page_texture = new Texture("Settings_page.png");
-//        backButtonTexture = new Texture("backButton.png");
-//        batch = new SpriteBatch();
-//        stage = new Stage();
-//        Gdx.input.setInputProcessor(stage);
-//        bbW = 100;
-//        bbH = 100;
-//        bbX= 0;
-//        bbY = 0;
-//        spW = 1000;
-//        spH = 800;
-//        spX = (Gdx.graphics.getWidth() - spW) / 2f;
-//        spY = (Gdx.graphics.getHeight() - spH) / 2f;
-//        stage.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                float adjustedY = Gdx.graphics.getHeight() - y;
-////                if (x>=pbX && x<=pbX+pW && y>=pbY && y<=pbY+pH){
-////                    main.setScreen(new Level_selector(main));}
-//                if (x>=bbX && x<=bbX+bbW && adjustedY>=bbY && y<=bbY+bbH){
-//                    main.setScreen(new Menu_page(main));
-//                }
-//            }
-//        });
 
     }
     public void render(float delta) {
