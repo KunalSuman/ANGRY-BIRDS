@@ -18,9 +18,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.*;
 
 public class Pause extends ScreenAdapter {
-    public static Texture to_menu ;
-    public static Texture retry_button;
-    public static Texture Save_quit;
+    public static Texture to_menu_texture ;
+    public static Texture retry_button_texture;
+    public static Texture Save_quit_texture;
     public static Texture quit_button;
     public static Texture settings ;
     public Main main ;
