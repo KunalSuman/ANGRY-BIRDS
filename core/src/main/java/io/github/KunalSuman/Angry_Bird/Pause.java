@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.*;
 
 public class Pause extends ScreenAdapter {
-   public static Texture to_menu_texture ;
+    public static Texture to_menu_texture ;
     public static Texture retry_button_texture;
     public static Texture Save_quit_texture;
     public static Texture quit_button_texture;
@@ -38,7 +38,7 @@ public class Pause extends ScreenAdapter {
         System.out.println("done") ;
         stage = new Stage(new ScreenViewport());
 
-       pause_menu = new Texture(Gdx.files.internal("Pause_menu.png"));
+        pause_menu = new Texture(Gdx.files.internal("Pause_menu.png"));
         to_menu_texture = new Texture("Menu_button.png");
         retry_button_texture = new Texture("Restart_button.png");
         Save_quit_texture = new Texture("SaveandExit_button.png");
@@ -52,9 +52,6 @@ public class Pause extends ScreenAdapter {
         new_renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("PausePage.tmx"));
         camera.setToOrtho(false, 1920, 1080);
 
-
-
-       
         ImageButton to_menu = Main.createButton(to_menu_texture,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,760);
 
         ImageButton retry_button = Main.createButton(retry_button_texture,stage,300,150,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,625);
