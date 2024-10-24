@@ -43,6 +43,10 @@ public class Menu_page extends ScreenAdapter {
     public OrthogonalTiledMapRenderer Bomb_unlocked ;
     public OrthogonalTiledMapRenderer Chuck_unlocked;
     public OrthogonalTiledMapRenderer Blues_unlocked ;
+    public int chuck_unlocked = 0 ;
+    public int bomb_unlocked = 0 ;
+    public int blues_unlocked = 0 ;
+    public Texture invisible_png ;
     public Menu_page(Main main) {
         this.main = main;
         this.assetManager = new AssetManager();
@@ -67,7 +71,9 @@ public class Menu_page extends ScreenAdapter {
         ubH = Gdx.graphics.getHeight() * 0.2f;
         ubX = (Gdx.graphics.getWidth() - ubW) ;
         ubY = (0);
-
+        Bomb_unlocked = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("BOMB_UNLOCKED.tmx"));
+        Chuck_unlocked = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("CHUCK_UNLOCKED.tmx"));
+        Blues_unlocked = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("BLUES_UNLOCKED.tmx"));
         playButtonTexture = new Texture("BUTTONS_SHEET_1.png");
         TextureRegionDrawable playButtonDrawable = new TextureRegionDrawable(new TextureRegion(playButtonTexture));
         TextureRegionDrawable playButtonClickedDrawable = new TextureRegionDrawable(new TextureRegion(settingsButtonTexture));
@@ -82,15 +88,36 @@ public class Menu_page extends ScreenAdapter {
 //        pbX = (Gdx.graphics.getWidth() - pW) / 2f;
 //        pbY = (Gdx.graphics.getHeight() - pH) / 2f;
 
-        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
-        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
-        ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
-        unlockedBirdButtonStyle.up = unlockedBirdButtonDrawable;
-        ImageButton unlockedBirdButton = new ImageButton(unlockedBirdButtonStyle);
-        //stage.addActor(unlockedBirdButton);
-        unlockedBirdButton.setSize(ubW, ubH);
-        unlockedBirdButton.setPosition(ubX, ubY);
+//        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
+//        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
+//        ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
+//        unlockedBirdButtonStyle.up = unlockedBirdButtonDrawable;
+//        ImageButton unlockedBirdButton = new ImageButton(unlockedBirdButtonStyle);
+//        stage.addActor(unlockedBirdButton);
+//        unlockedBirdButton.setSize(ubW, ubH);
+//        unlockedBirdButton.setPosition(ubX, ubY);
+        invisible_png = new Texture("BACK_button.png");
 
+        ImageButton chuck_button = Button.createButton(invisible_png,stage,200,200,Gdx.graphics.getWidth()/2f , Gdx.graphics.getHeight()/2f);
+        ImageButton bomb_button = Button.createButton(invisible_png,stage,200,200,Gdx.graphics.getWidth()/2f , Gdx.graphics.getHeight());
+        ImageButton blues_button = Button.createButton(invisible_png,stage,200,200,Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+
+        chuck_button.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                chuck_unlocked = 1;
+                //main.setScreen(new Unlocked_birds_page(main , 1 ,0 , 0));
+            }
+        });
+        bomb_button.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                bomb_unlocked = 1;
+            }
+        });
+        blues_button.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                blues_unlocked = 1;
+            }
+        });
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -131,18 +158,32 @@ public class Menu_page extends ScreenAdapter {
         camera.update();
         renderer.setView(camera);
         renderer.render();
-        if(x == 1){
+
+        if(bomb_unlocked == 1) {
             Bomb_unlocked.setView(camera);
             Bomb_unlocked.render();
         }
-        if(y==1){
+        if(chuck_unlocked == 1) {
             Chuck_unlocked.setView(camera);
             Chuck_unlocked.render();
         }
-        if(z == 1){
+        if(blues_unlocked == 1) {
             Blues_unlocked.setView(camera);
             Blues_unlocked.render();
         }
+
+//        if(x == 1){
+//            Bomb_unlocked.setView(camera);
+//            Bomb_unlocked.render();
+//        }
+//        if(y==1){
+//            Chuck_unlocked.setView(camera);
+//            Chuck_unlocked.render();
+//        }
+//        if(z == 1){
+//            Blues_unlocked.setView(camera);
+//            Blues_unlocked.render();
+//        }
         batch.begin();
         //batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        batch.draw(playButtonTexture, pbX, pbY, pW, pH);// Draw the button

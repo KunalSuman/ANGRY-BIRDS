@@ -71,7 +71,6 @@ public class Loading_page extends ScreenAdapter{
         }
         else {
             Batch.draw(Loading_page,0, 0);
-
             Batch.draw(Loading_text,Gdx.graphics.getWidth()*1.25f/3f,Gdx.graphics.getHeight()/8f,progressBar.getWidth()/4f,Loading_text.getHeight()/2f);
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
