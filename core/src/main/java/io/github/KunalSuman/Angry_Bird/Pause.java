@@ -54,15 +54,7 @@ public class Pause extends ScreenAdapter {
 
 
 
-        TextureRegionDrawable drawable_to_menue = new TextureRegionDrawable(new TextureRegion(to_menu));
-        ImageButton.ImageButtonStyle to_menuStyle = new ImageButton.ImageButtonStyle();
-        to_menuStyle.up = drawable_to_menue;
-        ImageButton to_menu = new ImageButton(to_menuStyle);
-        float menuX1 = (Gdx.graphics.getWidth() - to_menu.getWidth()) / 2;  // Center horizontally
-        float menuY1 = (Gdx.graphics.getHeight() - to_menu.getHeight()) / 2; // Center vertically
-        stage.addActor(to_menu);
-        to_menu.setSize(200,100);
-        to_menu.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 725);
+       ImageButton to_menu = Main.createButton(to_menu_texture,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,760);
 
         TextureRegionDrawable draweble_retry_button = new TextureRegionDrawable(new TextureRegion(retry_button));
         ImageButton.ImageButtonStyle retry_buttonStyle = new ImageButton.ImageButtonStyle();
