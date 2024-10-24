@@ -24,7 +24,7 @@ public class Main extends Game {
     private Texture Loading_page;
     private Texture Main_menu_page ;
     int page_number ;
-    public Pixmap pm;
+//    public Pixmap mouse_cursor;
 
 //    public ImageButton createButton(Texture Play_button, int x, int y, int w, int h) {
 //        TextureRegion PlaybuttonRegion = new TextureRegion(Play_button);
@@ -41,8 +41,7 @@ public class Main extends Game {
     public void create() {
         batch = new SpriteBatch();
         music = Gdx.audio.newMusic(Gdx.files.internal("title_theme.mp3"));
-        pm = new Pixmap(Gdx.files.internal("CURSORS_SHEET_1.png"));
-        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("CURSORS_SHEET_1.png")), 0, 0));
         setScreen(new Loading_page(this));
 
         page_number = 0;
@@ -69,6 +68,5 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
-        pm.dispose();
     }
 }
