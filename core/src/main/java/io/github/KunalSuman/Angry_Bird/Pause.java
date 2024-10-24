@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.*;
 
+import static io.github.KunalSuman.Angry_Bird.Button.createButton;
+
 public class Pause extends ScreenAdapter {
     public static Texture to_menu ;
     public static Texture retry_button;
@@ -54,92 +56,103 @@ public class Pause extends ScreenAdapter {
 
 
 
-        TextureRegionDrawable drawable_to_menue = new TextureRegionDrawable(new TextureRegion(to_menu));
-        ImageButton.ImageButtonStyle to_menuStyle = new ImageButton.ImageButtonStyle();
-        to_menuStyle.up = drawable_to_menue;
-        ImageButton to_menu = new ImageButton(to_menuStyle);
-        float menuX1 = (Gdx.graphics.getWidth() - to_menu.getWidth()) / 2;  // Center horizontally
-        float menuY1 = (Gdx.graphics.getHeight() - to_menu.getHeight()) / 2; // Center vertically
-        stage.addActor(to_menu);
-        to_menu.setSize(200,100);
-        to_menu.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 725);
+//        TextureRegionDrawable drawable_to_menue = new TextureRegionDrawable(new TextureRegion(to_menu));
+//        ImageButton.ImageButtonStyle to_menuStyle = new ImageButton.ImageButtonStyle();
+//        to_menuStyle.up = drawable_to_menue;
+//        ImageButton to_menu = new ImageButton(to_menuStyle);
+//        float menuX1 = (Gdx.graphics.getWidth() - to_menu.getWidth()) / 2;  // Center horizontally
+//        float menuY1 = (Gdx.graphics.getHeight() - to_menu.getHeight()) / 2; // Center vertically
+//        stage.addActor(to_menu);
+//        to_menu.setSize(200,100);
+//        to_menu.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 725);
 
-        TextureRegionDrawable draweble_retry_button = new TextureRegionDrawable(new TextureRegion(retry_button));
-        ImageButton.ImageButtonStyle retry_buttonStyle = new ImageButton.ImageButtonStyle();
-        retry_buttonStyle.up = draweble_retry_button;
-        ImageButton retry_button = new ImageButton(retry_buttonStyle);
-        float menuX2 = (Gdx.graphics.getWidth() - retry_button.getWidth()) / 2;  // Center horizontally
-        float menuY2 = (Gdx.graphics.getHeight() - retry_button.getHeight()) / 2; // Center vertically
-        stage.addActor(retry_button);
-        retry_button.setSize(200,100);
-        retry_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 625);
+//        TextureRegionDrawable draweble_retry_button = new TextureRegionDrawable(new TextureRegion(retry_button));
+//        ImageButton.ImageButtonStyle retry_buttonStyle = new ImageButton.ImageButtonStyle();
+//        retry_buttonStyle.up = draweble_retry_button;
+//        ImageButton retry_button = new ImageButton(retry_buttonStyle);
+//        float menuX2 = (Gdx.graphics.getWidth() - retry_button.getWidth()) / 2;  // Center horizontally
+//        float menuY2 = (Gdx.graphics.getHeight() - retry_button.getHeight()) / 2; // Center vertically
+//        stage.addActor(retry_button);
+//        retry_button.setSize(200,100);
+//        retry_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 625);
+//
+//        TextureRegionDrawable drawablequit_button = new TextureRegionDrawable(new TextureRegion(Save_quit));
+//        ImageButton.ImageButtonStyle Save_quitStyle = new ImageButton.ImageButtonStyle();
+//        Save_quitStyle.up = drawablequit_button;
+//        ImageButton Save_quit = new ImageButton(Save_quitStyle);
+//        float menuX3 = (Gdx.graphics.getWidth() - Save_quit.getWidth()) / 2;  // Center horizontally
+//        float menuY3 = (Gdx.graphics.getHeight() - Save_quit.getHeight()) / 2; // Center vertically
+//        stage.addActor(Save_quit);
+//        Save_quit.setSize(200,100);
+//        Save_quit.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 525);
+//
+//        TextureRegionDrawable draweble_quit_button = new TextureRegionDrawable(new TextureRegion(quit_button));
+//        ImageButton.ImageButtonStyle quit_buttonStyle = new ImageButton.ImageButtonStyle();
+//        quit_buttonStyle.up = draweble_quit_button;
+//        ImageButton quit_button = new ImageButton(quit_buttonStyle);
+//        float menuX4 = (Gdx.graphics.getWidth() - quit_button.getWidth()) / 2;  // Center horizontally
+//        float menuY4 = (Gdx.graphics.getHeight() - quit_button.getHeight()) / 2; // Center vertically
+//        stage.addActor(quit_button);
+//        quit_button.setSize(200,100);
+//        quit_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 425 );
 
-        TextureRegionDrawable drawablequit_button = new TextureRegionDrawable(new TextureRegion(Save_quit));
-        ImageButton.ImageButtonStyle Save_quitStyle = new ImageButton.ImageButtonStyle();
-        Save_quitStyle.up = drawablequit_button;
-        ImageButton Save_quit = new ImageButton(Save_quitStyle);
-        float menuX3 = (Gdx.graphics.getWidth() - Save_quit.getWidth()) / 2;  // Center horizontally
-        float menuY3 = (Gdx.graphics.getHeight() - Save_quit.getHeight()) / 2; // Center vertically
-        stage.addActor(Save_quit);
-        Save_quit.setSize(200,100);
-        Save_quit.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 525);
+//        TextureRegionDrawable drawable_settings = new TextureRegionDrawable(new TextureRegion(settings));
+//        ImageButton.ImageButtonStyle settingsStyle = new ImageButton.ImageButtonStyle();
+//        settingsStyle.up = drawable_settings;
+//        ImageButton settings = new ImageButton(settingsStyle);
+//        float menuX5 = (Gdx.graphics.getWidth() - settings.getWidth()) / 2;  // Center horizontally
+//        float menuY5 = (Gdx.graphics.getHeight() - settings.getHeight()) / 2; // Center vertically
+//        stage.addActor(settings);
+//        settings.setSize(200,100);
+//        settings.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 325);
 
-        TextureRegionDrawable draweble_quit_button = new TextureRegionDrawable(new TextureRegion(quit_button));
-        ImageButton.ImageButtonStyle quit_buttonStyle = new ImageButton.ImageButtonStyle();
-        quit_buttonStyle.up = draweble_quit_button;
-        ImageButton quit_button = new ImageButton(quit_buttonStyle);
-        float menuX4 = (Gdx.graphics.getWidth() - quit_button.getWidth()) / 2;  // Center horizontally
-        float menuY4 = (Gdx.graphics.getHeight() - quit_button.getHeight()) / 2; // Center vertically
-        stage.addActor(quit_button);
-        quit_button.setSize(200,100);
-        quit_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 425 );
+//        TextureRegionDrawable drawable_return = new TextureRegionDrawable(new TextureRegion(return_button));
+//        ImageButton.ImageButtonStyle return_buttonStyle = new ImageButton.ImageButtonStyle();
+//        return_buttonStyle.up = drawable_return;
+//        ImageButton return_button = new ImageButton(return_buttonStyle);
+//        float menuX6 = (Gdx.graphics.getWidth() - return_button.getWidth()) / 2;  // Center horizontally
+//        float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
+//        stage.addActor(return_button);
+//        return_button.setSize(200,100);
+//        return_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()*0.85f) / 2f);
+        ImageButton to_menu_val = Button.createButton(to_menu,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,760);
 
-        TextureRegionDrawable drawable_settings = new TextureRegionDrawable(new TextureRegion(settings));
-        ImageButton.ImageButtonStyle settingsStyle = new ImageButton.ImageButtonStyle();
-        settingsStyle.up = drawable_settings;
-        ImageButton settings = new ImageButton(settingsStyle);
-        float menuX5 = (Gdx.graphics.getWidth() - settings.getWidth()) / 2;  // Center horizontally
-        float menuY5 = (Gdx.graphics.getHeight() - settings.getHeight()) / 2; // Center vertically
-        stage.addActor(settings);
-        settings.setSize(200,100);
-        settings.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 325);
+        ImageButton retry_button_val = Button.createButton(retry_button,stage,300,150,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,625);
 
-        TextureRegionDrawable drawable_return = new TextureRegionDrawable(new TextureRegion(return_button));
-        ImageButton.ImageButtonStyle return_buttonStyle = new ImageButton.ImageButtonStyle();
-        return_buttonStyle.up = drawable_return;
-        ImageButton return_button = new ImageButton(return_buttonStyle);
-        float menuX6 = (Gdx.graphics.getWidth() - return_button.getWidth()) / 2;  // Center horizontally
-        float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
-        stage.addActor(return_button);
-        return_button.setSize(200,100);
-        return_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()*0.85f) / 2f);
-        System.out.println("hello");
+        ImageButton Save_quit_val = Button.createButton(Save_quit,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,500);
 
-        settings.addListener(new ClickListener() {
+        ImageButton quit_button_val = Button.createButton(quit_button,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,370);
+
+        ImageButton settings_val = Button.createButton(settings,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,220);
+
+        ImageButton return_button_val = Button.createButton(return_button,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,60);
+        //System.out.println("hello");
+
+        settings_val.addListener(new ClickListener() {
            public void clicked(InputEvent event, float x, float y) {
                main.setScreen(new Settings_page(main , renderer));
            }
         });
 
-        quit_button.addListener(new ClickListener() {
+        quit_button_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new Quit(main , renderer));
             }
         });
 
-        to_menu.addListener(new ClickListener() {
+        to_menu_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new Menu_page(main));
             }
         });
 
-        Save_quit.addListener(new ClickListener() {
+        Save_quit_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new Save_quit(main , return_number ,0, T1));
             }
         });
 
-        retry_button.addListener(new ClickListener() {
+        retry_button_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if(return_number == 1){
                     main.setScreen(new Level1(main));
@@ -159,7 +172,7 @@ public class Pause extends ScreenAdapter {
             }
         });
 
-        return_button.addListener(new ClickListener(){
+        return_button_val.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("done");
