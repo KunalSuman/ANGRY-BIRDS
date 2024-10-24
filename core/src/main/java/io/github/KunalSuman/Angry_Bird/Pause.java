@@ -54,42 +54,19 @@ public class Pause extends ScreenAdapter {
 
 
 
-       ImageButton to_menu = Main.createButton(to_menu_texture,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,760);
+       
+        ImageButton to_menu = Main.createButton(to_menu_texture,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,760);
 
         ImageButton retry_button = Main.createButton(retry_button_texture,stage,300,150,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,625);
 
         ImageButton Save_quit = Main.createButton(Save_quit_texture,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,500);
 
-        TextureRegionDrawable draweble_quit_button = new TextureRegionDrawable(new TextureRegion(quit_button));
-        ImageButton.ImageButtonStyle quit_buttonStyle = new ImageButton.ImageButtonStyle();
-        quit_buttonStyle.up = draweble_quit_button;
-        ImageButton quit_button = new ImageButton(quit_buttonStyle);
-        float menuX4 = (Gdx.graphics.getWidth() - quit_button.getWidth()) / 2;  // Center horizontally
-        float menuY4 = (Gdx.graphics.getHeight() - quit_button.getHeight()) / 2; // Center vertically
-        stage.addActor(quit_button);
-        quit_button.setSize(200,100);
-        quit_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 425 );
+        ImageButton quit_button = Main.createButton(quit_button_texture,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,370);
 
-        TextureRegionDrawable drawable_settings = new TextureRegionDrawable(new TextureRegion(settings));
-        ImageButton.ImageButtonStyle settingsStyle = new ImageButton.ImageButtonStyle();
-        settingsStyle.up = drawable_settings;
-        ImageButton settings = new ImageButton(settingsStyle);
-        float menuX5 = (Gdx.graphics.getWidth() - settings.getWidth()) / 2;  // Center horizontally
-        float menuY5 = (Gdx.graphics.getHeight() - settings.getHeight()) / 2; // Center vertically
-        stage.addActor(settings);
-        settings.setSize(200,100);
-        settings.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, 325);
+        ImageButton settings = Main.createButton(settings_texture,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,220);
 
-        TextureRegionDrawable drawable_return = new TextureRegionDrawable(new TextureRegion(return_button));
-        ImageButton.ImageButtonStyle return_buttonStyle = new ImageButton.ImageButtonStyle();
-        return_buttonStyle.up = drawable_return;
-        ImageButton return_button = new ImageButton(return_buttonStyle);
-        float menuX6 = (Gdx.graphics.getWidth() - return_button.getWidth()) / 2;  // Center horizontally
-        float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
-        stage.addActor(return_button);
-        return_button.setSize(200,100);
-        return_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()*0.85f) / 2f);
-        System.out.println("hello");
+        ImageButton return_button = Main.createButton(return_button_texture,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,60);
+
 
         settings.addListener(new ClickListener() {
            public void clicked(InputEvent event, float x, float y) {
