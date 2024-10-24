@@ -22,9 +22,13 @@ public class Loading_page extends ScreenAdapter{
     private TextureRegionDrawable textureProgressBar;
     private ProgressBar progressBar;
     public Texture Loading_text ;
+    public Texture progresabarsa ;
+    public Texture Loadingbar1 ;
+    public Texture Loadingbar2 ;
     public Loading_page(Main main) {
         Loading_page = new Texture("Loading_screen.jpg");
         Loading_text = new Texture("loading_text.png");
+        progresabarsa = new Texture("Loadingbar1.png");
         this.Batch = new SpriteBatch();
         this.main = main;
         x = 0;
@@ -44,31 +48,31 @@ public class Loading_page extends ScreenAdapter{
         assetManager.load("SETTINGS.png", Texture.class);
         assetManager.load("SAVEandEXIT.png", Texture.class);
         assetManager.load("Loading_screen.jpg", Texture.class);
-
-        TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Loadingbar1.png"))));
-        TextureRegionDrawable fillDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("loadingbar2.png"))));
+        Loadingbar1 = new Texture("Loadingbar1.png");
+        Loadingbar2 = new Texture("loadingbar2.png");
+        TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(Loadingbar1));
+        TextureRegionDrawable fillDrawable = new TextureRegionDrawable(new TextureRegion(Loadingbar2));
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle();
         progressBarStyle.background = backgroundDrawable;
         progressBarStyle.knobBefore = fillDrawable;
         progressBar = new ProgressBar(0f, 1f, 0.01f, false, progressBarStyle);  // false = horizontal progress bar
-        progressBar.setWidth(Gdx.graphics.getWidth() * 0.8f);
-        progressBar.setHeight(Gdx.graphics.getHeight()*(0.009f));// Set the size of the progress bar
-        progressBar.setPosition(Gdx.graphics.getWidth() / 2f - progressBar.getWidth() / 2f, (Gdx.graphics.getHeight() / 2f - Loading_page.getHeight()*0.2) / 4f );  // Center it horizontally
-
+        progressBar.setWidth(Gdx.graphics.getWidth());
+        progressBar.setHeight(Gdx.graphics.getHeight()/8f);// Set the size of the progress bar
+        progressBar.setPosition(Gdx.graphics.getWidth()/48f , Gdx.graphics.getHeight()/3.25f);  // Center it horizontally
         stage.addActor(progressBar);
-    }
-    public void show() {
-
     }
     public void render(float delta) {
         Batch.begin();
         float progress =assetManager.getProgress();
         progressBar.setValue(progress);
+
         if(x==1){
             main.setScreen(new Menu_page(main));
         }
         else {
-            Batch.draw(Loading_page, 0, 0);
+            Batch.draw(Loading_page,0, 0);
+
+            Batch.draw(Loading_text,Gdx.graphics.getWidth()*1.25f/3f,Gdx.graphics.getHeight()/8f,progressBar.getWidth()/4f,Loading_text.getHeight()/2f);
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             x =1 ;
@@ -76,9 +80,9 @@ public class Loading_page extends ScreenAdapter{
         if (assetManager.update() && progress == 1f) {
             main.setScreen(new Menu_page(main));
         }
-        Batch.end();
         stage.act(delta);
         stage.draw();
+        Batch.end();
     }
 
 }
