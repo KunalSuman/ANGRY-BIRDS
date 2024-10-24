@@ -21,8 +21,10 @@ public class Loading_page extends ScreenAdapter{
     private Stage stage;
     private TextureRegionDrawable textureProgressBar;
     private ProgressBar progressBar;
+    public Texture Loading_text ;
     public Loading_page(Main main) {
         Loading_page = new Texture("Loading_screen.jpg");
+        Loading_text = new Texture("loading_text.png");
         this.Batch = new SpriteBatch();
         this.main = main;
         x = 0;
@@ -42,16 +44,16 @@ public class Loading_page extends ScreenAdapter{
         assetManager.load("SETTINGS.png", Texture.class);
         assetManager.load("SAVEandEXIT.png", Texture.class);
         assetManager.load("Loading_screen.jpg", Texture.class);
-        
-        TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("backButton.png"))));
-        TextureRegionDrawable fillDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("pauseButton.png"))));
+
+        TextureRegionDrawable backgroundDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Loadingbar1.png"))));
+        TextureRegionDrawable fillDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("loadingbar2.png"))));
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle();
         progressBarStyle.background = backgroundDrawable;
         progressBarStyle.knobBefore = fillDrawable;
         progressBar = new ProgressBar(0f, 1f, 0.01f, false, progressBarStyle);  // false = horizontal progress bar
         progressBar.setWidth(Gdx.graphics.getWidth() * 0.8f);
         progressBar.setHeight(Gdx.graphics.getHeight()*(0.009f));// Set the size of the progress bar
-        progressBar.setPosition(Gdx.graphics.getWidth() / 2f - progressBar.getWidth() / 2f, Gdx.graphics.getHeight() / 4f - progressBar.getHeight() / 2f);  // Center it horizontally
+        progressBar.setPosition(Gdx.graphics.getWidth() / 2f - progressBar.getWidth() / 2f, (Gdx.graphics.getHeight() / 2f - Loading_page.getHeight()*0.2) / 4f );  // Center it horizontally
 
         stage.addActor(progressBar);
     }
