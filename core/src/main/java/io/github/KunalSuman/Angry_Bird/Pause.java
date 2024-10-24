@@ -43,8 +43,8 @@ public class Pause extends ScreenAdapter {
         retry_button_texture = new Texture("Restart_button.png");
         Save_quit_texture = new Texture("SaveandExit_button.png");
         quit_button_texture = new Texture("Quit_button.png");
-        settings = new Texture("Settings_button_text.png");
-        return_button = new Texture("Return.png");
+        settings_texture = new Texture("Settings_button_text.png");
+        return_button_texture = new Texture("Return.png");
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
