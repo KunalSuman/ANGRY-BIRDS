@@ -109,6 +109,9 @@ public class Completed_Level extends ScreenAdapter {
         background.dispose();
         next_Level_texture.dispose();
         batch.dispose();
+        assetManager.dispose();
+        next_Level_texture.dispose();
+        backButtonTexture.dispose();
     }
 
 }
