@@ -27,4 +27,9 @@ public class Quit extends ScreenAdapter {
         renderer.render();
 
     }
+    public void dispose(){
+        renderer.dispose();
+        T1.dispose();
+        
+    }
 }
