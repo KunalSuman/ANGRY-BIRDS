@@ -84,5 +84,15 @@ public class Loading_page extends ScreenAdapter{
         stage.draw();
         Batch.end();
     }
+    public void dispose() {
+        Batch.dispose();
+        assetManager.dispose();
+        stage.dispose();
+        Loading_page.dispose();
+        Loading_text.dispose();
+        progresabarsa.dispose();
+        Loadingbar1.dispose();
+        Loadingbar2.dispose();
+    }
 
 }
