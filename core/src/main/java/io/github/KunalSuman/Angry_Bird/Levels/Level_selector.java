@@ -59,7 +59,6 @@ public class Level_selector extends ScreenAdapter {
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL_SELECTOR.tmx"));
         camera.setToOrtho(false, 1920, 1080);
 
-
         TextureRegionDrawable drawable_load1 = new TextureRegionDrawable(new TextureRegion(Load_button1));
         ImageButton.ImageButtonStyle Load_button1Style = new ImageButton.ImageButtonStyle();
         Load_button1Style.up = drawable_load1;
@@ -78,7 +77,7 @@ public class Level_selector extends ScreenAdapter {
 
         Load_button1.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Level3(main));
+                main.setScreen(new Level4(main));
             }
         });
         Load_button2.addListener(new ClickListener() {
@@ -128,7 +127,7 @@ public class Level_selector extends ScreenAdapter {
         stage.act(delta);
         stage.draw();
         ///batch.draw(levels_page,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        batch.draw(backButtonTexture, bbX,0, bbW, bbH);
+        batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
         batch.end();
 
 
@@ -139,7 +138,7 @@ public class Level_selector extends ScreenAdapter {
         bbW = 100;
         bbH = 100;
         bbX= 0;
-        bbY = Gdx.graphics.getHeight()-backButtonTexture.getHeight();
+        bbY = 0;
         System.out.println((int)(Gdx.graphics.getWidth()/19.2));
         System.out.println((int)(Gdx.graphics.getHeight()/1.96363636364));
         l1X=(int)(Gdx.graphics.getWidth()/26.8);l1Y=(int)(Gdx.graphics.getHeight()/1.86363636364);l1W=100;l1H=100;
