@@ -93,4 +93,10 @@ public class Save_quit extends ScreenAdapter {
         stage.draw();
 
     }
+    public void dispose(){
+        to_menu.dispose();
+        Return.dispose();
+        stage.dispose();
+        pause_page.dispose();
+    }
 }
