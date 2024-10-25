@@ -121,6 +121,9 @@ public class Level4 extends ScreenAdapter {
         retryButtons.setSize(260,120);
         retryButtons.setPosition(700,175);
 
+
+
+
         TextureRegionDrawable To_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
         ImageButton.ImageButtonStyle Menu_button = new ImageButton.ImageButtonStyle();
         Menu_button.up = To_menu;
@@ -136,6 +139,21 @@ public class Level4 extends ScreenAdapter {
         winStage.addActor(Nextbutton);
         Nextbutton.setSize(400,180);
         Nextbutton.setPosition(1000,70);
+
+        retryButtons.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Level4((main)));
+            }
+        });
+
+        lostMenubutton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Level_selector(main));
+            }
+        });
+
 
         pauseButton.addListener(new ClickListener(){
             @Override

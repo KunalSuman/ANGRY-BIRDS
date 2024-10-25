@@ -91,7 +91,7 @@ public class Level_selector extends ScreenAdapter {
 
         ImageButton back_button = Button.createButton(ts,stage,100,100,0 , 0);
 
-        stage.addListener(new ClickListener() {
+        back_button.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new Menu_page(main));
             }
@@ -157,5 +157,5 @@ public class Level_selector extends ScreenAdapter {
         l3X=(int)(Gdx.graphics.getWidth()/3.49090909091);l3Y=(int)(Gdx.graphics.getHeight()/2.16);l3W=100;l3H=100;
         l4X=(int)(Gdx.graphics.getWidth()/2.72631578947);l4Y=(int)(Gdx.graphics.getHeight()/2.84210526316);l4W=100;l4H=100;
         l5X=(int)(Gdx.graphics.getWidth()/2.13333333333);l5Y=(int)(Gdx.graphics.getHeight()/1.74210526316);l5W=100;l5H=100;
-}
+    }
 }
