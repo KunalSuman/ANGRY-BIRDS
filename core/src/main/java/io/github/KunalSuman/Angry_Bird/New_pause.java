@@ -95,4 +95,14 @@ public class New_pause {
         settings.setPosition(0, 0);
         return fpauseButton ;
     }
+    public void dispose(){
+        stage.dispose();
+        batch.dispose();
+        T1.dispose();
+        to_menu.dispose();
+        retry_button.dispose();
+        Save_quit.dispose();
+        quit_button.dispose();
+        settings.dispose();
+    }
 }
