@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import io.github.KunalSuman.Angry_Bird.Button;
 import io.github.KunalSuman.Angry_Bird.Main;
 import io.github.KunalSuman.Angry_Bird.Menu_page;
 import io.github.KunalSuman.Angry_Bird.Settings_page;
@@ -44,6 +45,7 @@ public class Level_selector extends ScreenAdapter {
     public TextButton b2 ;
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer renderer ;
+    public Texture ts ;
 
     public Level_selector(Main main) {
         this.main = main;
@@ -54,6 +56,7 @@ public class Level_selector extends ScreenAdapter {
         backButtonTexture = new Texture("backButton.png");
         Load_button1 = new Texture("Load_button.png");
         Load_button2 = new Texture("Load_button.png");
+        ts = new Texture("backButton.png");
         this.t1 = new Table();
         camera = new OrthographicCamera();
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL_SELECTOR.tmx"));
@@ -86,13 +89,21 @@ public class Level_selector extends ScreenAdapter {
             }
         });
 
+        ImageButton back_button = Button.createButton(ts,stage,100,100,0 , 0);
+
+        stage.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Menu_page(main));
+            }
+        });
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 float adjustedY = Gdx.graphics.getHeight() - y;
-                if (x>=bbX && x<=bbX+bbW && adjustedY>=bbY && adjustedY<=bbY+bbH){
-                    main.setScreen(new Menu_page(main));
-                }else if (x>=l1X && x<=l1X+l1W && adjustedY>=l1Y && adjustedY<=l1Y+l1H){
+//                if (x>=bbX && x<=bbX+bbW && adjustedY>=bbY && adjustedY<=bbY+bbH){
+//                    main.setScreen(new Menu_page(main));
+//                }
+              if (x>=l1X && x<=l1X+l1W && adjustedY>=l1Y && adjustedY<=l1Y+l1H){
                     main.setScreen(new Level1(main));
                 }else if (x>=l2X && x<=l2X+l2W && adjustedY>=l2Y && adjustedY<=l2Y+l2H){
                     main.setScreen(new Level2(main));

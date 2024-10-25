@@ -130,13 +130,13 @@ public class Pause extends ScreenAdapter {
 
         settings_val.addListener(new ClickListener() {
            public void clicked(InputEvent event, float x, float y) {
-               main.setScreen(new Settings_page(main , renderer));
+               main.setScreen(new Settings_page(main , renderer , 1 , T1 ,return_number));
            }
         });
 
         quit_button_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Quit(main , renderer));
+                main.setScreen(new Quit(main , renderer , T1 , return_number));
             }
         });
 

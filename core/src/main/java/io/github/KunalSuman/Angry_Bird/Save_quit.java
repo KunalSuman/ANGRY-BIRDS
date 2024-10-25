@@ -42,7 +42,7 @@ public class Save_quit extends ScreenAdapter {
         float menuY1 = (Gdx.graphics.getHeight() - to_menu.getHeight()) / 2; // Center vertically
         stage.addActor(to_menu);
         to_menu.setSize(200,100);
-        to_menu.setPosition((Gdx.graphics.getWidth() - pause_page.getWidth()*0.42f) / 2f, 725);
+        to_menu.setPosition((Gdx.graphics.getWidth() - pause_page.getWidth()*0.42f) / 1.15f, 300);
 
         TextureRegionDrawable drawable_Return = new TextureRegionDrawable(new TextureRegion(Return));
         ImageButton.ImageButtonStyle ReturnStyle = new ImageButton.ImageButtonStyle();
@@ -50,7 +50,7 @@ public class Save_quit extends ScreenAdapter {
         ImageButton Return = new ImageButton(ReturnStyle);
         stage.addActor(Return);
         Return.setSize(200,100);
-        Return.setPosition((Gdx.graphics.getWidth() - pause_page.getWidth()*0.2f) / 2f, 725);
+        Return.setPosition((Gdx.graphics.getWidth() - pause_page.getWidth()*0.2f) / 2.1f, 300);
 
 
         to_menu.addListener(new ClickListener() {
@@ -61,7 +61,7 @@ public class Save_quit extends ScreenAdapter {
 
         Return.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-               // main.setScreen(new Pause(main,));
+                main.setScreen(new Pause(main,T1,level_return ));
             }
         });
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -34,7 +35,8 @@ public class Settings_page extends ScreenAdapter {
     public Texture return_button ;
     public Texture Quit_button ;
     public Texture settings_button;
-    public Settings_page(Main main , OrthogonalTiledMapRenderer renderer2) {
+
+    public Settings_page(Main main , OrthogonalTiledMapRenderer renderer2 , int return_page , TiledMap T1, int return_number ) {
         this.renderer2 = renderer2;
         this.main = main;
         this.stage = new Stage(new ScreenViewport());
@@ -54,7 +56,7 @@ public class Settings_page extends ScreenAdapter {
         float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
         stage.addActor(return_button);
         return_button.setSize(400,200);
-        return_button.setPosition(((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f), (Gdx.graphics.getHeight() - settings_button.getHeight()*0.85f) / 2f);
+        return_button.setPosition(((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f), (Gdx.graphics.getHeight() - settings_button.getHeight()*0.85f) / 0.7f);
 
         TextureRegionDrawable drawable_quit = new TextureRegionDrawable(new TextureRegion(Quit_button));
         ImageButton.ImageButtonStyle Quit_buttonStyle = new ImageButton.ImageButtonStyle();
@@ -66,7 +68,13 @@ public class Settings_page extends ScreenAdapter {
 
         return_button.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Menu_page(main));
+                if(return_page == 0){
+                    main.setScreen(new Menu_page(main));
+                }
+                if(return_page == 1){
+                    main.setScreen(new Pause(main , T1 ,return_number ));
+                }
+
             }
         });
         Quit_button.addListener(new ClickListener() {
