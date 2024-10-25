@@ -48,7 +48,6 @@ public class Main extends Game {
         music.setVolume(1f);
         music.setLooping(true);
         music.play();
-
     }
 
     @Override

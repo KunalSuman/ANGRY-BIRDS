@@ -64,16 +64,16 @@ public class Level_selector extends ScreenAdapter {
         Load_button1Style.up = drawable_load1;
         ImageButton Load_button1 = new ImageButton(Load_button1Style);
         stage.addActor(Load_button1);
-        Load_button1.setSize(200,100);
-        Load_button1.setPosition((Gdx.graphics.getWidth() - Load_button1.getWidth()*0.05f), (Gdx.graphics.getHeight() - Load_button1.getHeight()*0.85f) / 2f);
+        Load_button1.setSize(300,132);
+        Load_button1.setPosition((Gdx.graphics.getWidth()*0.72f - Load_button1.getWidth()*0.05f), (Gdx.graphics.getHeight()/0.94f - Load_button1.getHeight()*0.69f) / 2f);
 
         TextureRegionDrawable drawable_load2 = new TextureRegionDrawable(new TextureRegion(Load_button2));
         ImageButton.ImageButtonStyle Load_button2Style = new ImageButton.ImageButtonStyle();
         Load_button2Style.up = drawable_load2;
         ImageButton Load_button2 = new ImageButton(Load_button2Style);
         stage.addActor(Load_button2);
-        Load_button2.setSize(200,100);
-        Load_button2.setPosition((Gdx.graphics.getWidth() - Load_button1.getWidth()*.005f) / 2f, (Gdx.graphics.getHeight() - Load_button1.getHeight()*1.85f) / 2f);
+        Load_button2.setSize(300,132);
+        Load_button2.setPosition((Gdx.graphics.getWidth()*0.72f - Load_button2.getWidth()*0.05f), Gdx.graphics.getHeight()*0.10f);
 
         Load_button1.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

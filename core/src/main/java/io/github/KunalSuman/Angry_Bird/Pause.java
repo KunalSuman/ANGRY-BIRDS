@@ -213,6 +213,11 @@ public class Pause extends ScreenAdapter {
         stage.draw();
     }
     public void dispose(){
+        batch.dispose();
         stage.dispose();
+        to_menu.dispose();
+        retry_button.dispose();
+        Save_quit.dispose();
+        return_button.dispose();
     }
 }
