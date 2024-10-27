@@ -40,14 +40,22 @@ public class Main extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        music = Gdx.audio.newMusic(Gdx.files.internal("title_theme.mp3"));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("CURSORS_SHEET_1.png")), 0, 0));
         setScreen(new Loading_page(this));
 
+        music = Gdx.audio.newMusic(Gdx.files.internal("Background_music.mp3"));
         page_number = 0;
-        music.setVolume(1f);
-        music.setLooping(true);
-        music.play();
+        if (music != null) {
+            music.setVolume(1f);
+            music.setLooping(true);
+            music.play();
+            System.out.println("Music object");
+        } else {
+            System.out.println("Music object is null");
+        }
+//        music.setVolume(1f);
+//        music.setLooping(true);
+//        music.play();
     }
 
     @Override
