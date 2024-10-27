@@ -19,11 +19,16 @@ Refrences  =>   Brent Aureli Codes       : [Youtube series](https://www.youtube.
                 Change Cursor            : [Game Development](https://gamedev.stackexchange.com/questions/86509/how-can-i-change-the-appearance-of-the-mouse-cursor-in-libgdx)
                 Touch points             : [Official Documentation](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
                 Loading bar              : [Loading bar](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
-                Adobe Premier && pixlr   : for textures creation and editing images 
                 AssetManager             : [asset manager](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
                 Build.sh config          : [Gradle](https://docs.gradle.org/current/userguide/gradle_wrapper_basics.html)
                 SpriteBatch TextureRegion: [LibGDX Documentation](https://libgdx.com/wiki/graphics/2d/spritebatch-textureregions-and-sprites)
+                Background Music         : [LibGDX Documentation](https://libgdx.com/wiki/audio/streaming-music)
+                OrthographicCamera       : [GameFromScratch.com](https://gamefromscratch.com/libgdx-tutorial-part-16-cameras/)
+                TiledMaploader           : [GameFromScratch.com](https://gamefromscratch.com/libgdx-tutorial-11-tiled-maps-part-1-simple-orthogonal-maps/)
 
+Resources =>    Adobe Premier && pixlr   : for textures creation and editing images
+                AngryBirds apk file      : for assets and background music 
+                AngryBirds Font          : [AngryBirdfont](https://www.dafont.com/angrybirds.font)
 
 Our Final Directory at the end of this assignment
     └── Angry_Bird
