@@ -5,7 +5,7 @@ the Lwjgl3Launcher file in lwjgl3 directory.
 To quit the game press "ESC" 
 
 Press "ENTER" to simulate completing a level in the levels page and "SPACE" to simulate losing a level 
-Rest are button which will guide you through the application 
+Rest, the button which will guide you through the application 
 
 LUCID = [UML && USE CASE](https://lucid.app/lucidchart/9cdbd809-feea-4b26-8d30-dec170930028/edit?invitationId=inv_56c42be7-6ee3-4b18-adf8-8ea852fdbb99&page=0_0#) 
 
