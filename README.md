@@ -1,5 +1,11 @@
-To run the program type ./build.sh in terminal [UBUNTU OR OTHER LINUX DISTRO] in the Angry_Bird folder and program should start running
+To run the program type ./build.sh in terminal [UBUNTU OR OTHER LINUX DISTRO] in the Angry_Bird folder and program should start running  
+if it throws error try 'chmod +x build.sh' if error still exists type 'chmod +x gradlew'. If error still persists open it in **IDEA** and run 
+the Lwjgl3Launcher file in lwjgl3 directory. 
 
+To quit the game press "ESC" 
+
+Press "ENTER" to simulate completing a level in the levels page and "SPACE" to simulate losing a level 
+Rest are button which will guide you through the application 
 
 
 Refrences  =>   Brent Aureli Codes       : [Youtube series](https://www.youtube.com/watch?v=a8MPxzkwBwo&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt)  
@@ -14,47 +20,48 @@ Refrences  =>   Brent Aureli Codes       : [Youtube series](https://www.youtube.
                 Loading bar              : [Loading bar](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
                 Adobe Premier && pixlr   : for textures creation and editing images 
                 AssetManager             : [asset manager](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
-            
+                Build.sh config          : [Gradle](https://docs.gradle.org/current/userguide/gradle_wrapper_basics.html)
+                SpriteBatch TextureRegion: [LibGDX Documentation](https://libgdx.com/wiki/graphics/2d/spritebatch-textureregions-and-sprites)
 
 
-
-└── Angry_Bird
-├── Birds
-│    ├── Birds.java
-│    ├── Birds_schema.java
-│    ├── Black_bird.java
-│    ├── Blue_bird.java
-│    ├── Red_bird.java
-│    └── Yellow_bird.java
-│
-├── Button.java
-├── Catapult.java
-├── Completed_Level.java
-│
-├── Levels
-│    ├── Level1.java
-│    ├── Level2.java
-│    ├── Level3.java
-│    ├── Level4.java
-│    ├── Level5.java
-│    └── Level_selector.java
-│
-├── Loading_page.java
-├── LostLevel.java
-├── Main.java
-├── Menu_page.java
-├── New_pause.java
-│
-├── PIGS
-│    ├── Helmet_pig.java
-│    ├── King_pig.java
-│    ├── Old_pig.java
-│    ├── Pigs.java
-│    ├── Pigs_schema.java
-│    └── Small_pig.java
-│
-├── Pause.java
-├── Quit.java
-├── Save_quit.java
-├── Settings_page.java
-└── Unlocked_birds_page.java
+Our Final Directory at the end of this assignment
+    └── Angry_Bird
+    ├── Birds
+    │    ├── Birds.java
+    │    ├── Birds_schema.java
+    │    ├── Black_bird.java
+    │    ├── Blue_bird.java
+    │    ├── Red_bird.java
+    │    └── Yellow_bird.java
+    │
+    ├── Button.java
+    ├── Catapult.java
+    ├── Completed_Level.java
+    │
+    ├── Levels
+    │    ├── Level1.java
+    │    ├── Level2.java
+    │    ├── Level3.java
+    │    ├── Level4.java
+    │    ├── Level5.java
+    │    └── Level_selector.java
+    │
+    ├── Loading_page.java
+    ├── LostLevel.java
+    ├── Main.java
+    ├── Menu_page.java
+    ├── New_pause.java
+    │
+    ├── PIGS
+    │    ├── Helmet_pig.java
+    │    ├── King_pig.java
+    │    ├── Old_pig.java
+    │    ├── Pigs.java
+    │    ├── Pigs_schema.java
+    │    └── Small_pig.java
+    │
+    ├── Pause.java
+    ├── Quit.java
+    ├── Save_quit.java
+    ├── Settings_page.java
+    └── Unlocked_birds_page.java
