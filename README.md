@@ -1,33 +1,60 @@
-# Angry_Bird
+To run the program type ./build.sh in terminal [UBUNTU OR OTHER LINUX DISTRO] in the Angry_Bird folder and program should start running
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
 
-## Platforms
+Refrences  =>   Brent Aureli Codes       : [Youtube series](https://www.youtube.com/watch?v=a8MPxzkwBwo&list=PLZm85UZQLd2SXQzsF-a0-pPF6IWDDdrXt)  
+                Philip Mod Dev           : [Youtube](https://www.youtube.com/watch?v=9UWEz5kf8Rs)               
+                Image code button        : [stacks overflow](https://stackoverflow.com/questions/55731889/how-to-make-imagebutton-look-pressed-in-libgdx )
+                Sample Project 1         : [Github](https://github.com/libgdx/libgdx-demo-superjumper) 
+                Sample Project 2         : [Github](https://github.com/LonamiWebs/Klooni1010)
+                Senior Project Tank Star : [Github](https://github.com/DhvanilSheth/Tank-Stars-Game)
+                Tiled Tutorial           : [Youtube](https://www.youtube.com/watch?v=IHmF_bRpOAE) 
+                Change Cursor            : [Game Development](https://gamedev.stackexchange.com/questions/86509/how-can-i-change-the-appearance-of-the-mouse-cursor-in-libgdx)
+                Touch points             : [Official Documentation](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
+                Loading bar              : [Loading bar](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
+                Adobe Premier && pixlr   : for textures creation and editing images 
+                AssetManager             : [asset manager](https://libgdx.com/wiki/graphics/2d/scene2d/scene2d)
+            
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
 
-## Gradle
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
-
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
-
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+└── Angry_Bird
+├── Birds
+│    ├── Birds.java
+│    ├── Birds_schema.java
+│    ├── Black_bird.java
+│    ├── Blue_bird.java
+│    ├── Red_bird.java
+│    └── Yellow_bird.java
+│
+├── Button.java
+├── Catapult.java
+├── Completed_Level.java
+│
+├── Levels
+│    ├── Level1.java
+│    ├── Level2.java
+│    ├── Level3.java
+│    ├── Level4.java
+│    ├── Level5.java
+│    └── Level_selector.java
+│
+├── Loading_page.java
+├── LostLevel.java
+├── Main.java
+├── Menu_page.java
+├── New_pause.java
+│
+├── PIGS
+│    ├── Helmet_pig.java
+│    ├── King_pig.java
+│    ├── Old_pig.java
+│    ├── Pigs.java
+│    ├── Pigs_schema.java
+│    └── Small_pig.java
+│
+├── Pause.java
+├── Quit.java
+├── Save_quit.java
+├── Settings_page.java
+└── Unlocked_birds_page.java
