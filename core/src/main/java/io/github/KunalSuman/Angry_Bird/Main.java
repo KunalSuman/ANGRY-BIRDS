@@ -45,14 +45,9 @@ public class Main extends Game {
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Background_music.mp3"));
         page_number = 0;
-        if (music != null) {
-            music.setVolume(1f);
-            music.setLooping(true);
-            music.play();
-            System.out.println("Music object");
-        } else {
-            System.out.println("Music object is null");
-        }
+        music.setVolume(1f);
+        music.setLooping(true);
+        music.play();
 //        music.setVolume(1f);
 //        music.setLooping(true);
 //        music.play();
