@@ -7,9 +7,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -17,6 +25,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.*;
+
+import java.awt.*;
 
 public class Level1 extends ScreenAdapter {
     public Main main ;
@@ -45,6 +55,15 @@ public class Level1 extends ScreenAdapter {
     public Texture retryButtonTexture;
     public int x = 0 ;
     public Pause pause_render;
+    private Body body ;
+    private PolygonShape shape ;
+    private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer() ;
+    private World world  = new World(new Vector2(0,-10),true);
+    BodyDef bodyDef = new BodyDef();
+    Body body2 ;
+    Body body3 ;
+    private float distance = 50.0f ;
+    private FixtureDef fixtureDef = new FixtureDef() ;
     public Level1(Main main){
         this.main = new Main();
         this.batch = new SpriteBatch();
@@ -66,7 +85,11 @@ public class Level1 extends ScreenAdapter {
         map = new TmxMapLoader().load("LEVEL1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1920, 1080);  // Match camera to window size
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        Gdx.input.setInputProcessor(stage);
+
+        // Match camera to window size
         TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
         ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();
         pauseButtonStyle.up = drawablePauseButton;
@@ -135,6 +158,45 @@ public class Level1 extends ScreenAdapter {
         closeButton.setSize(100,100);
         closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
 
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(291 ,590);
+        body2 = world.createBody(bodyDef);
+
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(20);
+
+        fixtureDef.shape = circleShape ;
+        body2.createFixture(fixtureDef);
+
+
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle R2 = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set(R2.x + R2.width/2 , R2.y + R2.height/2);
+            body3 = world.createBody(bodyDef);
+
+            shape = new PolygonShape();
+            shape.setAsBox(R2.width/2, R2.height/2);
+            fixtureDef.shape = shape;
+            body3.createFixture(fixtureDef);
+        }
+
+
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle R1 = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.position.set(R1.x + R1.width/2, R1.y +R1.height/2);
+            body = world.createBody(bodyDef);
+
+            shape = new PolygonShape();
+            shape.setAsBox(R1.width/2, R1.height/2);
+
+            fixtureDef.shape = shape;
+            body.createFixture(fixtureDef);
+        }
+
+
+
 
         pauseButton.addListener(new ClickListener(){
             @Override
@@ -175,7 +237,25 @@ public class Level1 extends ScreenAdapter {
         camera.update();
         renderer.setView(camera);
         renderer.render();
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.getBatch().setProjectionMatrix(camera.combined);
+        stage.draw();
+        Vector2 pos = body2.getPosition();
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
+            body2.setTransform(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime(), 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && pos.y > 0) {
+            body2.setTransform(pos.x, pos.y - distance * Gdx.graphics.getDeltaTime(), 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && pos.x > 0) {
+            body2.setTransform(pos.x - distance * Gdx.graphics.getDeltaTime(), pos.y, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
+            body2.setTransform(pos.x + distance * Gdx.graphics.getDeltaTime(), pos.y, 0);
+        }
+        world.step(1/60f,6,2);
         batch.begin();
+
         if (x == 1) {
             stage.act(delta);
             stage.draw();
@@ -217,5 +297,6 @@ public class Level1 extends ScreenAdapter {
             }
         }
         batch.end();
+        debugRenderer.render(world,camera.combined);
     }
 }
