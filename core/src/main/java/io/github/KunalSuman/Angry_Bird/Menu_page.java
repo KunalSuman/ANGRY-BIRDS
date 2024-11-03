@@ -89,7 +89,6 @@ public class Menu_page extends ScreenAdapter {
 //        pH = 400;
 //        pbX = (Gdx.graphics.getWidth() - pW) / 2f;
 //        pbY = (Gdx.graphics.getHeight() - pH) / 2f;
-
 //        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
 //        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
 //        ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
