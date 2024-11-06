@@ -94,7 +94,7 @@ public class Level1 extends ScreenAdapter {
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
         Nextlevel = new Texture("Next_level_button.png");
-        Texture stone_long = new Texture("long_horizontal_stone.png") ;
+
         map = new TmxMapLoader().load("LEVEL1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
@@ -203,12 +203,59 @@ public class Level1 extends ScreenAdapter {
             fixtureDef.density = 0.05f;
             fixtureDef.friction = 0.5f ;
             body.createFixture(fixtureDef);
-            properties = new Properties(stone_long,R1.height,R1.width,10);
-            //if(object.getProperties().get("texture") == "S_L_V" ){
+            Texture stone_long_vertical = new Texture("stone_long_vertical.png") ;
+            Texture stone_medium_horizontal = new Texture("stone_medium_horizontal.png") ;
+            Texture stone_long_horizontal = new Texture("stone_long_horizontal.png") ;
+            Texture stone_small_vertical = new Texture("stone_small_vertical.png");
+            Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
+            Texture glass_small_vertical = new Texture("glass_small_vertical.png");
+            Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
+            Texture wood_box = new Texture("wood_box.png");
+            Texture TNT = new Texture("TNT.png");
+            if(object.getProperties().get("texture") == null){
+                System.out.println("false");
+            }
+            if(object.getProperties().get("texture").equals("S_L_V" )){
+                properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-//                body.setUserData(R1.height);
-//                body.setUserData(R1.width);
-            //}
+            }
+            else if (object.getProperties().get("texture").equals("S_M_H")) {
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("S_L_H")) {
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("S_S_V")) {
+                properties = new Properties(stone_small_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("W_S_H")) {
+                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if(object.getProperties().get("texture").equals("W_S_V")){
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("G_L_H")) {
+                properties = new Properties(glass_long_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+
+            } else if (object.getProperties().get("texture").equals("G_S_V")) {
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("TNT")) {
+                properties = new Properties(TNT,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("W_B")) {
+                properties = new Properties(wood_box,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else {
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
             rectangles1.add(body);
         }
 

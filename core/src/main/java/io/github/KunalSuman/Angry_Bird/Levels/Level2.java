@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Completed_Level;
 import io.github.KunalSuman.Angry_Bird.Main;
@@ -29,10 +30,10 @@ import io.github.KunalSuman.Angry_Bird.Pause;
 import java.util.ArrayList;
 
 public class Level2 extends ScreenAdapter {
-    public Main main ;
-    public SpriteBatch batch ;
+    public Main main;
+    public SpriteBatch batch;
     public Texture background;
-    public Stage stage ;
+    public Stage stage;
     public Stage pauseStage;
     public Texture pauseTexture;
     private boolean isPaused = false;
@@ -40,34 +41,37 @@ public class Level2 extends ScreenAdapter {
     public Texture closeButton;
     public Texture backButtonTexture;
     public Texture pauseButton;
-    public OrthographicCamera camera ;
-    public TiledMap map ;
-    public OrthogonalTiledMapRenderer renderer ;
+    public OrthographicCamera camera;
+    public TiledMap map;
+    public OrthogonalTiledMapRenderer renderer;
     public Stage lostStage;
-    public Texture retryTexture ;
+    public Texture retryTexture;
     public Stage winStage;
-    public Texture winTexture ;
-    public Texture MenuButtonTexture ;
-    public Texture Nextlevel ;
+    public Texture winTexture;
+    public Texture MenuButtonTexture;
+    public Texture Nextlevel;
     public Texture retryButtonTexture;
-    public int x  =0 ;
-    private Body body ;
-    private PolygonShape shape ;
-    private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer() ;
-    private World world  = new World(new Vector2(0,-30),true);
+    public int x = 0;
+    private Body body;
+    private PolygonShape shape;
+    private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    private World world = new World(new Vector2(0, -30), true);
     BodyDef bodyDef = new BodyDef();
-    Body body2 ;
-    Body body3 ;
-    public Pause pause_render ;
-    private float distance = 100.0f ;
-    private FixtureDef fixtureDef = new FixtureDef() ;
-    private FixtureDef fixture2 =new FixtureDef() ;
-    private Texture Red_bird ;
+    Body body2;
+    Body body3;
+    public Pause pause_render;
+    private float distance = 100.0f;
+    private FixtureDef fixtureDef = new FixtureDef();
+    private FixtureDef fixture2 = new FixtureDef();
+    private Texture Red_bird;
     private ShapeRenderer shapeRenderer;
     private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
-    public Level2(Main main){
+    public Array<Body> rectangles1 = new Array<>();
+    public Properties properties;
+
+    public Level2(Main main) {
         this.main = new Main();
-        pause =0;
+        pause = 0;
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
         lostStage = new Stage(new ScreenViewport());
@@ -85,14 +89,14 @@ public class Level2 extends ScreenAdapter {
         Nextlevel = new Texture("Next_level_button.png");
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        pause_render = new Pause(main ,map ,2);
+        pause_render = new Pause(main, map, 2);
 
         TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
         ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();
         pauseButtonStyle.up = drawablePauseButton;
         ImageButton pauseButton = new ImageButton(pauseButtonStyle);
         stage.addActor(pauseButton);
-        pauseButton.setSize(100,100);
+        pauseButton.setSize(100, 100);
         pauseButton.setPosition(0, 0);
 
         backButtonTexture = new Texture("backButton.png");
@@ -101,8 +105,8 @@ public class Level2 extends ScreenAdapter {
         backButtonStyle.up = drawablebackButton;
         ImageButton backButton = new ImageButton(backButtonStyle);
         stage.addActor(backButton);
-        backButton.setSize(100,100);
-        backButton.setPosition(0,Gdx.graphics.getHeight()-backButton.getHeight());
+        backButton.setSize(100, 100);
+        backButton.setPosition(0, Gdx.graphics.getHeight() - backButton.getHeight());
 
         closeButton = new Texture("closeButton.png");
         TextureRegionDrawable drawablecloseButton = new TextureRegionDrawable(new TextureRegion(closeButton));
@@ -110,8 +114,8 @@ public class Level2 extends ScreenAdapter {
         closeButtonStyle.up = drawablecloseButton;
         ImageButton closeButton = new ImageButton(closeButtonStyle);
         pauseStage.addActor(closeButton);
-        closeButton.setSize(100,100);
-        closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
+        closeButton.setSize(100, 100);
+        closeButton.setPosition(Gdx.graphics.getWidth() - closeButton.getWidth(), Gdx.graphics.getHeight() - closeButton.getHeight());
 
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
@@ -121,81 +125,130 @@ public class Level2 extends ScreenAdapter {
         lost_Menu_button.up = lost_menu;
         ImageButton lostMenubutton = new ImageButton(lost_Menu_button);
         lostStage.addActor(lostMenubutton);
-        lostMenubutton.setSize(280,120);
-        lostMenubutton.setPosition(1000,175);
+        lostMenubutton.setSize(280, 120);
+        lostMenubutton.setPosition(1000, 175);
 
         TextureRegionDrawable retryButton = new TextureRegionDrawable(new TextureRegion(retryButtonTexture));
         ImageButton.ImageButtonStyle retryButton_button = new ImageButton.ImageButtonStyle();
         retryButton_button.up = retryButton;
         ImageButton retryButtons = new ImageButton(retryButton_button);
         lostStage.addActor(retryButtons);
-        retryButtons.setSize(260,120);
-        retryButtons.setPosition(700,175);
+        retryButtons.setSize(260, 120);
+        retryButtons.setPosition(700, 175);
 
         TextureRegionDrawable To_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
         ImageButton.ImageButtonStyle Menu_button = new ImageButton.ImageButtonStyle();
         Menu_button.up = To_menu;
         ImageButton Menubutton = new ImageButton(Menu_button);
         winStage.addActor(Menubutton);
-        Menubutton.setSize(390,170);
-        Menubutton.setPosition(550,70);
+        Menubutton.setSize(390, 170);
+        Menubutton.setPosition(550, 70);
 
         TextureRegionDrawable next_level = new TextureRegionDrawable(new TextureRegion(Nextlevel));
         ImageButton.ImageButtonStyle Next_button = new ImageButton.ImageButtonStyle();
         Next_button.up = next_level;
         ImageButton Nextbutton = new ImageButton(Next_button);
         winStage.addActor(Nextbutton);
-        Nextbutton.setSize(400,180);
-        Nextbutton.setPosition(1000,70);
+        Nextbutton.setSize(400, 180);
+        Nextbutton.setPosition(1000, 70);
 
         pauseStage.addActor(closeButton);
         //lostStage.addActor(retryButton);
-        closeButton.setSize(100,100);
-        closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
+        closeButton.setSize(100, 100);
+        closeButton.setPosition(Gdx.graphics.getWidth() - closeButton.getWidth(), Gdx.graphics.getHeight() - closeButton.getHeight());
 
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(391 ,590);
+        bodyDef.position.set(391, 590);
         body2 = world.createBody(bodyDef);
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(20);
 
-        fixture2.shape = circleShape ;
-        fixtureDef.density = 0.0f ;
-        fixtureDef.friction = 0.5f ;
-        fixture2.density = 0.5f ;
-        fixture2.friction = 0.5f ;
-        fixture2.restitution = 0.5f ;
+        fixture2.shape = circleShape;
+        fixtureDef.density = 0.0f;
+        fixtureDef.friction = 0.5f;
+        fixture2.density = 0.5f;
+        fixture2.friction = 0.5f;
+        fixture2.restitution = 0.5f;
         body2.createFixture(fixture2);
 
 
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle R2 = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set(R2.x + R2.width/2 , R2.y + R2.height/2);
+            bodyDef.position.set(R2.x + R2.width / 2, R2.y + R2.height / 2);
             body3 = world.createBody(bodyDef);
 
             shape = new PolygonShape();
-            shape.setAsBox(R2.width/2, R2.height/2);
+            shape.setAsBox(R2.width / 2, R2.height / 2);
             fixtureDef.shape = shape;
             body3.createFixture(fixtureDef);
         }
 
 
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle R1 = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.DynamicBody;
-            bodyDef.position.set(R1.x + R1.width/2, R1.y +R1.height/2);
+            bodyDef.position.set(R1.x + R1.width / 2, R1.y + R1.height / 2);
             body = world.createBody(bodyDef);
 
             shape = new PolygonShape();
-            shape.setAsBox(R1.width/2, R1.height/2);
+            shape.setAsBox(R1.width / 2, R1.height / 2);
 
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
             //rectangles.add(new Rectangle(R1.x, R1.y, R1.width, R1.height));
+            Texture stone_long_vertical = new Texture("stone_long_vertical.png");
+            Texture stone_medium_horizontal = new Texture("stone_medium_horizontal.png");
+            Texture stone_long_horizontal = new Texture("stone_long_horizontal.png");
+            Texture stone_small_vertical = new Texture("stone_small_vertical.png");
+            Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
+            Texture glass_small_vertical = new Texture("glass_small_vertical.png");
+            Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
+            Texture wood_box = new Texture("wood_box.png");
+            Texture TNT = new Texture("TNT.png");
+            if (object.getProperties().get("texture") == null) {
+                System.out.println("false");
+            }
+            if (object.getProperties().get("texture").equals("S_L_V")) {
+                properties = new Properties(stone_long_vertical, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("S_M_H")) {
+                properties = new Properties(stone_medium_horizontal, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("S_L_H")) {
+                properties = new Properties(stone_long_horizontal, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("S_S_V")) {
+                properties = new Properties(stone_small_vertical, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("W_S_H")) {
+                properties = new Properties(wood_small_horizontal, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("W_S_V")) {
+                properties = new Properties(glass_small_vertical, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("G_L_H")) {
+                properties = new Properties(glass_long_horizontal, R1.height, R1.width, 10);
+                body.setUserData(properties);
+
+            } else if (object.getProperties().get("texture").equals("G_S_V")) {
+                properties = new Properties(glass_small_vertical, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("TNT")) {
+                properties = new Properties(TNT, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("W_B")) {
+                properties = new Properties(wood_box, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            } else {
+                properties = new Properties(stone_long_horizontal, R1.height, R1.width, 10);
+                body.setUserData(properties);
+            }
+            rectangles1.add(body);
         }
+
 
 
         pauseButton.addListener(new ClickListener(){
@@ -232,6 +285,7 @@ public class Level2 extends ScreenAdapter {
         });
         pauseTexture = new Texture("Pause_menu.png");
     }
+
     public void render(float delta){
         camera.update();
         renderer.setView(camera);
