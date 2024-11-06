@@ -74,6 +74,7 @@ public class Level1 extends ScreenAdapter {
     private ShapeRenderer shapeRenderer;
     //private
     public Array<Body> rectangles1 = new Array<>() ;
+    public Properties properties ;
 //    private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level1(Main main){
         this.main = new Main();
@@ -202,9 +203,9 @@ public class Level1 extends ScreenAdapter {
             fixtureDef.density = 0.05f;
             fixtureDef.friction = 0.5f ;
             body.createFixture(fixtureDef);
-
+            properties = new Properties(stone_long,R1.height,R1.width,10);
             //if(object.getProperties().get("texture") == "S_L_V" ){
-                body.setUserData(stone_long);
+                body.setUserData(properties);
 //                body.setUserData(R1.height);
 //                body.setUserData(R1.width);
             //}
@@ -242,8 +243,8 @@ public class Level1 extends ScreenAdapter {
         stage.getBatch().draw(Red_bird , pos.x-23 ,pos.y-23 , 46 , 46);
         //world.getBodies(rectangle);
         for(Body body : rectangles1){
-            Texture texture = (Texture) body.getUserData();
-            stage.getBatch().draw(texture,body.getPosition().x -25,body.getPosition().y-25 ,50 ,50 );
+            Properties properties1 = (Properties) body.getUserData();
+            stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
         }
         stage.getBatch().end();
         stage.draw();
