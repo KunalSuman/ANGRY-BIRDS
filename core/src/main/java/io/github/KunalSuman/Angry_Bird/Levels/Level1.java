@@ -2,6 +2,7 @@ package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -67,7 +69,7 @@ public class Level1 extends ScreenAdapter {
     BodyDef bodyDef = new BodyDef();
     Body body2 ;
     Body body3 ;
-    private float distance = 100.0f ;
+    private float multiplyer = 1000.0f ;
     private FixtureDef fixtureDef = new FixtureDef() ;
     private FixtureDef fixture2 =new FixtureDef() ;
     private Texture Red_bird ;
@@ -75,6 +77,10 @@ public class Level1 extends ScreenAdapter {
     //private
     public Array<Body> rectangles1 = new Array<>() ;
     public Properties properties ;
+    private ArrayList<Vector2> pointsOfTrajectory=new ArrayList<>();
+    private boolean isDragging = false;
+    private Vector3 startPosition = new Vector3();
+    private Vector3 endPosition =new Vector3();
 //    private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level1(Main main){
         this.main = new Main();
@@ -161,17 +167,14 @@ public class Level1 extends ScreenAdapter {
         closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(391 ,590);
+        bodyDef.position.set(325 ,690);
         body2 = world.createBody(bodyDef);
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(20);
 
         fixture2.shape = circleShape ;
-        fixtureDef.density = 0.0f ;
-        fixtureDef.friction = 0.5f ;
-        fixture2.density = 0.5f ;
-        fixture2.friction = 0.5f ;
+        fixture2.density = 0.15f ;
         fixture2.restitution = 0.5f ;
         body2.createFixture(fixture2);
 
@@ -258,6 +261,51 @@ public class Level1 extends ScreenAdapter {
             }
             rectangles1.add(body);
         }
+        Gdx.input.setInputProcessor(new InputAdapter(){
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if (button == Input.Buttons.LEFT){
+                    startPosition.set(screenX,screenY,0);
+                    camera.unproject(startPosition);
+
+                    isDragging = true;
+                    return true;
+                }
+                return false;
+
+            }
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                if (button == Input.Buttons.LEFT){
+                    endPosition.set(screenX,screenY,0);
+                    camera.unproject(endPosition);
+                    //for applying force
+                    Vector2 launchDirection = new Vector2( startPosition.x -endPosition.x ,   startPosition.y -endPosition.y);
+                    launchDirection.nor();
+
+                    double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
+                    float IMPULSE_SCALE = 500000f;
+                    body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
+                    pointsOfTrajectory.clear();
+                    isDragging = false;
+                    return true;
+                }
+                return false;
+            }
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                if (isDragging){
+                    endPosition.set(screenX,screenY,0);
+                    camera.unproject(endPosition);
+                    Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
+                    double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
+                    Vector2 calculatedLinearVelocity=body2.getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/body2.getMass()));
+                    calculatePath(pointsOfTrajectory,startPosition,calculatedLinearVelocity);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         //stage.addActor(elements).width(2).height(4);
     }
@@ -267,20 +315,28 @@ public class Level1 extends ScreenAdapter {
         renderer.setView(camera);
         renderer.render();
 
-        Vector2 pos = body2.getPosition();
-        if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
-            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        for (Vector2 p: pointsOfTrajectory){
+            shapeRenderer.circle(p.x, p.y, 5);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) && pos.y > 0) {
-            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && pos.x > 0) {
-            body2.setLinearVelocity(pos.x + distance* Gdx.graphics.getDeltaTime(), pos.y );
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
-            body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
-        }
-        world.step(1/60f,6,2);
+        shapeRenderer.end();
+
+       Vector2 pos = body2.getPosition();
+//        if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
+//            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.S) && pos.y > 0) {
+//            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.A) && pos.x > 0) {
+//            body2.setLinearVelocity(pos.x + distance* Gdx.graphics.getDeltaTime(), pos.y );
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
+//            body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
+//        }
+        world.step(1/120f,12,4);
         renderer.render(new int[]{3});
         batch.begin();
 
@@ -300,5 +356,14 @@ public class Level1 extends ScreenAdapter {
         //shapeRenderer.end();
 
         debugRenderer.render(world,camera.combined);
+    }
+    public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
+        pointsOfTrajectory.clear();
+        for (int i=0;i<=10;i++){
+            float simulatedTime = i*0.3f;
+            float x = startPosition.x + Velocity.x *simulatedTime;
+            float y = startPosition.y + Velocity.y *simulatedTime - 0.5f*simulatedTime*simulatedTime*9.8f;
+            pointsOfTrajectory.add(new Vector2(x, y));
+        }
     }
 }
