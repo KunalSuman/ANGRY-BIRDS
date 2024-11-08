@@ -61,7 +61,7 @@ public class Level1 extends ScreenAdapter {
     private Body body ;
     private PolygonShape shape ;
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer() ;
-    private World world  = new World(new Vector2(0,-9.8f),true);
+    private World world  = new World(new Vector2(0,-38.98f),true);
     BodyDef bodyDef = new BodyDef();
     Body body2 ;
     Body body3 ;
@@ -74,6 +74,7 @@ public class Level1 extends ScreenAdapter {
     public Array<Body> rectangles1 = new Array<>() ;
     public Properties properties ;
     private ArrayList<Vector2> pointsOfTrajectory=new ArrayList<>();
+    private Collison collisonListener = new Collison() ;
 //    private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level1(Main main){
         this.main = new Main();
@@ -99,6 +100,7 @@ public class Level1 extends ScreenAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         shapeRenderer = new ShapeRenderer();
+        world.setContactListener(collisonListener);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -172,7 +174,8 @@ public class Level1 extends ScreenAdapter {
         fixture2.density = 0.5f ;
         fixture2.friction = 0.5f ;
         fixture2.restitution = 0.5f ;
-        body2.createFixture(fixture2);
+        body2.createFixture(fixture2).setUserData("bird");
+
 
 
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
@@ -201,7 +204,7 @@ public class Level1 extends ScreenAdapter {
             fixtureDef.shape = shape;
             fixtureDef.density = 0.05f;
             fixtureDef.friction = 0.5f ;
-            body.createFixture(fixtureDef);
+            body.createFixture(fixtureDef).setUserData("Obstacles");
             properties = new Properties(stone_long,R1.height,R1.width,10);
             //if(object.getProperties().get("texture") == "S_L_V" ){
                 body.setUserData(properties);
@@ -269,7 +272,13 @@ public class Level1 extends ScreenAdapter {
             shapeRenderer.circle(p.x, p.y, 5);
         }
         shapeRenderer.end();
-
+        for (Body b: collisonListener.getBodiesToRemove()){
+            if (b!=null) {
+                world.destroyBody(b);
+                rectangles1.removeValue(b,true);
+            }
+        }
+        collisonListener.bodiesToRemove.clear();
         Vector2 pos = body2.getPosition();
         if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
             body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
@@ -283,7 +292,7 @@ public class Level1 extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
             body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
         }
-        world.step(1/60f,6,2);
+        world.step(1/120f,12,2);
         renderer.render(new int[]{3});
         batch.begin();
 
@@ -308,7 +317,7 @@ public class Level1 extends ScreenAdapter {
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();
         for (int i=0;i<=10;i++){
-            float simulatedTime = i*0.3f;
+            float simulatedTime = i*0.1f;
             float x = startPosition.x + Velocity.x *simulatedTime;
             float y = startPosition.y + Velocity.y *simulatedTime - 0.5f*simulatedTime*simulatedTime*9.8f;
             pointsOfTrajectory.add(new Vector2(x, y));
