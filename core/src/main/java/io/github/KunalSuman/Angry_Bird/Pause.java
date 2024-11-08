@@ -120,8 +120,15 @@ public class Pause extends ScreenAdapter {
 //        float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
 //        stage.addActor(return_button);
 //        return_button.setSize(200,100);
-//        return_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()*0.85f) / 2f);
-        to_menu_val = Button.createButton(to_menu,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/1.42105263158f);
+        ImageButton retry_button_val = Button.createButton(retry_button,stage,300,150,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,625);
+
+        ImageButton Save_quit_val = Button.createButton(Save_quit,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,500);
+
+        ImageButton quit_button_val = Button.createButton(quit_button,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,370);
+
+        ImageButton settings_val = Button.createButton(settings,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,220);
+
+        ImageButton return_button_val = Button.createButton(return_button,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,60);
 
         retry_button_val = Button.createButton(retry_button,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/1.728f);
 

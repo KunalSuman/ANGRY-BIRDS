@@ -38,7 +38,6 @@ public class Settings_page extends ScreenAdapter {
     public float qb_X,qb_Y,qb_W,qb_H;
     public ImageButton quit_button;
     public ImageButton return_button;
-
     public Settings_page(Main main , OrthogonalTiledMapRenderer renderer2 , int return_page , TiledMap T1, int return_number ) {
         this.renderer2 = renderer2;
         this.main = main;
@@ -58,10 +57,16 @@ public class Settings_page extends ScreenAdapter {
         float menuX6 = (Gdx.graphics.getWidth() - return_button.getWidth()) / 2;  // Center horizontally
         float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
         stage.addActor(return_button);
+        return_button.setSize(400,200);
+        return_button.setPosition(((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f), (Gdx.graphics.getHeight() - settings_button.getHeight()*0.85f) / 0.7f);
 
         TextureRegionDrawable drawable_quit = new TextureRegionDrawable(new TextureRegion(Quit_button));
         ImageButton.ImageButtonStyle Quit_buttonStyle = new ImageButton.ImageButtonStyle();
         Quit_buttonStyle.up = drawable_quit;
+        ImageButton Quit_button = new ImageButton(Quit_buttonStyle);
+        stage.addActor(Quit_button);
+        Quit_button.setSize(400,200);
+        Quit_button.setPosition((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f, (Gdx.graphics.getHeight() - settings_button.getHeight()*0.85f) / 0.37f);
         quit_button = new ImageButton(Quit_buttonStyle);
         stage.addActor(quit_button);
 

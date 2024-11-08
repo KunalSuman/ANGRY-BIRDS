@@ -56,6 +56,8 @@ public class Level_selector extends ScreenAdapter {
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         backButtonTexture = new Texture("backButton.png");
+        Load_button1 = new Texture("Load_button.png");
+        Load_button2 = new Texture("Load_button.png");
         load_button1 = new Texture("Load_button.png");
         load_button2 = new Texture("Load_button.png");
         ts = new Texture("backButton.png");
@@ -69,6 +71,7 @@ public class Level_selector extends ScreenAdapter {
         Load_button1Style.up = drawable_load1;
         Load_button1 = new ImageButton(Load_button1Style);
         stage.addActor(Load_button1);
+        Load_button1.setSize(300,132);
         Load_button1.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/8.18181818182f);
         Load_button1.setPosition((Gdx.graphics.getWidth()*0.72f - Load_button1.getWidth()*0.05f), (Gdx.graphics.getHeight()/0.94f - Load_button1.getHeight()*0.69f) / 2f);
 
@@ -77,6 +80,7 @@ public class Level_selector extends ScreenAdapter {
         Load_button2Style.up = drawable_load2;
         Load_button2 = new ImageButton(Load_button2Style);
         stage.addActor(Load_button2);
+        Load_button2.setSize(300,132);
         Load_button2.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/8.18181818182f);
         Load_button2.setPosition((Gdx.graphics.getWidth()*0.72f - Load_button2.getWidth()*0.05f), Gdx.graphics.getHeight()*0.10f);
 

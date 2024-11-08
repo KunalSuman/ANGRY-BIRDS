@@ -7,9 +7,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -44,6 +50,18 @@ public class Level3 extends ScreenAdapter {
     public Texture retryButtonTexture ;
     public int x  =0 ;
     public Pause pause_render;
+    private Body body ;
+    private PolygonShape shape ;
+    private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer() ;
+    private World world  = new World(new Vector2(0,-30),true);
+    BodyDef bodyDef = new BodyDef();
+    Body body2 ;
+    Body body3 ;
+    private float distance = 100.0f ;
+    private FixtureDef fixtureDef = new FixtureDef() ;
+    private FixtureDef fixture2 =new FixtureDef() ;
+    private Texture Red_bird ;
+    private ShapeRenderer shapeRenderer;
     public Level3(Main main) {
         this.main = new Main();
         pause =0;
@@ -132,6 +150,48 @@ public class Level3 extends ScreenAdapter {
         closeButton.setSize(100,100);
         closeButton.setPosition(Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
 
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(391 ,590);
+        body2 = world.createBody(bodyDef);
+
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(20);
+
+        fixture2.shape = circleShape ;
+        fixtureDef.density = 0.0f ;
+        fixtureDef.friction = 0.5f ;
+        fixture2.density = 0.5f ;
+        fixture2.friction = 0.5f ;
+        fixture2.restitution = 0.5f ;
+        body2.createFixture(fixture2);
+
+
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle R2 = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set(R2.x + R2.width/2 , R2.y + R2.height/2);
+            body3 = world.createBody(bodyDef);
+
+            shape = new PolygonShape();
+            shape.setAsBox(R2.width/2, R2.height/2);
+            fixtureDef.shape = shape;
+            body3.createFixture(fixtureDef);
+        }
+
+
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle R1 = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.DynamicBody;
+            bodyDef.position.set(R1.x + R1.width/2, R1.y +R1.height/2);
+            body = world.createBody(bodyDef);
+
+            shape = new PolygonShape();
+            shape.setAsBox(R1.width/2, R1.height/2);
+
+            fixtureDef.shape = shape;
+            body.createFixture(fixtureDef);
+            //rectangles.add(new Rectangle(R1.x, R1.y, R1.width, R1.height));
+        }
 
         pauseButton.addListener(new ClickListener(){
             @Override
@@ -172,6 +232,20 @@ public class Level3 extends ScreenAdapter {
         renderer.setView(camera);
         renderer.render();
         batch.begin();
+        Vector2 pos = body2.getPosition();
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
+            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && pos.y > 0) {
+            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && pos.x > 0) {
+            body2.setLinearVelocity(pos.x + distance* Gdx.graphics.getDeltaTime(), pos.y );
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
+            body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
+        }
+        world.step(1/60f,6,2);
         if(x==1){
             stage.act(delta);
             stage.draw();
@@ -213,7 +287,8 @@ public class Level3 extends ScreenAdapter {
             }
         }
         batch.end();
-
+        renderer.render(new int[]{3});
+        debugRenderer.render(world,camera.combined);
 //        batch.begin();
 //        batch.draw(background, 0, 0);
 //        batch.end();

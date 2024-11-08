@@ -11,20 +11,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.*;
+import io.github.KunalSuman.Angry_Bird.Birds.Red_bird;
+
+import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -61,6 +70,11 @@ public class Level1 extends ScreenAdapter {
     private Body body ;
     private PolygonShape shape ;
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer() ;
+    private World world  = new World(new Vector2(0,-30),true);
+    BodyDef bodyDef = new BodyDef();
+    Body body2 ;
+    Body body3 ;
+    private float multiplyer = 1000.0f ;
     private World world  = new World(new Vector2(0,-38.98f),true);
     BodyDef bodyDef = new BodyDef();
     Body body2 ;
@@ -74,6 +88,9 @@ public class Level1 extends ScreenAdapter {
     public Array<Body> rectangles1 = new Array<>() ;
     public Properties properties ;
     private ArrayList<Vector2> pointsOfTrajectory=new ArrayList<>();
+    private boolean isDragging = false;
+    private Vector3 startPosition = new Vector3();
+    private Vector3 endPosition =new Vector3();
     private Collison collisonListener = new Collison() ;
 //    private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level1(Main main){
@@ -94,6 +111,7 @@ public class Level1 extends ScreenAdapter {
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
         Nextlevel = new Texture("Next_level_button.png");
+
         Texture stone_long = new Texture("long_horizontal_stone.png") ;
         map = new TmxMapLoader().load("LEVEL1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
@@ -169,6 +187,9 @@ public class Level1 extends ScreenAdapter {
         circleShape.setRadius(20);
 
         fixture2.shape = circleShape ;
+        fixture2.density = 0.15f ;
+        fixture2.restitution = 0.5f ;
+        body2.createFixture(fixture2);
         fixtureDef.density = 0.0f ;
         fixtureDef.friction = 0.5f ;
         fixture2.density = 0.5f ;
@@ -204,6 +225,60 @@ public class Level1 extends ScreenAdapter {
             fixtureDef.shape = shape;
             fixtureDef.density = 0.05f;
             fixtureDef.friction = 0.5f ;
+            body.createFixture(fixtureDef);
+            Texture stone_long_vertical = new Texture("stone_long_vertical.png") ;
+            Texture stone_medium_horizontal = new Texture("stone_medium_horizontal.png") ;
+            Texture stone_long_horizontal = new Texture("stone_long_horizontal.png") ;
+            Texture stone_small_vertical = new Texture("stone_small_vertical.png");
+            Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
+            Texture glass_small_vertical = new Texture("glass_small_vertical.png");
+            Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
+            Texture wood_box = new Texture("wood_box.png");
+            Texture TNT = new Texture("TNT.png");
+            if(object.getProperties().get("texture") == null){
+                System.out.println("false");
+            }
+            if(object.getProperties().get("texture").equals("S_L_V" )){
+                properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("S_M_H")) {
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("S_L_H")) {
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("S_S_V")) {
+                properties = new Properties(stone_small_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("W_S_H")) {
+                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if(object.getProperties().get("texture").equals("W_S_V")){
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
+            else if (object.getProperties().get("texture").equals("G_L_H")) {
+                properties = new Properties(glass_long_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+
+            } else if (object.getProperties().get("texture").equals("G_S_V")) {
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("TNT")) {
+                properties = new Properties(TNT,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else if (object.getProperties().get("texture").equals("W_B")) {
+                properties = new Properties(wood_box,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else {
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }
             body.createFixture(fixtureDef).setUserData("Obstacles");
             properties = new Properties(stone_long,R1.height,R1.width,10);
             //if(object.getProperties().get("texture") == "S_L_V" ){
@@ -231,6 +306,13 @@ public class Level1 extends ScreenAdapter {
                 if (button == Input.Buttons.LEFT){
                     endPosition.set(screenX,screenY,0);
                     camera.unproject(endPosition);
+                    //for applying force
+                    Vector2 launchDirection = new Vector2( startPosition.x -endPosition.x ,   startPosition.y -endPosition.y);
+                    launchDirection.nor();
+
+                    double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
+                    float IMPULSE_SCALE = 500000f;
+                    body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
                     System.out.println("Lmao gods!!!!");
                     //for applying force
                     Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
@@ -270,6 +352,23 @@ public class Level1 extends ScreenAdapter {
         shapeRenderer.setProjectionMatrix(camera.combined);
         for (Vector2 p: pointsOfTrajectory){
             shapeRenderer.circle(p.x, p.y, 5);
+        }
+        shapeRenderer.end();
+
+       Vector2 pos = body2.getPosition();
+//        if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
+//            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.S) && pos.y > 0) {
+//            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.A) && pos.x > 0) {
+//            body2.setLinearVelocity(pos.x + distance* Gdx.graphics.getDeltaTime(), pos.y );
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
+//            body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
+//        }
+        world.step(1/120f,12,4);
         }
         shapeRenderer.end();
         for (Body b: collisonListener.getBodiesToRemove()){
@@ -313,6 +412,10 @@ public class Level1 extends ScreenAdapter {
 
         debugRenderer.render(world,camera.combined);
     }
+    public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
+        pointsOfTrajectory.clear();
+        for (int i=0;i<=10;i++){
+            float simulatedTime = i*0.3f;
 
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();

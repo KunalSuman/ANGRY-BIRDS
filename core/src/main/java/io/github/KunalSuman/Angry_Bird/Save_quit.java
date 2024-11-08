@@ -91,6 +91,5 @@ public class Save_quit extends ScreenAdapter {
         renderer.render();
         Gdx.input.setInputProcessor(stage);
         stage.draw();
-
     }
 }

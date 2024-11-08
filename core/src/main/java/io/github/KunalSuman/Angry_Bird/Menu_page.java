@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -35,6 +36,7 @@ public class Menu_page extends ScreenAdapter {
     private float ubW,ubH,ubX,ubY;
     private Texture unlockedBirdButton;
     public Main main;
+    public static TiledMap T1 ;
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer renderer ;
     public int x = 0 ;
@@ -58,9 +60,9 @@ public class Menu_page extends ScreenAdapter {
         camera = new OrthographicCamera();
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("MENUE_PAGE.tmx"));
         camera.setToOrtho(false, 1920, 1080);
-        sW = Gdx.graphics.getWidth() * 0.075f;
+        sW = Gdx.graphics.getWidth() * 0.05f;
         sH = Gdx.graphics.getHeight() * 0.1f;
-        sX = 0;  // Position at bottom-left corner
+        sX = 50;  // Position at bottom-left corner
         sY = 50;
         pbW = Gdx.graphics.getWidth() * 0.18f;
         pbH = Gdx.graphics.getHeight() * 0.2f;
@@ -87,6 +89,15 @@ public class Menu_page extends ScreenAdapter {
 //        pH = 400;
 //        pbX = (Gdx.graphics.getWidth() - pW) / 2f;
 //        pbY = (Gdx.graphics.getHeight() - pH) / 2f;
+//        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
+//        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
+//        ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
+//        unlockedBirdButtonStyle.up = unlockedBirdButtonDrawable;
+//        ImageButton unlockedBirdButton = new ImageButton(unlockedBirdButtonStyle);
+//        stage.addActor(unlockedBirdButton);
+//        unlockedBirdButton.setSize(ubW, ubH);
+//        unlockedBirdButton.setPosition(ubX, ubY);
+        invisible_png = new Texture("empty_png.png");
 
 //        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
 //        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
@@ -125,7 +136,7 @@ public class Menu_page extends ScreenAdapter {
 //                if (x>=pbX && x<=pbX+pW && y>=pbY && y<=pbY+pH){
 //                    main.setScreen(new Level_selector(main));}
                 if (x>=sX && x<=sX+sW && adjustedY>=sY && y<=sY+sH){
-                    main.setScreen(new Settings_page(main , renderer));
+                    main.setScreen(new Settings_page(main , renderer ,0 , T1,0));
                 }
             }
         });

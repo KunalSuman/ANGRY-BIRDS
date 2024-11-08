@@ -1,4 +1,6 @@
 ## Gradle:
+*:Zone.Identifier
+
 .gradle/
 gradle-app.setting
 /gradle/gradle-daemon-jvm.properties

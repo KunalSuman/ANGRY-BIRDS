@@ -24,33 +24,40 @@ import static com.badlogic.gdx.graphics.g3d.particles.ParticleShader.AlignMode.S
 public class Unlocked_birds_page extends ScreenAdapter {
     public Texture background;
     public AssetManager assetManager;
-    private Stage stage;
+    public Stage stage;
     public SpriteBatch batch;
     private Texture playButtonTexture;
     private Texture settingsButtonTexture;
-    private Texture bird1;
-    private Texture bird2;
-    private Texture bird3;
-    private Texture Egg;
+//    private Texture bird1;
+//    private Texture bird2;
+//    private Texture bird3;
+//    private Texture Egg;
     private float sW,sH,sX,sY;
-    private float pbW, pbH, pbX, pbY;
-    public Texture chuck ;
-    public Texture chuck_unlocked ;
-    public Texture bomb ;
-    public Texture bomb_unlocked ;
-    public Texture blues ;
-    public Texture blues_unlocked ;
+//    private float pbW, pbH, pbX, pbY;
+//    public Texture chuck ;
+//    public Texture chuck_unlocked ;
+//    public Texture bomb ;
+//    public Texture bomb_unlocked ;
+//    public Texture blues ;
+//    public Texture blues_unlocked ;
+    public Texture invisible_png ;
     public OrthographicCamera camera ;
     public OrthogonalTiledMapRenderer Bomb_unlocked ;
     public OrthogonalTiledMapRenderer Chuck_unlocked ;
     public OrthogonalTiledMapRenderer Blues_unlocked ;
+    public int chuck_unlocked = 0 ;
+    public int bomb_unlocked = 0 ;
+    public int blues_unlocked = 0 ;
     // Variables for Play button size and position
 
     public Main main;
-    public Unlocked_birds_page(Main main) {
+    public Unlocked_birds_page(Main main ,int chuck_unlocked,int bomb_unlocked,int blues_unlocked) {
         this.main = main;
         this.assetManager = new AssetManager();
         this.stage = new Stage(new ScreenViewport());
+        this.bomb_unlocked = bomb_unlocked ;
+        this.chuck_unlocked = chuck_unlocked ;
+        this.blues_unlocked = blues_unlocked ;
         Gdx.input.setInputProcessor(stage);
         background = new Texture("BACKGROUNDS_GE_1.png");
         this.batch = new SpriteBatch();
@@ -58,26 +65,42 @@ public class Unlocked_birds_page extends ScreenAdapter {
         Bomb_unlocked = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("BOMB_UNLOCKED.tmx"));
         Chuck_unlocked = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("CHUCK_UNLOCKED.tmx"));
         Blues_unlocked = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("BLUES_UNLOCKED.tmx"));
+
+
         camera.setToOrtho(false, 1920,1080);
     }
     public void render(float delta) {
+
         camera.update();
-        Bomb_unlocked.setView(camera);
-        Chuck_unlocked.setView(camera);
-        Blues_unlocked.setView(camera);
-        Bomb_unlocked.render();
-        Chuck_unlocked.render();
-        Blues_unlocked.render();
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //      batch.draw(playButtonTexture, pbX, pbY, pW, pH);// Draw the button
-        batch.draw(settingsButtonTexture, sX, sY, sW, sH);
+
+//        batch.draw(settingsButtonTexture, sX, sY, sW, sH);
         batch.end();
 
-        // Render the stage (buttons, if any)
+
+
+        if(bomb_unlocked == 1) {
+            Bomb_unlocked.setView(camera);
+            Bomb_unlocked.render();
+        }
+        if(chuck_unlocked == 1) {
+            Chuck_unlocked.setView(camera);
+            Chuck_unlocked.render();
+        }
+        if(blues_unlocked == 1) {
+            Blues_unlocked.setView(camera);
+            Blues_unlocked.render();
+        }
+
         stage.act(delta);
+        Gdx.input.setInputProcessor(stage);
         stage.draw();
+        // Render the stage (buttons, if any)
+
     }
     @Override
     public void resize(int width, int height){

@@ -45,7 +45,6 @@ public class Quit extends ScreenAdapter {
                 main.setScreen(new Pause(main,T1,level));
             }
         });
-       // new_renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load(""));
     }
     public void render(float delta) {
         Gdx.input.setInputProcessor(stage);
