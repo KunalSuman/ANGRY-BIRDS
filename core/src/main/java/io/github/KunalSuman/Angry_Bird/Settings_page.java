@@ -32,10 +32,12 @@ public class Settings_page extends ScreenAdapter {
     public OrthographicCamera camera;
     public OrthogonalTiledMapRenderer renderer;
     public OrthogonalTiledMapRenderer renderer2;
-    public Texture return_button ;
+    public Texture Return_button ;
     public Texture Quit_button ;
     public Texture settings_button;
-
+    public float qb_X,qb_Y,qb_W,qb_H;
+    public ImageButton quit_button;
+    public ImageButton return_button;
     public Settings_page(Main main , OrthogonalTiledMapRenderer renderer2 , int return_page , TiledMap T1, int return_number ) {
         this.renderer2 = renderer2;
         this.main = main;
@@ -43,15 +45,15 @@ public class Settings_page extends ScreenAdapter {
         assetManager = new AssetManager();
         camera = new OrthographicCamera();
         renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("SETTINGS.tmx"));
-        return_button = new Texture("BACK_button.png");
+        Return_button = new Texture("BACK_button.png");
         Quit_button = new Texture("Quit_button.png");
         settings_button = new Texture("SETTINGS.png");
         camera.setToOrtho(false, 1920, 1080);
 
-        TextureRegionDrawable drawable_return = new TextureRegionDrawable(new TextureRegion(return_button));
+        TextureRegionDrawable drawable_return = new TextureRegionDrawable(new TextureRegion(Return_button));
         ImageButton.ImageButtonStyle return_buttonStyle = new ImageButton.ImageButtonStyle();
         return_buttonStyle.up = drawable_return;
-        ImageButton return_button = new ImageButton(return_buttonStyle);
+        return_button = new ImageButton(return_buttonStyle);
         float menuX6 = (Gdx.graphics.getWidth() - return_button.getWidth()) / 2;  // Center horizontally
         float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
         stage.addActor(return_button);
@@ -65,6 +67,9 @@ public class Settings_page extends ScreenAdapter {
         stage.addActor(Quit_button);
         Quit_button.setSize(400,200);
         Quit_button.setPosition((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f, (Gdx.graphics.getHeight() - settings_button.getHeight()*0.85f) / 0.37f);
+        quit_button = new ImageButton(Quit_buttonStyle);
+        stage.addActor(quit_button);
+
 
         return_button.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
@@ -77,7 +82,7 @@ public class Settings_page extends ScreenAdapter {
 
             }
         });
-        Quit_button.addListener(new ClickListener() {
+        quit_button.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 System.exit(0);
             }
@@ -128,6 +133,11 @@ public class Settings_page extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        quit_button.setSize(Gdx.graphics.getWidth()/4.8f,Gdx.graphics.getHeight()/5.4f);
+        quit_button.setPosition(((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f), Gdx.graphics.getHeight()/2.4f);
+        return_button.setSize(Gdx.graphics.getWidth()/4.8f,Gdx.graphics.getHeight()/5.4f);
+        return_button.setPosition(((Gdx.graphics.getWidth() - settings_button.getWidth()*0.05f) / 2.35f), Gdx.graphics.getHeight()/4.9f);
+
     }
     public void dispose() {
         stage.dispose();

@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -27,11 +25,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.*;
 import io.github.KunalSuman.Angry_Bird.Birds.Red_bird;
+
+import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -46,6 +48,9 @@ public class Level1 extends ScreenAdapter {
     public Texture pauseTexture;
     private boolean isPaused = false;
     private int pause;
+    private boolean isDragging = false;
+    private Vector3 startPosition = new Vector3();
+    private Vector3 endPosition = new Vector3();
     public Texture closeButton;
     public Texture pauseButton;
     public Texture backButtonTexture;
@@ -70,6 +75,11 @@ public class Level1 extends ScreenAdapter {
     Body body2 ;
     Body body3 ;
     private float multiplyer = 1000.0f ;
+    private World world  = new World(new Vector2(0,-38.98f),true);
+    BodyDef bodyDef = new BodyDef();
+    Body body2 ;
+    Body body3 ;
+    private float distance = 100.0f ;
     private FixtureDef fixtureDef = new FixtureDef() ;
     private FixtureDef fixture2 =new FixtureDef() ;
     private Texture Red_bird ;
@@ -81,6 +91,7 @@ public class Level1 extends ScreenAdapter {
     private boolean isDragging = false;
     private Vector3 startPosition = new Vector3();
     private Vector3 endPosition =new Vector3();
+    private Collison collisonListener = new Collison() ;
 //    private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level1(Main main){
         this.main = new Main();
@@ -101,11 +112,13 @@ public class Level1 extends ScreenAdapter {
         winTexture = new Texture("Level_complete.png");
         Nextlevel = new Texture("Next_level_button.png");
 
+        Texture stone_long = new Texture("long_horizontal_stone.png") ;
         map = new TmxMapLoader().load("LEVEL1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         shapeRenderer = new ShapeRenderer();
+        world.setContactListener(collisonListener);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -177,6 +190,13 @@ public class Level1 extends ScreenAdapter {
         fixture2.density = 0.15f ;
         fixture2.restitution = 0.5f ;
         body2.createFixture(fixture2);
+        fixtureDef.density = 0.0f ;
+        fixtureDef.friction = 0.5f ;
+        fixture2.density = 0.5f ;
+        fixture2.friction = 0.5f ;
+        fixture2.restitution = 0.5f ;
+        body2.createFixture(fixture2).setUserData("bird");
+
 
 
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
@@ -259,6 +279,13 @@ public class Level1 extends ScreenAdapter {
                 properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
             }
+            body.createFixture(fixtureDef).setUserData("Obstacles");
+            properties = new Properties(stone_long,R1.height,R1.width,10);
+            //if(object.getProperties().get("texture") == "S_L_V" ){
+                body.setUserData(properties);
+//                body.setUserData(R1.height);
+//                body.setUserData(R1.width);
+            //}
             rectangles1.add(body);
         }
         Gdx.input.setInputProcessor(new InputAdapter(){
@@ -286,6 +313,11 @@ public class Level1 extends ScreenAdapter {
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
                     float IMPULSE_SCALE = 500000f;
                     body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
+                    System.out.println("Lmao gods!!!!");
+                    //for applying force
+                    Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
+                    double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
+                    body2.applyLinearImpulse(launchDirection.scl((float) distance*10f), body2.getWorldCenter(), true);
                     pointsOfTrajectory.clear();
                     isDragging = false;
                     return true;
@@ -337,6 +369,29 @@ public class Level1 extends ScreenAdapter {
 //            body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
 //        }
         world.step(1/120f,12,4);
+        }
+        shapeRenderer.end();
+        for (Body b: collisonListener.getBodiesToRemove()){
+            if (b!=null) {
+                world.destroyBody(b);
+                rectangles1.removeValue(b,true);
+            }
+        }
+        collisonListener.bodiesToRemove.clear();
+        Vector2 pos = body2.getPosition();
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && pos.y < 1080) {
+            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && pos.y > 0) {
+            body2.setLinearVelocity(pos.x, pos.y + distance * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && pos.x > 0) {
+            body2.setLinearVelocity(pos.x + distance* Gdx.graphics.getDeltaTime(), pos.y );
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && pos.x < 1920 ) {
+            body2.setLinearVelocity(pos.x - distance* Gdx.graphics.getDeltaTime(), pos.y );
+        }
+        world.step(1/120f,12,2);
         renderer.render(new int[]{3});
         batch.begin();
 
@@ -361,6 +416,11 @@ public class Level1 extends ScreenAdapter {
         pointsOfTrajectory.clear();
         for (int i=0;i<=10;i++){
             float simulatedTime = i*0.3f;
+
+    public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
+        pointsOfTrajectory.clear();
+        for (int i=0;i<=10;i++){
+            float simulatedTime = i*0.1f;
             float x = startPosition.x + Velocity.x *simulatedTime;
             float y = startPosition.y + Velocity.y *simulatedTime - 0.5f*simulatedTime*simulatedTime*9.8f;
             pointsOfTrajectory.add(new Vector2(x, y));

@@ -52,6 +52,18 @@ public class Main extends Game {
 //        music.setLooping(true);
 //        music.play();
     }
+    public static ImageButton createButton(Texture toMenu, Stage stage,int w,int h,float x,float y) {
+        TextureRegionDrawable drawable_to_menue = new TextureRegionDrawable(new TextureRegion(toMenu));
+        ImageButton.ImageButtonStyle to_menuStyle = new ImageButton.ImageButtonStyle();
+        to_menuStyle.up = drawable_to_menue;
+        ImageButton to_menu = new ImageButton(to_menuStyle);
+        float menuX1 = (Gdx.graphics.getWidth() - to_menu.getWidth()) / 2;  // Center horizontally
+        float menuY1 = (Gdx.graphics.getHeight() - to_menu.getHeight()) / 2; // Center vertically
+        stage.addActor(to_menu);
+        to_menu.setSize(w,h);
+        to_menu.setPosition(x, y);
+        return to_menu;
+    }
 
     @Override
     public void render() {

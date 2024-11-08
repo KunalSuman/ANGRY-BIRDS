@@ -99,6 +99,16 @@ public class Menu_page extends ScreenAdapter {
 //        unlockedBirdButton.setPosition(ubX, ubY);
         invisible_png = new Texture("empty_png.png");
 
+//        unlockedBirdButton = new Texture("BUTTONS_SHEET_1.png");
+//        TextureRegionDrawable unlockedBirdButtonDrawable = new TextureRegionDrawable(new TextureRegion(unlockedBirdButton));
+//        ImageButton.ImageButtonStyle unlockedBirdButtonStyle = new ImageButton.ImageButtonStyle();
+//        unlockedBirdButtonStyle.up = unlockedBirdButtonDrawable;
+//        ImageButton unlockedBirdButton = new ImageButton(unlockedBirdButtonStyle);
+//        stage.addActor(unlockedBirdButton);
+//        unlockedBirdButton.setSize(ubW, ubH);
+//        unlockedBirdButton.setPosition(ubX, ubY);
+        invisible_png = new Texture("empty_png.png");
+
         ImageButton chuck_button = Button.createButton(invisible_png,stage,300,500,Gdx.graphics.getWidth()/2.7f , Gdx.graphics.getHeight()/3.2f);
         ImageButton bomb_button = Button.createButton(invisible_png,stage,300,500,Gdx.graphics.getWidth()/1.45f , Gdx.graphics.getHeight()/3.4f);
         ImageButton blues_button = Button.createButton(invisible_png,stage,300,500,Gdx.graphics.getWidth()/1.9f , Gdx.graphics.getHeight()/3.2f);

@@ -35,11 +35,17 @@ public class Pause extends ScreenAdapter {
     public static Texture return_button ;
     public static TiledMap T1 ;
     public static TiledMap T2 ;
-
+    ImageButton to_menu_val;
+    ImageButton retry_button_val;
+    ImageButton Save_quit_val;
+    ImageButton quit_button_val;
+    ImageButton settings_val;
+    ImageButton return_button_val;
+    int return_number;
     public Pause(Main main ,TiledMap T1,int return_number){
         System.out.println("done") ;
         stage = new Stage(new ScreenViewport());
-
+        this.return_number = return_number;
         pause_menu = new Texture(Gdx.files.internal("Pause_menu.png"));
         to_menu = new Texture("Menu_button.png");
         retry_button = new Texture("Restart_button.png");
@@ -114,9 +120,6 @@ public class Pause extends ScreenAdapter {
 //        float menuY6 = (Gdx.graphics.getHeight() - return_button.getHeight()) / 2; // Center vertically
 //        stage.addActor(return_button);
 //        return_button.setSize(200,100);
-//        return_button.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.05f) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()*0.85f) / 2f);
-        ImageButton to_menu_val = Button.createButton(to_menu,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,760);
-
         ImageButton retry_button_val = Button.createButton(retry_button,stage,300,150,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,625);
 
         ImageButton Save_quit_val = Button.createButton(Save_quit,stage,300,140,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,500);
@@ -126,6 +129,16 @@ public class Pause extends ScreenAdapter {
         ImageButton settings_val = Button.createButton(settings,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,220);
 
         ImageButton return_button_val = Button.createButton(return_button,stage,300,160,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,60);
+
+        retry_button_val = Button.createButton(retry_button,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/1.728f);
+
+        Save_quit_val = Button.createButton(Save_quit,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/2.16f);
+
+        quit_button_val = Button.createButton(quit_button,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/2.91891891892f);
+
+        settings_val = Button.createButton(settings,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/4.90909090909f);
+
+        return_button_val = Button.createButton(return_button,stage,Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f,(Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/18f);
         //System.out.println("hello");
 
         settings_val.addListener(new ClickListener() {
@@ -211,6 +224,25 @@ public class Pause extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         //stage.getBatch().draw(pause_menu, (Gdx.graphics.getWidth() - pause_menu.getWidth()) / 2f, (Gdx.graphics.getHeight() - pause_menu.getHeight()) / 2f);
         stage.draw();
+    }
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+        retry_button_val.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f);
+        retry_button_val.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/1.728f);
+        to_menu_val.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f);
+        return_button_val.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f);
+        settings_val.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f);
+        Save_quit_val.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f);
+        quit_button_val.setSize(Gdx.graphics.getWidth()/6.4f,Gdx.graphics.getHeight()/7.2f);
+
+
+        to_menu_val.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/1.42105263158f);
+        return_button_val.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/18f);
+        settings_val.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/4.90909090909f);
+        Save_quit_val.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/2.16f);
+        quit_button_val.setPosition((Gdx.graphics.getWidth() - pause_menu.getWidth()*0.1f) / 2f,Gdx.graphics.getHeight()/2.91891891892f);
+
     }
     public void dispose(){
         batch.dispose();
