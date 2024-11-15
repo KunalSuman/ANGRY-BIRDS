@@ -88,13 +88,10 @@ public class Level1 extends ScreenAdapter {
         this.main = new Main();
         this.batch = new SpriteBatch();
         pause =0;
-        //this.background = new Texture("Level3.png");
-        this.elements = new Texture("libgdx.png");
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
         lostStage = new Stage(new ScreenViewport());
         winStage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
         pauseButton = new Texture("pauseButton.png");
         closeButton = new Texture("closeButton.png");
         MenuButtonTexture = new Texture("Menu_button.png");
@@ -112,8 +109,6 @@ public class Level1 extends ScreenAdapter {
 
         Gdx.input.setInputProcessor(stage);
         world.setContactListener(collisonListener);
-
-
 
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
@@ -152,7 +147,6 @@ public class Level1 extends ScreenAdapter {
             shape.setAsBox(R2.width/2, R2.height/2);
             fixtureDef.shape = shape;
             body3.createFixture(fixtureDef);
-
         }
 
 
@@ -176,6 +170,8 @@ public class Level1 extends ScreenAdapter {
             Texture stone_long_horizontal = new Texture("stone_long_horizontal.png") ;
             Texture stone_small_vertical = new Texture("stone_small_vertical.png");
             Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
+            Texture wood_long_horizontal = new Texture("wood_long_horizontal.png");
+            Texture wood_long_vertical = new Texture("wood_long_vertical.png");
             Texture glass_small_vertical = new Texture("glass_small_vertical.png");
             Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
             Texture wood_box = new Texture("wood_box.png");
@@ -186,31 +182,24 @@ public class Level1 extends ScreenAdapter {
             if(object.getProperties().get("texture").equals("S_L_V" )){
                 properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("S_M_H")) {
+            } else if (object.getProperties().get("texture").equals("S_M_H")) {
                 properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("S_L_H")) {
+            } else if (object.getProperties().get("texture").equals("S_L_H")) {
                 properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("S_S_V")) {
+            } else if (object.getProperties().get("texture").equals("S_S_V")) {
                 properties = new Properties(stone_small_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("W_S_H")) {
+            } else if (object.getProperties().get("texture").equals("W_S_H")) {
                 properties = new Properties(wood_small_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if(object.getProperties().get("texture").equals("W_S_V")){
+            } else if(object.getProperties().get("texture").equals("W_S_V")){
                 properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("G_L_H")) {
+            } else if (object.getProperties().get("texture").equals("G_L_H")) {
                 properties = new Properties(glass_long_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
-
             } else if (object.getProperties().get("texture").equals("G_S_V")) {
                 properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
@@ -219,6 +208,12 @@ public class Level1 extends ScreenAdapter {
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_B")) {
                 properties = new Properties(wood_box,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else if(object.getProperties().get("texture").equals("W_L_V" )){
+                properties = new Properties(wood_long_vertical,R1.height,R1.width,10);
+                body.setUserData(properties);
+            } else if(object.getProperties().get("texture").equals("W_L_H" )){
+                properties = new Properties(wood_long_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
             } else {
                 properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
@@ -289,9 +284,7 @@ public class Level1 extends ScreenAdapter {
                     int launchMultiplier = 500;
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
                     Vector2 launchDirection = new Vector2((float) ((startPosition.x -endPosition.x)*distance), (float) ((startPosition.y -endPosition.y)*distance));
-
                     body2.setLinearVelocity(launchDirection);
-                    //body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
                     pointsOfTrajectory.clear();
                     isDragging = false;
                     return true;
@@ -352,10 +345,6 @@ public class Level1 extends ScreenAdapter {
         stage.getBatch().end();
         stage.draw();
         batch.end();
-
-
-
-        //debugRenderer.render(world,camera.combined);
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();
