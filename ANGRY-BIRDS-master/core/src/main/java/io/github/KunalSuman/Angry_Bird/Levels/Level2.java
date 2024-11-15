@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import io.github.KunalSuman.Angry_Bird.Button;
 import io.github.KunalSuman.Angry_Bird.Completed_Level;
 import io.github.KunalSuman.Angry_Bird.Main;
 import io.github.KunalSuman.Angry_Bird.Pause;
@@ -68,10 +69,10 @@ public class Level2 extends ScreenAdapter {
     private ArrayList<Rectangle> rectangles = new ArrayList<Rectangle>();
     public Array<Body> rectangles1 = new Array<>();
     public Properties properties;
+    private Texture PauseButtonTexture ;
 
     public Level2(Main main) {
         this.main = new Main();
-        pause = 0;
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
         lostStage = new Stage(new ScreenViewport());
@@ -87,76 +88,21 @@ public class Level2 extends ScreenAdapter {
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
         Nextlevel = new Texture("Next_level_button.png");
-        renderer = new OrthogonalTiledMapRenderer(map);
-
-        pause_render = new Pause(main, map, 2);
-
-        TextureRegionDrawable drawablePauseButton = new TextureRegionDrawable(new TextureRegion(pauseButton));
-        ImageButton.ImageButtonStyle pauseButtonStyle = new ImageButton.ImageButtonStyle();
-        pauseButtonStyle.up = drawablePauseButton;
-        ImageButton pauseButton = new ImageButton(pauseButtonStyle);
-        stage.addActor(pauseButton);
-        pauseButton.setSize(100, 100);
-        pauseButton.setPosition(0, 0);
-
+        PauseButtonTexture = new Texture("pauseButton.png");
         backButtonTexture = new Texture("backButton.png");
-        TextureRegionDrawable drawablebackButton = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
-        ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
-        backButtonStyle.up = drawablebackButton;
-        ImageButton backButton = new ImageButton(backButtonStyle);
-        stage.addActor(backButton);
-        backButton.setSize(100, 100);
-        backButton.setPosition(0, Gdx.graphics.getHeight() - backButton.getHeight());
-
-        closeButton = new Texture("closeButton.png");
-        TextureRegionDrawable drawablecloseButton = new TextureRegionDrawable(new TextureRegion(closeButton));
-        ImageButton.ImageButtonStyle closeButtonStyle = new ImageButton.ImageButtonStyle();
-        closeButtonStyle.up = drawablecloseButton;
-        ImageButton closeButton = new ImageButton(closeButtonStyle);
-        pauseStage.addActor(closeButton);
-        closeButton.setSize(100, 100);
-        closeButton.setPosition(Gdx.graphics.getWidth() - closeButton.getWidth(), Gdx.graphics.getHeight() - closeButton.getHeight());
-
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
+        pause_render = new Pause(main ,map ,3);
+        closeButton = new Texture("closeButton.png");
 
-        TextureRegionDrawable lost_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
-        ImageButton.ImageButtonStyle lost_Menu_button = new ImageButton.ImageButtonStyle();
-        lost_Menu_button.up = lost_menu;
-        ImageButton lostMenubutton = new ImageButton(lost_Menu_button);
-        lostStage.addActor(lostMenubutton);
-        lostMenubutton.setSize(280, 120);
-        lostMenubutton.setPosition(1000, 175);
-
-        TextureRegionDrawable retryButton = new TextureRegionDrawable(new TextureRegion(retryButtonTexture));
-        ImageButton.ImageButtonStyle retryButton_button = new ImageButton.ImageButtonStyle();
-        retryButton_button.up = retryButton;
-        ImageButton retryButtons = new ImageButton(retryButton_button);
-        lostStage.addActor(retryButtons);
-        retryButtons.setSize(260, 120);
-        retryButtons.setPosition(700, 175);
-
-        TextureRegionDrawable To_menu = new TextureRegionDrawable(new TextureRegion(MenuButtonTexture));
-        ImageButton.ImageButtonStyle Menu_button = new ImageButton.ImageButtonStyle();
-        Menu_button.up = To_menu;
-        ImageButton Menubutton = new ImageButton(Menu_button);
-        winStage.addActor(Menubutton);
-        Menubutton.setSize(390, 170);
-        Menubutton.setPosition(550, 70);
-
-        TextureRegionDrawable next_level = new TextureRegionDrawable(new TextureRegion(Nextlevel));
-        ImageButton.ImageButtonStyle Next_button = new ImageButton.ImageButtonStyle();
-        Next_button.up = next_level;
-        ImageButton Nextbutton = new ImageButton(Next_button);
-        winStage.addActor(Nextbutton);
-        Nextbutton.setSize(400, 180);
-        Nextbutton.setPosition(1000, 70);
-
-        pauseStage.addActor(closeButton);
-        //lostStage.addActor(retryButton);
-        closeButton.setSize(100, 100);
-        closeButton.setPosition(Gdx.graphics.getWidth() - closeButton.getWidth(), Gdx.graphics.getHeight() - closeButton.getHeight());
-
+        ImageButton PauseButton = Button.createButton(PauseButtonTexture,stage,100,100,0,0);
+        ImageButton QuitButton = Button.createButton(backButtonTexture,stage,100,100,0,Gdx.graphics.getHeight()-backButtonTexture.getHeight());
+        ImageButton CloseButton1 = Button.createButton(closeButton,pauseStage,100,100,Gdx.graphics.getWidth()- closeButton.getWidth(),Gdx.graphics.getHeight()- closeButton.getHeight());
+        ImageButton CloseButton2 = Button.createButton(closeButton,lostStage,100,100,Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
+        ImageButton LostMenuButton = Button.createButton(MenuButtonTexture,lostStage,280,120,1000,175);
+        ImageButton RetryButton = Button.createButton(retryButtonTexture,lostStage,260,120,700,175);
+        ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
+        ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(391, 590);
@@ -249,28 +195,34 @@ public class Level2 extends ScreenAdapter {
             rectangles1.add(body);
         }
 
-
-
-        pauseButton.addListener(new ClickListener(){
+        PauseButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 isPaused = true;
                 Gdx.input.setInputProcessor(pauseStage);
             }
         });
-        backButton.addListener(new ClickListener(){
+        QuitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new Level_selector(main));
             }
         });
-        closeButton.addListener(new ClickListener(){
+        CloseButton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 isPaused = false;
                 Gdx.input.setInputProcessor(stage);
             }
         });
+        CloseButton2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                isPaused = false;
+                Gdx.input.setInputProcessor(stage);
+            }
+        });
+
         Menubutton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
