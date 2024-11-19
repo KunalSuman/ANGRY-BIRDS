@@ -322,7 +322,7 @@ public class Level1 extends ScreenAdapter {
         shapeRenderer.end();
 
         Vector2 pos = body2.getPosition();
-        world.step(1/120f,12,4);
+        world.step(1/120f,20,4);
         renderer.render(new int[]{3});
         batch.begin();
 

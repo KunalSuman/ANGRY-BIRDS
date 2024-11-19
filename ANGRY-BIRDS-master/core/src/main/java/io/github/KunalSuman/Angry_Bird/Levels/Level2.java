@@ -175,6 +175,7 @@ public class Level2 extends ScreenAdapter {
             Texture wood_long_vertical = new Texture("wood_long_vertical.png");
             Texture glass_small_vertical = new Texture("glass_small_vertical.png");
             Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
+            Texture glass_long_vertical = new Texture("glass_long_vertical.png");
             Texture wood_box = new Texture("wood_box.png");
             Texture TNT = new Texture("TNT.png");
             if(object.getProperties().get("texture") == null){
@@ -185,6 +186,9 @@ public class Level2 extends ScreenAdapter {
                 body.setUserData(properties);
             }
             else if (object.getProperties().get("texture").equals("S_M_H")) {
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
+                body.setUserData(properties);
+            }else if (object.getProperties().get("texture").equals("G_L_V")) {
                 properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_L_H")) {
