@@ -344,7 +344,7 @@ public class Level1 extends ScreenAdapter {
         camera.update();
         renderer.setView(camera);
         renderer.render();
-
+        
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.setProjectionMatrix(camera.combined);

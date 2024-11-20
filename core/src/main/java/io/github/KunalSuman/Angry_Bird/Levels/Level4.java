@@ -32,6 +32,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.*;
 import io.github.KunalSuman.Angry_Bird.Birds.Red_bird;
+import io.github.KunalSuman.Angry_Bird.PIGS.Pigs_schema;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,6 @@ public class Level4 extends ScreenAdapter {
     private FixtureDef fixture2 =new FixtureDef() ;
     private Texture Red_bird ;
     private ShapeRenderer shapeRenderer;
-    //private
     public Array<Body> rectangles1 = new Array<>() ;
     public Properties properties ;
     private ArrayList<Vector2> pointsOfTrajectory=new ArrayList<>();
@@ -83,7 +83,17 @@ public class Level4 extends ScreenAdapter {
     private Vector3 endPosition =new Vector3();
     private Collison collisonListener = new Collison();
     private Texture PauseButtonTexture;
-    //    private ArrayList<Body> rectangles = new ArrayList<Body>();
+    private Body pig_body ;
+    private BodyDef pig_body_def = new BodyDef() ;
+    private FixtureDef pig_fixture_def = new FixtureDef() ;
+    private PolygonShape pig_shape;
+    private Box2DDebugRenderer debugRenderer1 = new Box2DDebugRenderer();
+    private Texture king_pig ;
+    private Texture small_pig ;
+    private Texture helmet_pig ;
+    public Pigs_schema pig_t ;
+    public ArrayList<Body> pigs_array = new ArrayList<>();
+    //private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level4(Main main){
         this.main = new Main();
         this.batch = new SpriteBatch();
@@ -101,7 +111,21 @@ public class Level4 extends ScreenAdapter {
         Nextlevel = new Texture("Next_level_button.png");
         PauseButtonTexture = new Texture("pauseButton.png");
         backButtonTexture = new Texture("backButton.png");
-        map = new TmxMapLoader().load("LEVEL4.tmx");
+        map = new TmxMapLoader().load("LEVEL3.tmx");
+        king_pig = new Texture("king_pig.png");
+        small_pig = new Texture("small_pig.png");
+        helmet_pig = new Texture("helmet_pig.png");
+        Texture stone_long_vertical = new Texture("stone_long_vertical.png") ;
+        Texture stone_medium_horizontal = new Texture("stone_medium_horizontal.png") ;
+        Texture stone_long_horizontal = new Texture("stone_long_horizontal.png") ;
+        Texture stone_small_vertical = new Texture("stone_small_vertical.png");
+        Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
+        Texture wood_long_horizontal = new Texture("wood_long_horizontal.png");
+        Texture wood_long_vertical = new Texture("wood_long_vertical.png");
+        Texture glass_small_vertical = new Texture("glass_small_vertical.png");
+        Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
+        Texture wood_box = new Texture("wood_box.png");
+        Texture TNT = new Texture("TNT.png");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -112,7 +136,7 @@ public class Level4 extends ScreenAdapter {
 
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
-        pause_render = new Pause(main ,map ,5,null,null,null,this,null);
+        pause_render = new Pause(main ,map ,4,null,null,null,this,null);
         Red_bird = new Texture("Red.png");
 
         ImageButton PauseButton = Button.createButton(PauseButtonTexture,stage,100,100,0,0);
@@ -147,49 +171,51 @@ public class Level4 extends ScreenAdapter {
             shape.setAsBox(R2.width/2, R2.height/2);
             fixtureDef.shape = shape;
             body3.createFixture(fixtureDef);
-
         }
 
-
+        for(MapObject object1 : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle pigs = ((RectangleMapObject) object1).getRectangle();
+            pig_body_def.type = BodyDef.BodyType.DynamicBody;
+            pig_body_def.position.set(pigs.x + pigs.width/2, pigs.y + pigs.height/2);
+            pig_body = world.createBody(pig_body_def);
+            pig_shape = new PolygonShape();
+            pig_shape.setAsBox(pigs.width/2, pigs.height/2);
+            pig_fixture_def.shape = pig_shape;
+            pig_body.createFixture(pig_fixture_def).setUserData("Pig");
+            if(object1.getProperties().get("pig").equals("king_pig" )) {
+                pig_t = new Pigs_schema(0, 0, king_pig, 0, pigs.height, pigs.width);
+                pig_body.setUserData(pig_t);
+            } else if (object1.getProperties().get("pig").equals("small_pig")) {
+                pig_t = new Pigs_schema(0, 0, small_pig, 0, pigs.height, pigs.width);
+                pig_body.setUserData(pig_t);
+            }else if (object1.getProperties().get("pig").equals("helmet_pig" )) {
+                pig_t = new Pigs_schema(0, 0, helmet_pig, 0, pigs.height, pigs.width);
+                pig_body.setUserData(pig_t);
+            }
+            pigs_array.add(pig_body);
+        }
 
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle R1 = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.DynamicBody;
             bodyDef.position.set(R1.x + R1.width/2, R1.y +R1.height/2);
             body = world.createBody(bodyDef);
-
             shape = new PolygonShape();
             shape.setAsBox(R1.width/2, R1.height/2);
-
             fixtureDef.shape = shape;
             fixtureDef.density = 0.05f;
             fixtureDef.friction = 0.5f ;
             fixtureDef.restitution = 0.5f;
             body.createFixture(fixtureDef).setUserData("Obstacles");
-            Texture stone_long_vertical = new Texture("stone_long_vertical.png") ;
-            Texture stone_medium_horizontal = new Texture("stone_medium_horizontal.png") ;
-            Texture stone_long_horizontal = new Texture("stone_long_horizontal.png") ;
-            Texture stone_small_vertical = new Texture("stone_small_vertical.png");
-            Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
-            Texture wood_long_horizontal = new Texture("wood_long_horizontal.png");
-            Texture wood_long_vertical = new Texture("wood_long_vertical.png");
-            Texture glass_small_vertical = new Texture("glass_small_vertical.png");
-            Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
-            Texture glass_long_vertical = new Texture("glass_long_vertical.png");
-            Texture wood_box = new Texture("wood_box.png");
-            Texture TNT = new Texture("TNT.png");
+
             if(object.getProperties().get("texture") == null){
                 System.out.println("false");
             }
             if(object.getProperties().get("texture").equals("S_L_V" )){
                 properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("S_M_H")) {
+            } else if (object.getProperties().get("texture").equals("S_M_H")) {
                 properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }else if (object.getProperties().get("texture").equals("G_L_V")) {
-                properties = new Properties(glass_long_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_L_H")) {
                 properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
@@ -218,16 +244,13 @@ public class Level4 extends ScreenAdapter {
             } else if(object.getProperties().get("texture").equals("W_L_V" )){
                 properties = new Properties(wood_long_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if(object.getProperties().get("texture").equals("W_L_H" )){
+            } else if(object.getProperties().get("texture").equals("W_L_H" )){
                 properties = new Properties(wood_long_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else {
+            } else {
                 properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
             }
-
             rectangles1.add(body);
         }
         PauseButton.addListener(new ClickListener(){
@@ -293,9 +316,7 @@ public class Level4 extends ScreenAdapter {
                     int launchMultiplier = 500;
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
                     Vector2 launchDirection = new Vector2((float) ((startPosition.x -endPosition.x)*distance), (float) ((startPosition.y -endPosition.y)*distance));
-
                     body2.setLinearVelocity(launchDirection);
-                    //body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
                     pointsOfTrajectory.clear();
                     isDragging = false;
                     return true;
@@ -333,7 +354,7 @@ public class Level4 extends ScreenAdapter {
         shapeRenderer.end();
 
         Vector2 pos = body2.getPosition();
-        world.step(1/60f,12,4);
+        world.step(1/120f,20,4);
         renderer.render(new int[]{3});
         batch.begin();
 
@@ -353,13 +374,14 @@ public class Level4 extends ScreenAdapter {
             Properties properties1 = (Properties) body.getUserData();
             stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
         }
+        for(Body body : pigs_array){
+            Pigs_schema pigg = (Pigs_schema) body.getUserData();
+            stage.getBatch().draw(pigg.texture,body.getPosition().x- pigg.width/2,body.getPosition().y - pigg.height/2 ,pigg.width/2,pigg.height/2, pigg.width,pigg.height,1.0f , 1.0f , (float) Math.toDegrees(body.getAngle()));
+        }
         stage.getBatch().end();
         stage.draw();
         batch.end();
-
-
-
-        //debugRenderer.render(world,camera.combined);
+        debugRenderer1.render(world,camera.combined);
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();
