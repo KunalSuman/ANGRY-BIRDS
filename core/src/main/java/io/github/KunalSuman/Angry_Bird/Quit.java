@@ -12,8 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import javax.swing.event.ChangeListener;
-
 public class Quit extends ScreenAdapter {
     public Texture T1 ;
     public OrthographicCamera camera ;
@@ -21,8 +19,9 @@ public class Quit extends ScreenAdapter {
     public Stage stage;
     public Texture quitButtonTexture;
     public Texture backButtonTexture;
+    private Pause pause;
     public OrthogonalTiledMapRenderer new_renderer ;
-    Quit(Main main , OrthogonalTiledMapRenderer new_renderer,TiledMap T1,int level ) {
+    Quit(Main main , OrthogonalTiledMapRenderer new_renderer, TiledMap T1, int level , Pause pause) {
         camera = new OrthographicCamera();
         quitButtonTexture = new Texture(Gdx.files.internal("Quit_button.png"));
         backButtonTexture = new Texture(Gdx.files.internal("BACK_button.png"));
@@ -42,7 +41,7 @@ public class Quit extends ScreenAdapter {
         });
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Pause(main,T1,level));
+                main.setScreen(pause);
             }
         });
         // new_renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load(""));

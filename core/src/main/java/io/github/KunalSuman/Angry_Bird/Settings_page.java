@@ -36,7 +36,7 @@ public class Settings_page extends ScreenAdapter {
     public Texture Quit_button ;
     public Texture settings_button;
 
-    public Settings_page(Main main , OrthogonalTiledMapRenderer renderer2 , int return_page , TiledMap T1, int return_number ) {
+    public Settings_page(Main main , OrthogonalTiledMapRenderer renderer2 , int return_page , TiledMap T1, int return_number,Pause pause ) {
         this.renderer2 = renderer2;
         this.main = main;
         this.stage = new Stage(new ScreenViewport());
@@ -72,7 +72,7 @@ public class Settings_page extends ScreenAdapter {
                     main.setScreen(new Menu_page(main));
                 }
                 if(return_page == 1){
-                    main.setScreen(new Pause(main , T1 ,return_number ));
+                    main.setScreen(pause);
                 }
 
             }

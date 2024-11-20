@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.*;
 
+import java.io.IOException;
+
 import static io.github.KunalSuman.Angry_Bird.Button.createButton;
 
 public class Pause extends ScreenAdapter {
@@ -35,11 +37,20 @@ public class Pause extends ScreenAdapter {
     public static Texture return_button ;
     public static TiledMap T1 ;
     public static TiledMap T2 ;
+    private Level1 level1 ;
+    private Level2 level2 ;
+    private Level3 level3 ;
+    private Level4 level4 ;
+    private Level5 level5 ;
 
-    public Pause(Main main ,TiledMap T1,int return_number){
+    public Pause(Main main ,TiledMap T1,int return_number,Level1 level1,Level2 level2,Level3 level3,Level4 level4,Level5 level5) {
         System.out.println("done") ;
         stage = new Stage(new ScreenViewport());
-
+        this.level1 = level1 ;
+        this.level2 = level2 ;
+        this.level3 = level3 ;
+        this.level4 = level4 ;
+        this.level5 = level5 ;
         pause_menu = new Texture(Gdx.files.internal("Pause_menu.png"));
         to_menu = new Texture("Menu_button.png");
         retry_button = new Texture("Restart_button.png");
@@ -129,14 +140,14 @@ public class Pause extends ScreenAdapter {
         //System.out.println("hello");
 
         settings_val.addListener(new ClickListener() {
-           public void clicked(InputEvent event, float x, float y) {
-               main.setScreen(new Settings_page(main , renderer , 1 , T1 ,return_number));
-           }
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new Settings_page(main , renderer , 1 , T1 ,return_number,new Pause(main,T1,return_number,level1,level2,level3,level4,level5)));
+            }
         });
 
         quit_button_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Quit(main , renderer , T1 , return_number));
+                main.setScreen(new Quit(main , renderer , T1 , return_number,new Pause(main,T1,return_number,level1,level2,level3,level4,level5)));
             }
         });
 
@@ -148,14 +159,19 @@ public class Pause extends ScreenAdapter {
 
         Save_quit_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Save_quit(main , return_number ,0, T1));
+                try {
+                    level2.saveGame();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                main.setScreen(new Save_quit(main , return_number ,0, T1,new Pause(main,T1,return_number,level1,level2,level3,level4,level5)));
             }
         });
 
         retry_button_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if(return_number == 1){
-                    main.setScreen(new Level1(main));
+                    main.setScreen(level1);
                 }
                 if(return_number == 2){
                     main.setScreen(new Level2(main));
@@ -177,10 +193,12 @@ public class Pause extends ScreenAdapter {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("done");
                 if(return_number == 1){
-                    main.setScreen(new Level1(main));
+                    main.setScreen(level1);
+                    level1.setPauseStageTrue();
                 }
                 if(return_number == 2){
-                    main.setScreen(new Level2(main));
+                    main.setScreen(level2);
+                    level2.setPauseStageTrue();
                 }
                 if(return_number == 3){
                     main.setScreen(new Level3(main));
@@ -195,7 +213,7 @@ public class Pause extends ScreenAdapter {
         });
 
     }
-        public void render(float delta) {
+    public void render(float delta) {
         super.render(delta);
         camera.update();
         renderer.setView(camera);

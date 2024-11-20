@@ -25,7 +25,7 @@ public class Save_quit extends ScreenAdapter {
     public OrthogonalTiledMapRenderer new_renderer ;
     public Texture pause_page;
 
-    Save_quit(Main main , int level_return , int page_return , TiledMap T1) {
+    Save_quit(Main main , int level_return , int page_return , TiledMap T1,Pause pause) {
         to_menu = new Texture("Quit_button.png");
         Return = new Texture("Return.png");
         //settings_page = new Texture("Settings_page.png");
@@ -61,7 +61,7 @@ public class Save_quit extends ScreenAdapter {
 
         Return.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Pause(main,T1,level_return ));
+                main.setScreen(pause);
             }
         });
 

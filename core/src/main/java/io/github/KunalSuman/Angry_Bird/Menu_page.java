@@ -126,7 +126,7 @@ public class Menu_page extends ScreenAdapter {
 //                if (x>=pbX && x<=pbX+pW && y>=pbY && y<=pbY+pH){
 //                    main.setScreen(new Level_selector(main));}
                 if (x>=sX && x<=sX+sW && adjustedY>=sY && y<=sY+sH){
-                    main.setScreen(new Settings_page(main , renderer ,0 , T1,0));
+                    main.setScreen(new Settings_page(main , renderer ,0 , T1,0,new Pause(main,T1,0,null,null,null,null,null)));
                 }
             }
         });

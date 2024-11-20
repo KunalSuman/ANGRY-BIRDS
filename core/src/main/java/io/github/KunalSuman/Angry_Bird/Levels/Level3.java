@@ -2,98 +2,83 @@ package io.github.KunalSuman.Angry_Bird.Levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import io.github.KunalSuman.Angry_Bird.*;
-import io.github.KunalSuman.Angry_Bird.Birds.Red_bird;
-
-import java.util.ArrayList;
+import io.github.KunalSuman.Angry_Bird.Button;
+import io.github.KunalSuman.Angry_Bird.Completed_Level;
+import io.github.KunalSuman.Angry_Bird.Main;
+import io.github.KunalSuman.Angry_Bird.Pause;
 
 public class Level3 extends ScreenAdapter {
     public Main main ;
     public SpriteBatch batch ;
     public Texture background;
-    public Texture elements;
     public Stage stage ;
     public Stage pauseStage;
-    public TiledMap map;
     public Texture pauseTexture;
     private boolean isPaused = false;
     private int pause;
     public Texture closeButton;
     public Texture pauseButton;
     public Texture backButtonTexture;
-    private float pbX,pbY,pbW,pbH;
-    public OrthogonalTiledMapRenderer renderer;
+    public TiledMap map;
     public OrthographicCamera camera ;
+    public OrthogonalTiledMapRenderer renderer ;
     public Stage lostStage;
     public Texture retryTexture ;
-    public Texture tomenue ;
     public Stage winStage;
     public Texture winTexture ;
+    public Texture Nextlevel;
     public Texture MenuButtonTexture ;
-    public Texture Nextlevel ;
-    public Texture retryButtonTexture;
-    public int x = 0 ;
+    public Texture retryButtonTexture ;
+    public int x  =0 ;
     public Pause pause_render;
     private Body body ;
     private PolygonShape shape ;
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer() ;
-    private World world  = new World(new Vector2(0,-50),true);
+    private World world  = new World(new Vector2(0,-30),true);
+    private Texture PauseButtonTexture ;
     BodyDef bodyDef = new BodyDef();
     Body body2 ;
     Body body3 ;
-    private float multiplyer = 1000.0f ;
+    private float distance = 100.0f ;
     private FixtureDef fixtureDef = new FixtureDef() ;
     private FixtureDef fixture2 =new FixtureDef() ;
     private Texture Red_bird ;
     private ShapeRenderer shapeRenderer;
-    //private
-    public Array<Body> rectangles1 = new Array<>() ;
-    public Properties properties ;
-    private ArrayList<Vector2> pointsOfTrajectory=new ArrayList<>();
-    private boolean isDragging = false;
-    private Vector3 startPosition = new Vector3();
-    private Vector3 endPosition =new Vector3();
-    private Collison collisonListener = new Collison();
-    private Texture PauseButtonTexture;
-    //    private ArrayList<Body> rectangles = new ArrayList<Body>();
-    public Level3(Main main){
+    public Level3(Main main) {
         this.main = new Main();
-        this.batch = new SpriteBatch();
         pause =0;
+        batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+
+        //this.background = new Texture("Level3.png");
         lostStage = new Stage(new ScreenViewport());
         winStage = new Stage(new ScreenViewport());
-        pauseButton = new Texture("pauseButton.png");
-        closeButton = new Texture("closeButton.png");
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1920, 1080);
+        map = new TmxMapLoader().load("LEVEL3.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
         MenuButtonTexture = new Texture("Menu_button.png");
         retryButtonTexture = new Texture("Retry_button.png");
         retryTexture = new Texture("Level_failed.png");
@@ -101,19 +86,10 @@ public class Level3 extends ScreenAdapter {
         Nextlevel = new Texture("Next_level_button.png");
         PauseButtonTexture = new Texture("pauseButton.png");
         backButtonTexture = new Texture("backButton.png");
-        map = new TmxMapLoader().load("LEVEL3.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        shapeRenderer = new ShapeRenderer();
-
-        Gdx.input.setInputProcessor(stage);
-        world.setContactListener(collisonListener);
-
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
-        pause_render = new Pause(main ,map ,1);
-        Red_bird = new Texture("Red.png");
+        pause_render = new Pause(main ,map ,3,null,null,this,null,null);
+        closeButton = new Texture("closeButton.png");
 
         ImageButton PauseButton = Button.createButton(PauseButtonTexture,stage,100,100,0,0);
         ImageButton QuitButton = Button.createButton(backButtonTexture,stage,100,100,0,Gdx.graphics.getHeight()-backButtonTexture.getHeight());
@@ -124,17 +100,17 @@ public class Level3 extends ScreenAdapter {
         ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
         ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(325 ,690);
-        body2 = world.createBody(bodyDef);
 
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(391 ,590);
+        body2 = world.createBody(bodyDef);
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(20);
-
         fixture2.shape = circleShape ;
-        fixture2.density = 0.15f ;
+        fixture2.density = 0.5f ;
+        fixture2.friction = 0.5f ;
         fixture2.restitution = 0.5f ;
-        body2.createFixture(fixture2).setUserData("Bird");
+        body2.createFixture(fixture2);
 
 
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
@@ -146,10 +122,10 @@ public class Level3 extends ScreenAdapter {
             shape = new PolygonShape();
             shape.setAsBox(R2.width/2, R2.height/2);
             fixtureDef.shape = shape;
+            fixtureDef.density = 0.0f ;
+            fixtureDef.friction = 0.5f ;
             body3.createFixture(fixtureDef);
-
         }
-
 
 
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
@@ -162,74 +138,10 @@ public class Level3 extends ScreenAdapter {
             shape.setAsBox(R1.width/2, R1.height/2);
 
             fixtureDef.shape = shape;
-            fixtureDef.density = 0.05f;
-            fixtureDef.friction = 0.5f ;
-            fixtureDef.restitution = 0.5f;
-            body.createFixture(fixtureDef).setUserData("Obstacles");
-            Texture stone_long_vertical = new Texture("stone_long_vertical.png") ;
-            Texture stone_medium_horizontal = new Texture("stone_medium_horizontal.png") ;
-            Texture stone_long_horizontal = new Texture("stone_long_horizontal.png") ;
-            Texture stone_small_vertical = new Texture("stone_small_vertical.png");
-            Texture wood_small_horizontal = new Texture("wood_small_horizontal.png");
-            Texture wood_long_horizontal = new Texture("wood_long_horizontal.png");
-            Texture wood_long_vertical = new Texture("wood_long_vertical.png");
-            Texture glass_small_vertical = new Texture("glass_small_vertical.png");
-            Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
-            Texture glass_long_vertical = new Texture("glass_long_vertical.png");
-            Texture wood_box = new Texture("wood_box.png");
-            Texture TNT = new Texture("TNT.png");
-            if(object.getProperties().get("texture") == null){
-                System.out.println("false");
-            }
-            if(object.getProperties().get("texture").equals("S_L_V" )){
-                properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("S_M_H")) {
-                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }else if (object.getProperties().get("texture").equals("G_L_V")) {
-                properties = new Properties(glass_long_vertical,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("S_L_H")) {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("S_S_V")) {
-                properties = new Properties(stone_small_vertical,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("W_S_H")) {
-                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if(object.getProperties().get("texture").equals("W_S_V")){
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("G_L_H")) {
-                properties = new Properties(glass_long_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("G_S_V")) {
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("TNT")) {
-                properties = new Properties(TNT,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("W_B")) {
-                properties = new Properties(wood_box,R1.height,R1.width,10);
-                body.setUserData(properties);
-            } else if(object.getProperties().get("texture").equals("W_L_V" )){
-                properties = new Properties(wood_long_vertical,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }
-            else if(object.getProperties().get("texture").equals("W_L_H" )){
-                properties = new Properties(wood_long_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }
-            else {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }
-
-            rectangles1.add(body);
+            body.createFixture(fixtureDef);
+            //rectangles.add(new Rectangle(R1.x, R1.y, R1.width, R1.height));
         }
+
         PauseButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -271,111 +183,54 @@ public class Level3 extends ScreenAdapter {
             }
         });
         pauseTexture = new Texture("Pause_menu.png");
-        Gdx.input.setInputProcessor(new InputAdapter(){
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if (button == Input.Buttons.LEFT){
-                    startPosition.set(screenX,screenY,0);
-                    camera.unproject(startPosition);
-
-                    isDragging = true;
-                    return true;
-                }
-                return false;
-
-            }
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                if (button == Input.Buttons.LEFT){
-                    endPosition.set(screenX,screenY,0);
-                    camera.unproject(endPosition);
-                    //for applying force
-                    int launchMultiplier = 500;
-                    double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
-                    Vector2 launchDirection = new Vector2((float) ((startPosition.x -endPosition.x)*distance), (float) ((startPosition.y -endPosition.y)*distance));
-
-                    body2.setLinearVelocity(launchDirection);
-                    //body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
-                    pointsOfTrajectory.clear();
-                    isDragging = false;
-                    return true;
-                }
-                return false;
-            }
-            @Override
-            public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if (isDragging){
-                    endPosition.set(screenX,screenY,0);
-                    camera.unproject(endPosition);
-                    Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
-                    double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
-                    Vector2 calculatedLinearVelocity=body2.getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/body2.getMass()));
-                    calculatePath(pointsOfTrajectory,startPosition,calculatedLinearVelocity);
-                    return true;
-                }
-                return false;
-            }
-
-        });
     }
-    public void render(float delta) {
-
+    public void render(float delta){
         camera.update();
         renderer.setView(camera);
         renderer.render();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        for (Vector2 p: pointsOfTrajectory){
-            shapeRenderer.circle(p.x, p.y, 5);
-        }
-        shapeRenderer.end();
-
-        Vector2 pos = body2.getPosition();
-        world.step(1/60f,12,4);
-        renderer.render(new int[]{3});
         batch.begin();
+        Vector2 pos = body2.getPosition();
 
-        for (Body b: collisonListener.getBodiesToRemove()){
-            if (b!=null) {
-                world.destroyBody(b);
-                rectangles1.removeValue(b,true);
+        world.step(1/60f,6,2);
+        if(x==1){
+            stage.act(delta);
+            stage.draw();
+            lostStage.act(delta);
+            lostStage.getBatch().begin();
+            lostStage.getBatch().draw(retryTexture,(Gdx.graphics.getWidth()-retryTexture.getWidth())/2f,(Gdx.graphics.getHeight()-retryTexture.getHeight())/2f);
+            lostStage.getBatch().end();
+            lostStage.draw();
+        }
+        if(x==2){
+            stage.act(delta);
+            stage.draw();
+            winStage.act(delta);
+            winStage.getBatch().begin();
+            winStage.getBatch().draw(winTexture,(Gdx.graphics.getWidth()-winTexture.getWidth())/2f,(Gdx.graphics.getHeight()-winTexture.getHeight())/2f);
+            winStage.getBatch().end();
+            winStage.draw();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            x =1 ;
+            Gdx.input.setInputProcessor(lostStage);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            x =2 ;
+            Gdx.input.setInputProcessor(winStage);
+        }
+        if(x==0){
+            if (!isPaused){
+                stage.act(delta);
+                stage.draw();
+            }
+            if (isPaused){
+                pause_render.render(delta);
+
             }
         }
-        collisonListener.getBodiesToRemove().clear();
-
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.getBatch().setProjectionMatrix(camera.combined);
-        stage.getBatch().begin();
-        stage.getBatch().draw(Red_bird , pos.x-23 ,pos.y-23 , 46 , 46);
-        for(Body body : rectangles1){
-            Properties properties1 = (Properties) body.getUserData();
-            stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
-        }
-        stage.getBatch().end();
-        stage.draw();
         batch.end();
+        renderer.render(new int[]{3});
+        debugRenderer.render(world,camera.combined);
 
-
-
-        //debugRenderer.render(world,camera.combined);
-    }
-    public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
-        pointsOfTrajectory.clear();
-        for (int i=0;i<=10;i++){
-            if (Velocity.x<200 && Velocity.x>-200 && Velocity.y<200 && Velocity.y>-200) {
-                float simulatedTime = i * 0.3f;
-                float x = startPosition.x + Velocity.x * simulatedTime / 2;
-                float y = startPosition.y + Velocity.y * simulatedTime / 2 - 0.5f * simulatedTime * simulatedTime * 9.8f;
-                pointsOfTrajectory.add(new Vector2(x, y));
-            }else{
-                float simulatedTime = i * 0.3f;
-                float directionModulus = (float) Math.sqrt((Velocity.x*Velocity.x)+(Velocity.y*Velocity.y));
-                float x = startPosition.x + (Velocity.x/directionModulus)*200 * simulatedTime;
-                float y = startPosition.y + (Velocity.y/directionModulus)*200 * simulatedTime  - 0.5f * simulatedTime * simulatedTime * 9.8f;
-                pointsOfTrajectory.add(new Vector2(x, y));
-            }
-        }
     }
 }

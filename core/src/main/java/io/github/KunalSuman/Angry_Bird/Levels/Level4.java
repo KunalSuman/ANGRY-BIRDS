@@ -112,7 +112,7 @@ public class Level4 extends ScreenAdapter {
 
         retryTexture = new Texture("Level_failed.png");
         winTexture = new Texture("Level_complete.png");
-        pause_render = new Pause(main ,map ,1);
+        pause_render = new Pause(main ,map ,5,null,null,null,this,null);
         Red_bird = new Texture("Red.png");
 
         ImageButton PauseButton = Button.createButton(PauseButtonTexture,stage,100,100,0,0);
