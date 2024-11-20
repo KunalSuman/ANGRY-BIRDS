@@ -192,10 +192,10 @@ public class Pause extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("done");
-                if(return_number == 1){
-                    main.setScreen(level1);
-                    level1.setPauseStageTrue();
-                }
+//                if(return_number == 1){
+//                    main.setScreen(level1);
+//                    level1.setPauseStageTrue();
+//                }
                 if(return_number == 2){
                     main.setScreen(level2);
                     level2.setPauseStageTrue();

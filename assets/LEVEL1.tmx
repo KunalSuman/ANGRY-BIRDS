@@ -7,7 +7,7 @@
  <imagelayer id="2" name="level1">
   <image source="level1.png" width="1920" height="1080"/>
  </imagelayer>
- <layer id="1" name="Tile Layer 1" width="384" height="216" offsetx="0.666667" offsety="1.33333">
+ <layer id="1" name="Tile Layer 1" width="384" height="216" visible="0" offsetx="0.666667" offsety="1.33333">
   <properties>
    <property name="Movable" type="object" value="1"/>
    <property name="movable2" type="object" value="2"/>
@@ -556,7 +556,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup color="#000000" id="6" name="Static layer">
+ <objectgroup color="#000000" id="6" name="Static layer" visible="0">
   <object id="42" x="1111.33" y="657.333" width="130.667" height="54"/>
   <object id="43" x="1243.33" y="671.333" width="130.667" height="40"/>
   <object id="44" x="303.333" y="410.667" width="88.6667" height="202.667"/>
@@ -565,27 +565,27 @@
  <objectgroup id="5" name="PIGS">
   <object id="146" x="1151.93" y="190.264" width="96.0588" height="93.3312">
    <properties>
-    <property name="texture" value="king_pig"/>
+    <property name="pig" value="king_pig"/>
    </properties>
   </object>
   <object id="147" x="1167.94" y="316.514" width="77.2048" height="72.5054">
    <properties>
-    <property name="texture" value="helmet_pig"/>
+    <property name="pig" value="helmet_pig"/>
    </properties>
   </object>
   <object id="148" x="1254.9" y="432.244" width="57.1678" height="58.562">
    <properties>
-    <property name="texture" value="small_pig"/>
+    <property name="pig" value="small_pig"/>
    </properties>
   </object>
   <object id="149" x="1234.5" y="521.482" width="47.4074" height="48.8017">
    <properties>
-    <property name="texture" value="small_pig"/>
+    <property name="pig" value="small_pig"/>
    </properties>
   </object>
   <object id="151" x="1195.06" y="609.081" width="50.2048" height="45.5054">
    <properties>
-    <property name="texture" value="helmet_pig"/>
+    <property name="pig" value="helmet_pig"/>
    </properties>
   </object>
  </objectgroup>

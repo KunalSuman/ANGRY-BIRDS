@@ -186,8 +186,7 @@ public class Level2 extends ScreenAdapter {
             if(object.getProperties().get("texture").equals("S_L_V" )){
                 properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
                 body.setUserData(properties);
-            }
-            else if (object.getProperties().get("texture").equals("S_M_H")) {
+            } else if (object.getProperties().get("texture").equals("S_M_H")) {
                 properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
                 body.setUserData(properties);
             }else if (object.getProperties().get("texture").equals("G_L_V")) {

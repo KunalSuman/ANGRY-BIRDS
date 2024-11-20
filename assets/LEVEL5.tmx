@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="7" nextobjectid="39">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="8" nextobjectid="44">
  <tileset firstgid="1" source="INGAME_BLOCKS_1.tsx"/>
  <tileset firstgid="47971" source="INGAME_BIRDS_1.tsx"/>
  <tileset firstgid="88308" source="INGAME_BLOCKS_2.tsx"/>
@@ -449,22 +449,22 @@
 </data>
  </layer>
  <objectgroup id="6" name="dynamic">
-  <object id="6" x="1250" y="733" width="214" height="20">
+  <object id="6" x="1251" y="734" width="214" height="20">
    <properties>
     <property name="texture" value="W_L_H"/>
    </properties>
   </object>
-  <object id="8" x="1343.33" y="641" width="14" height="92">
+  <object id="8" x="1343.33" y="641" width="14" height="92.875">
    <properties>
     <property name="texture" value="W_S_V"/>
    </properties>
   </object>
-  <object id="12" x="1279.25" y="755" width="62.5" height="61.5">
+  <object id="12" x="1274.63" y="755.75" width="64.375" height="62.25">
    <properties>
     <property name="texture" value="TNT"/>
    </properties>
   </object>
-  <object id="13" x="1447" y="527.25" width="201.5" height="19.25">
+  <object id="13" x="1447" y="529.25" width="201.5" height="19.25">
    <properties>
     <property name="texture" value="W_L_H"/>
    </properties>
@@ -474,37 +474,37 @@
     <property name="texture" value="S_S_H"/>
    </properties>
   </object>
-  <object id="19" x="1598.83" y="273.167" width="14.75" height="119">
+  <object id="19" x="1598.83" y="275.167" width="14.75" height="119">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="20" x="1469.5" y="255.75" width="146.75" height="16.75">
+  <object id="20" x="1469.5" y="259.75" width="146.75" height="14.75">
    <properties>
     <property name="texture" value="S_S_H"/>
    </properties>
   </object>
-  <object id="21" x="1449.75" y="239" width="188.25" height="16">
+  <object id="21" x="1449.75" y="243" width="188.25" height="16">
    <properties>
     <property name="texture" value="G_L_H"/>
    </properties>
   </object>
-  <object id="23" x="1449.5" y="255.917" width="20.25" height="271">
+  <object id="23" x="1449.5" y="259.667" width="20.25" height="269.25">
    <properties>
     <property name="texture" value="G_L_V"/>
    </properties>
   </object>
-  <object id="26" x="1617.88" y="256.5" width="20.25" height="271">
+  <object id="26" x="1617.88" y="259.75" width="20.25" height="269.75">
    <properties>
     <property name="texture" value="G_L_V"/>
    </properties>
   </object>
-  <object id="27" x="1607.88" y="548.5" width="20.25" height="201">
+  <object id="27" x="1620.88" y="548.5" width="20.25" height="205">
    <properties>
     <property name="texture" value="G_L_V"/>
    </properties>
   </object>
-  <object id="28" x="1526.88" y="551.5" width="20.25" height="201">
+  <object id="28" x="1526.88" y="549" width="20.25" height="205">
    <properties>
     <property name="texture" value="G_L_V"/>
    </properties>
@@ -519,37 +519,37 @@
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="31" x="1470.96" y="411.167" width="14.75" height="116.333">
+  <object id="31" x="1470.96" y="413.167" width="14.75" height="116.333">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="32" x="1599.96" y="413.167" width="14.75" height="113">
+  <object id="32" x="1599.96" y="412.917" width="14.75" height="116.25">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="33" x="1366.33" y="542" width="78.3333" height="77">
+  <object id="33" x="1359.33" y="544" width="78.3333" height="77">
    <properties>
     <property name="texture" value="W_B"/>
    </properties>
   </object>
-  <object id="35" x="1255" y="642.667" width="14" height="92">
+  <object id="35" x="1254.82" y="641.394" width="14" height="92.75">
    <properties>
     <property name="texture" value="W_S_V"/>
    </properties>
   </object>
-  <object id="36" x="1449.67" y="642.667" width="14" height="92">
+  <object id="36" x="1449.67" y="640.667" width="14" height="93.25">
    <properties>
     <property name="texture" value="W_S_V"/>
    </properties>
   </object>
-  <object id="37" x="1258.33" y="753.333" width="14" height="64.6667">
+  <object id="37" x="1258.33" y="753.958" width="14" height="64.0417">
    <properties>
     <property name="texture" value="W_S_V"/>
    </properties>
   </object>
-  <object id="38" x="1452.33" y="550" width="14" height="68">
+  <object id="38" x="1449.33" y="549" width="14" height="71.5">
    <properties>
     <property name="texture" value="W_S_V"/>
    </properties>
@@ -561,5 +561,32 @@
   <object id="3" x="1523" y="754" width="176" height="29"/>
   <object id="24" x="392" y="530" width="83" height="206"/>
   <object id="25" x="195" y="737" width="292" height="51"/>
+ </objectgroup>
+ <objectgroup id="7" name="pigs">
+  <object id="39" x="1504.67" y="458.667" width="69.3333" height="68.6667">
+   <properties>
+    <property name="pig" value="helmet_pig"/>
+   </properties>
+  </object>
+  <object id="40" x="1506.67" y="309.333" width="76.6667" height="84">
+   <properties>
+    <property name="pig" value="king_pig"/>
+   </properties>
+  </object>
+  <object id="41" x="1379.33" y="675.333" width="54" height="58">
+   <properties>
+    <property name="pig" value="small_pig"/>
+   </properties>
+  </object>
+  <object id="42" x="1283.33" y="671.333" width="52.6667" height="62">
+   <properties>
+    <property name="pig" value="small_pig"/>
+   </properties>
+  </object>
+  <object id="43" x="1562.67" y="698" width="49.3333" height="55.3333">
+   <properties>
+    <property name="pig" value="small_pig"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
