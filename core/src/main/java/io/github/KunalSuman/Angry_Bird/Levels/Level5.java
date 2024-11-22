@@ -183,14 +183,14 @@ public class Level5 extends ScreenAdapter {
             pig_fixture_def.shape = pig_shape;
             pig_body.createFixture(pig_fixture_def).setUserData("Pig");
             if(object1.getProperties().get("pig").equals("king_pig" )) {
-                pig_t = new Pigs_schema(0, 0, king_pig, 0, pigs.height, pigs.width);
-                pig_body.setUserData(pig_t);
+                properties = new Properties( king_pig, pigs.height, pigs.width ,0 );
+                pig_body.setUserData(properties);
             } else if (object1.getProperties().get("pig").equals("small_pig")) {
-                pig_t = new Pigs_schema(0, 0, small_pig, 0, pigs.height, pigs.width);
-                pig_body.setUserData(pig_t);
+                properties = new Properties( small_pig, pigs.height, pigs.width , 0);
+                pig_body.setUserData(properties);
             }else if (object1.getProperties().get("pig").equals("helmet_pig" )) {
-                pig_t = new Pigs_schema(0, 0, helmet_pig, 0, pigs.height, pigs.width);
-                pig_body.setUserData(pig_t);
+                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 0 );
+                pig_body.setUserData(properties);
             }
             pigs_array.add(pig_body);
         }
@@ -375,7 +375,7 @@ public class Level5 extends ScreenAdapter {
             stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
         }
         for(Body body : pigs_array){
-            Pigs_schema pigg = (Pigs_schema) body.getUserData();
+            Properties pigg = (Properties) body.getUserData();
             stage.getBatch().draw(pigg.texture,body.getPosition().x- pigg.width/2,body.getPosition().y - pigg.height/2 ,pigg.width/2,pigg.height/2, pigg.width,pigg.height,1.0f , 1.0f , (float) Math.toDegrees(body.getAngle()));
         }
         stage.getBatch().end();

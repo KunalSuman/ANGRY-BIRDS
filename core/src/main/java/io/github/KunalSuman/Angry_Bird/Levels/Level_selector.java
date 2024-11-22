@@ -23,6 +23,7 @@ import io.github.KunalSuman.Angry_Bird.Button;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
 
@@ -79,7 +80,27 @@ public class Level_selector extends ScreenAdapter {
 
         Load_button1.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Level4(main));
+                int l;
+                ArrayList<Integer> s;
+                try {
+                    s = savedGamesList.loadArray();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                l = s.get(0);
+                try {
+                    if (l==2) {
+                        Level2 l2 = Level2.loadGame(main);
+                        System.out.println("Loading save file");
+                        main.setScreen(l2);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         Load_button2.addListener(new ClickListener() {

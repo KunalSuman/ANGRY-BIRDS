@@ -177,55 +177,65 @@ public class Level2 extends ScreenAdapter {
             Texture wood_long_vertical = new Texture("wood_long_vertical.png");
             Texture glass_small_vertical = new Texture("glass_small_vertical.png");
             Texture glass_long_horizontal = new Texture("glass_long_horizontal.png");
-            Texture glass_long_vertical = new Texture("glass_long_vertical.png");
             Texture wood_box = new Texture("wood_box.png");
             Texture TNT = new Texture("TNT.png");
             if(object.getProperties().get("texture") == null){
                 System.out.println("false");
             }
             if(object.getProperties().get("texture").equals("S_L_V" )){
-                properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
+                properties = new Properties(stone_long_vertical,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
-            } else if (object.getProperties().get("texture").equals("S_M_H")) {
-                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
-                body.setUserData(properties);
-            }else if (object.getProperties().get("texture").equals("G_L_V")) {
-                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
+            }
+            else if (object.getProperties().get("texture").equals("S_M_H")) {
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_L_H")) {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_S_V")) {
-                properties = new Properties(stone_small_vertical,R1.height,R1.width,10);
+                properties = new Properties(stone_small_vertical,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_S_H")) {
-                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10);
+                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_S_V")){
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_L_H")) {
-                properties = new Properties(glass_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(glass_long_horizontal,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_S_V")) {
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("TNT")) {
-                properties = new Properties(TNT,R1.height,R1.width,10);
+                properties = new Properties(TNT,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_B")) {
-                properties = new Properties(wood_box,R1.height,R1.width,10);
+                properties = new Properties(wood_box,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_L_V" )){
-                properties = new Properties(wood_long_vertical,R1.height,R1.width,10);
+                properties = new Properties(wood_long_vertical,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             }
             else if(object.getProperties().get("texture").equals("W_L_H" )){
-                properties = new Properties(wood_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(wood_long_horizontal,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             }
             else {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10,objectId);
+                objectId++;
                 body.setUserData(properties);
             }
 
@@ -444,13 +454,8 @@ public class Level2 extends ScreenAdapter {
                     properties = new Properties(stone_long_vertical,g1.p1.get(objectId).height,g1.p1.get(objectId).width,g1.p1.get(objectId).health,g1.p1.get(objectId).objectId);
                     body.setUserData(properties);
                 }
-            } else if (object.getProperties().get("texture").equals("G_L_H")) {
-                objectId++ ;
-                if (g1.p1.containsKey(objectId)) {
-                    properties = new Properties(glass_long_horizontal,g1.p1.get(objectId).height,g1.p1.get(objectId).width,g1.p1.get(objectId).health,g1.p1.get(objectId).objectId);
-                    body.setUserData(properties);
-                }
-            } else if (object.getProperties().get("texture").equals("S_M_H")) {
+            }
+            else if (object.getProperties().get("texture").equals("S_M_H")) {
                 objectId++;
                 if (g1.p1.containsKey(objectId)) {
                     properties = new Properties(stone_medium_horizontal,g1.p1.get(objectId).height,g1.p1.get(objectId).width,g1.p1.get(objectId).health,g1.p1.get(objectId).objectId);
@@ -723,6 +728,8 @@ public class Level2 extends ScreenAdapter {
         int score = 0;
         float birdPositionX = currentBody.getPosition().x;
         float birdPositionY = currentBody.getPosition().y;
+        savedGamesList s = new savedGamesList();
+        s.setLevel2();
         Properties redProperty = (Properties) red.getBirdBody().getUserData();
         int currentBird = 0;
         HashMap<Integer,Float> objectPositionsX = new HashMap<>();
@@ -737,18 +744,19 @@ public class Level2 extends ScreenAdapter {
         }
         GameSaver g1 = new GameSaver(score,birdPositionX,birdPositionY,(int)redProperty.health,currentBird,objectPositionsX,objectPositionsY,properties);
         g1.saveGame();
+        s.saveArray();
         GameSaver.level2Saved=true;
 
     }
     public static Level2 loadGame(Main main) throws IOException, ClassNotFoundException {
         GameSaver g1;
-        FileInputStream fileIn = new FileInputStream("C:\\Users\\jagan\\Downloads\\ANGRY-BIRDS-master-new-branch\\ANGRY-BIRDS-master\\SaveData.ser");
+        FileInputStream fileIn = new FileInputStream("SaveData.ser");
         ObjectInputStream in = new ObjectInputStream(fileIn);
+
         g1 = (GameSaver) in.readObject();
         in.close();
         fileIn.close();
         Level2 l2=new Level2(main,g1);
-
         System.out.println(g1.birdPositionX);
 
         return l2;

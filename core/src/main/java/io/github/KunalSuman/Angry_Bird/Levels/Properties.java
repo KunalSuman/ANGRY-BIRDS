@@ -11,6 +11,7 @@ public class Properties implements Serializable {
     public float width ;
     public float health ;
     public int objectId;
+    public float dead ;
 
     public Properties(Texture texture, float height, float width, float health) {
         this.texture = new TextureRegion(texture);
@@ -24,5 +25,12 @@ public class Properties implements Serializable {
         this.objectId = objectId;
         this.width = width;
         this.health = health;
+    }
+    public Properties(TextureRegion texture, float height, float width, float health , float dead) {
+        this.texture = new TextureRegion(texture);
+        this.height = height;
+        this.width = width;
+        this.health = health;
+        this.dead = dead;
     }
 }

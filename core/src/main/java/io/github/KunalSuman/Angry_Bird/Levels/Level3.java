@@ -183,18 +183,17 @@ public class Level3 extends ScreenAdapter {
             pig_fixture_def.shape = pig_shape;
             pig_body.createFixture(pig_fixture_def).setUserData("Pig");
             if(object1.getProperties().get("pig").equals("king_pig" )) {
-                pig_t = new Pigs_schema(0, 0, king_pig, 0, pigs.height, pigs.width);
-                pig_body.setUserData(pig_t);
+                properties = new Properties( king_pig, pigs.height, pigs.width ,0 );
+                pig_body.setUserData(properties);
             } else if (object1.getProperties().get("pig").equals("small_pig")) {
-                pig_t = new Pigs_schema(0, 0, small_pig, 0, pigs.height, pigs.width);
-                pig_body.setUserData(pig_t);
+                properties = new Properties( small_pig, pigs.height, pigs.width , 0);
+                pig_body.setUserData(properties);
             }else if (object1.getProperties().get("pig").equals("helmet_pig" )) {
-                pig_t = new Pigs_schema(0, 0, helmet_pig, 0, pigs.height, pigs.width);
-                pig_body.setUserData(pig_t);
+                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 0 );
+                pig_body.setUserData(properties);
             }
             pigs_array.add(pig_body);
         }
-
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle R1 = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -212,43 +211,43 @@ public class Level3 extends ScreenAdapter {
                 System.out.println("false");
             }
             if(object.getProperties().get("texture").equals("S_L_V" )){
-                properties = new Properties(stone_long_vertical,R1.height,R1.width,10);
+                properties = new Properties(stone_long_vertical,R1.height,R1.width,3);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_M_H")) {
-                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10);
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,3);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_L_H")) {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,3);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_S_V")) {
-                properties = new Properties(stone_small_vertical,R1.height,R1.width,10);
+                properties = new Properties(stone_small_vertical,R1.height,R1.width,3);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_S_H")) {
-                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10);
+                properties = new Properties(wood_small_horizontal,R1.height,R1.width,2);
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_S_V")){
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,1);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_L_H")) {
-                properties = new Properties(glass_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(glass_long_horizontal,R1.height,R1.width,1);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_S_V")) {
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,1);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("TNT")) {
-                properties = new Properties(TNT,R1.height,R1.width,10);
+                properties = new Properties(TNT,R1.height,R1.width,1);
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_B")) {
-                properties = new Properties(wood_box,R1.height,R1.width,10);
+                properties = new Properties(wood_box,R1.height,R1.width,2);
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_L_V" )){
-                properties = new Properties(wood_long_vertical,R1.height,R1.width,10);
+                properties = new Properties(wood_long_vertical,R1.height,R1.width,2);
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_L_H" )){
-                properties = new Properties(wood_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(wood_long_horizontal,R1.height,R1.width,2);
                 body.setUserData(properties);
             } else {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,2);
                 body.setUserData(properties);
             }
             rectangles1.add(body);
@@ -375,7 +374,7 @@ public class Level3 extends ScreenAdapter {
             stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
         }
         for(Body body : pigs_array){
-            Pigs_schema pigg = (Pigs_schema) body.getUserData();
+            Properties pigg = (Properties) body.getUserData();
             stage.getBatch().draw(pigg.texture,body.getPosition().x- pigg.width/2,body.getPosition().y - pigg.height/2 ,pigg.width/2,pigg.height/2, pigg.width,pigg.height,1.0f , 1.0f , (float) Math.toDegrees(body.getAngle()));
         }
         stage.getBatch().end();
