@@ -54,7 +54,7 @@ public class Level2 extends ScreenAdapter {
     public OrthogonalTiledMapRenderer renderer;
     public OrthographicCamera camera ;
     public Stage lostStage;
-    public Texture retryTexture ;;
+    public Texture retryTexture ;
     public Stage winStage;
     public Texture winTexture ;
     public Texture MenuButtonTexture ;
@@ -85,14 +85,26 @@ public class Level2 extends ScreenAdapter {
     Red_bird red;
     public static boolean hasSaveFile=false;
     private float timeLapsed=0;
-
+    private Texture king_pig ;
+    private Texture small_pig ;
+    private Texture helmet_pig ;
+    private Body pig_body ;
+    private BodyDef pig_body_def = new BodyDef() ;
+    private FixtureDef pig_fixture_def = new FixtureDef() ;
+    private PolygonShape pig_shape;
+    public ArrayList<Body> pigs_array = new ArrayList<>();
+    public Body body4 ;
+    public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     public Level2(Main main){
-        this.main = new Main();
+        this.main = main;
         this.batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
         lostStage = new Stage(new ScreenViewport());
         winStage = new Stage(new ScreenViewport());
+        king_pig = new Texture("king_pig.png");
+        small_pig = new Texture("small_pig.png");
+        helmet_pig = new Texture("helmet_pig.png");
         pauseButton = new Texture("pauseButton.png");
         closeButton = new Texture("closeButton.png");
         MenuButtonTexture = new Texture("Menu_button.png");
@@ -125,20 +137,37 @@ public class Level2 extends ScreenAdapter {
         ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
         ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
-        red = new Red_bird(body2,world,Red_bird,10,1,10,"LMAO",0);
-        Properties birdProperties = new Properties (Red_bird,46,46,100);
-        red.createBirdBody(bodyDef,BodyDef.BodyType.DynamicBody,335,695,birdProperties);
+//        red = new Red_bird(body2,world,Red_bird,10,1,10,"LMAO",0);
+//        Properties birdProperties = new Properties (Red_bird,10,46,46,100,true);
+//        red.createBirdBody(bodyDef,BodyDef.BodyType.DynamicBody,335,695,birdProperties);
 
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(325 ,690);
+        body2 = world.createBody(bodyDef);
 
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(20);
+        circleShape.setRadius(50);
 
         fixture2.shape = circleShape ;
         fixture2.density = 0.15f ;
         fixture2.restitution = 0.5f ;
-        red.createBirdFixture(fixture2,20);
-        currentBody = red.getBirdBody();
+        body2.createFixture(fixture2).setUserData("Bird");
+        Properties birdBodyProperty = new Properties(Red_bird,4,30,30,40,true);
+        body2.setUserData(birdBodyProperty);
 
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle R2 = ((RectangleMapObject) object).getRectangle();
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set(R2.x + R2.width/2 , R2.y + R2.height/2);
+            body4 = world.createBody(bodyDef);
+
+            shape = new PolygonShape();
+            shape.setAsBox(R2.width/2, R2.height/2);
+            fixtureDef.shape = shape;
+            body4.createFixture(fixtureDef).setUserData("Border");
+            properties = new Properties(1);
+            body4.setUserData(properties);
+        }
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle R2 = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -151,7 +180,27 @@ public class Level2 extends ScreenAdapter {
             body3.createFixture(fixtureDef);
 
         }
-
+        for(MapObject object1 : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle pigs = ((RectangleMapObject) object1).getRectangle();
+            pig_body_def.type = BodyDef.BodyType.DynamicBody;
+            pig_body_def.position.set(pigs.x + pigs.width/2, pigs.y + pigs.height/2);
+            pig_body = world.createBody(pig_body_def);
+            pig_shape = new PolygonShape();
+            pig_shape.setAsBox(pigs.width/2, pigs.height/2);
+            pig_fixture_def.shape = pig_shape;
+            pig_body.createFixture(pig_fixture_def).setUserData("Pig");
+            if(object1.getProperties().get("pig").equals("king_pig" )) {
+                properties = new Properties(king_pig, pigs.height, pigs.width ,5,false);
+                pig_body.setUserData(properties);
+            } else if (object1.getProperties().get("pig").equals("small_pig")) {
+                properties = new Properties( small_pig, pigs.height, pigs.width , 3,false);
+                pig_body.setUserData(properties);
+            }else if (object1.getProperties().get("pig").equals("helmet_pig" )) {
+                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 3,false );
+                pig_body.setUserData(properties);
+            }
+            pigs_array.add(pig_body);
+        }
 
         int objectId = 0;
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
@@ -183,28 +232,28 @@ public class Level2 extends ScreenAdapter {
                 System.out.println("false");
             }
             if(object.getProperties().get("texture").equals("S_L_V" )){
-                properties = new Properties(stone_long_vertical,R1.height,R1.width,10,objectId);
+                properties = new Properties(stone_long_vertical,R1.height,R1.width,30,objectId);
                 objectId++;
                 body.setUserData(properties);
             }
             else if (object.getProperties().get("texture").equals("S_M_H")) {
-                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,10,objectId);
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,30,objectId);
                 objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_L_H")) {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,10,objectId);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,30,objectId);
                 objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_S_V")) {
-                properties = new Properties(stone_small_vertical,R1.height,R1.width,10,objectId);
+                properties = new Properties(stone_small_vertical,R1.height,R1.width,30,objectId);
                 objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_S_H")) {
-                properties = new Properties(wood_small_horizontal,R1.height,R1.width,10,objectId);
+                properties = new Properties(wood_small_horizontal,R1.height,R1.width,20,objectId);
                 objectId++;
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_S_V")){
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,10,objectId);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,20,objectId);
                 objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_L_H")) {
@@ -220,16 +269,16 @@ public class Level2 extends ScreenAdapter {
                 objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_B")) {
-                properties = new Properties(wood_box,R1.height,R1.width,10,objectId);
+                properties = new Properties(wood_box,R1.height,R1.width,20,objectId);
                 objectId++;
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_L_V" )){
-                properties = new Properties(wood_long_vertical,R1.height,R1.width,10,objectId);
+                properties = new Properties(wood_long_vertical,R1.height,R1.width,20,objectId);
                 objectId++;
                 body.setUserData(properties);
             }
             else if(object.getProperties().get("texture").equals("W_L_H" )){
-                properties = new Properties(wood_long_horizontal,R1.height,R1.width,10,objectId);
+                properties = new Properties(wood_long_horizontal,R1.height,R1.width,20,objectId);
                 objectId++;
                 body.setUserData(properties);
             }
@@ -306,12 +355,12 @@ public class Level2 extends ScreenAdapter {
                     camera.unproject(endPosition);
 
                     //for applying force
-                    float launchMultiplier = 10.5f;
+                    float launchMultiplier = 5.5f;
                     double distance = Math.sqrt(((startPosition.x - endPosition.x) * (startPosition.x - endPosition.x)) + ((startPosition.y - endPosition.y) * (startPosition.y - endPosition.y)));
                     Vector2 launchDirection = new Vector2((float) (((startPosition.x - endPosition.x))*launchMultiplier), (float) (((startPosition.y - endPosition.y)) *launchMultiplier));
                     System.out.println(launchDirection.x);
                     System.out.println(launchDirection.y);
-                    currentBody.setLinearVelocity(launchDirection);
+                    body2.setLinearVelocity(launchDirection);
                     //body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
                     pointsOfTrajectory.clear();
                     isDragging = false;
@@ -337,7 +386,7 @@ public class Level2 extends ScreenAdapter {
 
                     Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
-                    Vector2 calculatedLinearVelocity=currentBody.getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/currentBody.getMass()));
+                    Vector2 calculatedLinearVelocity=body2.getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/body2.getMass()));
                     calculatePath(pointsOfTrajectory,startPosition,calculatedLinearVelocity);
                     return true;
                 }
@@ -350,7 +399,7 @@ public class Level2 extends ScreenAdapter {
         Gdx.input.setInputProcessor(multiplexer);
     }
     public Level2(Main main,GameSaver g1){
-        this.main = new Main();
+        this.main = main;
         this.batch = new SpriteBatch();
         stage = new Stage(new ScreenViewport());
         pauseStage = new Stage(new ScreenViewport());
@@ -379,8 +428,8 @@ public class Level2 extends ScreenAdapter {
         pause_render = new Pause(main ,map ,2,null,this,null,null,null);
         Red_bird = new Texture("Red.png");
 
-        ImageButton PauseButton = Button.createButton(PauseButtonTexture,stage,100,100,0,0);
-        ImageButton QuitButton = Button.createButton(backButtonTexture,stage,100,100,0,Gdx.graphics.getHeight()-backButtonTexture.getHeight());
+        ImageButton PauseButton = Button.createButton(PauseButtonTexture,stage,100,100,10,10);
+        ImageButton QuitButton = Button.createButton(backButtonTexture,stage,100,100,10,Gdx.graphics.getHeight()-10);
         ImageButton CloseButton1 = Button.createButton(closeButton,pauseStage,100,100,Gdx.graphics.getWidth()- closeButton.getWidth(),Gdx.graphics.getHeight()- closeButton.getHeight());
         ImageButton CloseButton2 = Button.createButton(closeButton,lostStage,100,100,Gdx.graphics.getWidth()-closeButton.getWidth(),Gdx.graphics.getHeight()-closeButton.getHeight());
         ImageButton LostMenuButton = Button.createButton(MenuButtonTexture,lostStage,280,120,1000,175);
@@ -388,10 +437,9 @@ public class Level2 extends ScreenAdapter {
         ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
         ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
-        red = new Red_bird(body2,world,Red_bird,10,1,10,"LMAO",0);
-        Properties birdProperties = new Properties (Red_bird,46,46,g1.birdHealth);
-        red.createBirdBody(bodyDef,BodyDef.BodyType.DynamicBody,g1.birdPositionX,g1.birdPositionY,birdProperties);
-
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(325 ,690);
+        body2 = world.createBody(bodyDef);
 
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(20);
@@ -399,8 +447,9 @@ public class Level2 extends ScreenAdapter {
         fixture2.shape = circleShape ;
         fixture2.density = 0.15f ;
         fixture2.restitution = 0.5f ;
-        red.createBirdFixture(fixture2,20);
-        currentBody = red.getBirdBody();
+        body2.createFixture(fixture2).setUserData("Bird");
+        Properties birdBodyProperty = new Properties(Red_bird,4,10,10,10,true);
+        body2.setUserData(birdBodyProperty);
 
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle R2 = ((RectangleMapObject) object).getRectangle();
@@ -606,7 +655,7 @@ public class Level2 extends ScreenAdapter {
                     Vector2 launchDirection = new Vector2((float) (((startPosition.x - endPosition.x))*launchMultiplier), (float) (((startPosition.y - endPosition.y)) *launchMultiplier));
                     System.out.println(launchDirection.x);
                     System.out.println(launchDirection.y);
-                    currentBody.setLinearVelocity(launchDirection);
+                    body2.setLinearVelocity(launchDirection);
                     //body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
                     pointsOfTrajectory.clear();
                     isDragging = false;
@@ -632,7 +681,7 @@ public class Level2 extends ScreenAdapter {
 
                     Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
-                    Vector2 calculatedLinearVelocity=currentBody.getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/currentBody.getMass()));
+                    Vector2 calculatedLinearVelocity=body2.getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/currentBody.getMass()));
                     calculatePath(pointsOfTrajectory,startPosition,calculatedLinearVelocity);
                     return true;
                 }
@@ -677,15 +726,23 @@ public class Level2 extends ScreenAdapter {
         }
         shapeRenderer.end();
 
-        Vector2 pos = red.getPosition();
+        Vector2 pos = body2.getPosition();
         world.step(1/120f,12,4);
         renderer.render(new int[]{3});
         batch.begin();
 
         for (Body b: collisonListener.getBodiesToRemove()){
             if (b!=null) {
-                world.destroyBody(b);
-                rectangles1.removeValue(b,true);
+                if (rectangles1.contains(b,true)) {
+                    world.destroyBody(b);
+                    rectangles1.removeValue(b, true);
+                }
+
+            }if (b!=null){
+                if (pigs_array.contains(b)) {
+                    world.destroyBody(b);
+                    pigs_array.remove(b);
+                }
             }
         }
         collisonListener.getBodiesToRemove().clear();
@@ -693,18 +750,26 @@ public class Level2 extends ScreenAdapter {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.getBatch().setProjectionMatrix(camera.combined);
         stage.getBatch().begin();
-        stage.getBatch().draw(Red_bird , pos.x-23 ,pos.y-23 , 46 , 46);
+        //stage.getBatch().draw(Red_bird , pos.x-23 ,pos.y-23 , 46 , 46);
         for(Body body : rectangles1){
             Properties properties1 = (Properties) body.getUserData();
             stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
         }
+        for (Body body : pigs_array) {
+            Properties pigg = (Properties) body.getUserData();
+            stage.getBatch().draw(pigg.texture, body.getPosition().x - pigg.width / 2, body.getPosition().y - pigg.height / 2, pigg.width / 2, pigg.height / 2, pigg.width, pigg.height, 1.0f, 1.0f, (float) Math.toDegrees(body.getAngle()));
+        }
+        Properties bird = (Properties) body2.getUserData();
+        stage.getBatch().draw(bird.texture,body2.getPosition().x-bird.width/2,body2.getPosition().y-bird.width/2,bird.width,bird.height,50,50,1.0f,1.0f,(float) Math.toDegrees(body2.getAngle()));
         stage.getBatch().end();
         stage.draw();
         batch.end();
+        if(pigs_array.isEmpty()){
 
-
-
-        //debugRenderer.render(world,camera.combined);
+            System.out.println("pigs_array==null");
+            main.setScreen(new Completed_Level(main,2));
+        }
+        debugRenderer.render(world,camera.combined);
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();

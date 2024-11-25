@@ -95,7 +95,7 @@ public class Level1 extends ScreenAdapter {
     public ArrayList<Body> pigs_array = new ArrayList<>();
     //private ArrayList<Body> rectangles = new ArrayList<Body>();
     public Level1(Main main){
-        this.main = new Main();
+        this.main = main;
         this.batch = new SpriteBatch();
         pause =0;
         stage = new Stage(new ScreenViewport());
@@ -159,6 +159,8 @@ public class Level1 extends ScreenAdapter {
         fixture2.density = 0.15f ;
         fixture2.restitution = 0.5f ;
         body2.createFixture(fixture2).setUserData("Bird");
+        Properties birdBodyProperty = new Properties(Red_bird,4,10,10,10,true);
+        body2.setUserData(birdBodyProperty);
 
 
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
@@ -183,18 +185,18 @@ public class Level1 extends ScreenAdapter {
             pig_fixture_def.shape = pig_shape;
             pig_body.createFixture(pig_fixture_def).setUserData("Pig");
             if(object1.getProperties().get("pig").equals("king_pig" )) {
-                properties = new Properties( king_pig, pigs.height, pigs.width ,0 );
+                properties = new Properties(king_pig, pigs.height, pigs.width ,5,false);
                 pig_body.setUserData(properties);
             } else if (object1.getProperties().get("pig").equals("small_pig")) {
-                properties = new Properties( small_pig, pigs.height, pigs.width , 0);
+                properties = new Properties( small_pig, pigs.height, pigs.width , 3,false);
                 pig_body.setUserData(properties);
             }else if (object1.getProperties().get("pig").equals("helmet_pig" )) {
-                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 0 );
+                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 3,false );
                 pig_body.setUserData(properties);
             }
             pigs_array.add(pig_body);
         }
-
+        int objectId = 0;
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle R1 = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -212,43 +214,53 @@ public class Level1 extends ScreenAdapter {
                 System.out.println("false");
             }
             if(object.getProperties().get("texture").equals("S_L_V" )){
-                properties = new Properties(stone_long_vertical,R1.height,R1.width,3);
+                properties = new Properties(stone_long_vertical,R1.height,R1.width,3,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_M_H")) {
-                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,3);
+                properties = new Properties(stone_medium_horizontal,R1.height,R1.width,3,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_L_H")) {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,3);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,3,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("S_S_V")) {
-                properties = new Properties(stone_small_vertical,R1.height,R1.width,3);
+                properties = new Properties(stone_small_vertical,R1.height,R1.width,3,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_S_H")) {
-                properties = new Properties(wood_small_horizontal,R1.height,R1.width,2);
+                properties = new Properties(wood_small_horizontal,R1.height,R1.width,2,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_S_V")){
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,1);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,1,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_L_H")) {
-                properties = new Properties(glass_long_horizontal,R1.height,R1.width,1);
+                properties = new Properties(glass_long_horizontal,R1.height,R1.width,1,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("G_S_V")) {
-                properties = new Properties(glass_small_vertical,R1.height,R1.width,1);
+                properties = new Properties(glass_small_vertical,R1.height,R1.width,1,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("TNT")) {
-                properties = new Properties(TNT,R1.height,R1.width,1);
+                properties = new Properties(TNT,R1.height,R1.width,5,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if (object.getProperties().get("texture").equals("W_B")) {
-                properties = new Properties(wood_box,R1.height,R1.width,2);
+                properties = new Properties(wood_box,R1.height,R1.width,2,objectId);
+                objectId++;
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_L_V" )){
-                properties = new Properties(wood_long_vertical,R1.height,R1.width,2);
+                properties = new Properties(wood_long_vertical,R1.height,R1.width,2,objectId);
                 body.setUserData(properties);
             } else if(object.getProperties().get("texture").equals("W_L_H" )){
-                properties = new Properties(wood_long_horizontal,R1.height,R1.width,2);
+                properties = new Properties(wood_long_horizontal,R1.height,R1.width,2,objectId);
                 body.setUserData(properties);
             } else {
-                properties = new Properties(stone_long_horizontal,R1.height,R1.width,3);
+                properties = new Properties(stone_long_horizontal,R1.height,R1.width,3,objectId);
                 body.setUserData(properties);
             }
             rectangles1.add(body);
@@ -315,7 +327,7 @@ public class Level1 extends ScreenAdapter {
                     //for applying force
                     int launchMultiplier = 500;
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
-                    Vector2 launchDirection = new Vector2((float) ((startPosition.x -endPosition.x)*distance), (float) ((startPosition.y -endPosition.y)*distance));
+                    Vector2 launchDirection = new Vector2((float) ((startPosition.x -endPosition.x)*distance*launchMultiplier), (float) ((startPosition.y -endPosition.y)*distance*launchMultiplier));
                     body2.setLinearVelocity(launchDirection);
                     pointsOfTrajectory.clear();
                     isDragging = false;
@@ -354,14 +366,22 @@ public class Level1 extends ScreenAdapter {
         shapeRenderer.end();
 
         Vector2 pos = body2.getPosition();
-        world.step(1/120f,20,4);
+        world.step(1/120f,12,4);
         renderer.render(new int[]{3});
         batch.begin();
 
         for (Body b: collisonListener.getBodiesToRemove()){
             if (b!=null) {
-                world.destroyBody(b);
-                rectangles1.removeValue(b,true);
+                if (rectangles1.contains(b,true)) {
+                    world.destroyBody(b);
+                    rectangles1.removeValue(b, true);
+                }
+
+            }if (b!=null){
+                if (pigs_array.contains(b)) {
+                    world.destroyBody(b);
+                    pigs_array.remove(b);
+                }
             }
         }
         collisonListener.getBodiesToRemove().clear();
@@ -374,14 +394,20 @@ public class Level1 extends ScreenAdapter {
             Properties properties1 = (Properties) body.getUserData();
             stage.getBatch().draw(properties1.texture, body.getPosition().x -properties1.width/2, body.getPosition().y-properties1.height/2, properties1.width/2 ,properties1.height/2 ,properties1.width ,properties1.height,1.0f ,1.0f, (float) Math.toDegrees(body.getAngle()));
         }
-        for(Body body : pigs_array){
+
+        for (Body body : pigs_array) {
             Properties pigg = (Properties) body.getUserData();
-            stage.getBatch().draw(pigg.texture,body.getPosition().x- pigg.width/2,body.getPosition().y - pigg.height/2 ,pigg.width/2,pigg.height/2, pigg.width,pigg.height,1.0f , 1.0f , (float) Math.toDegrees(body.getAngle()));
+            stage.getBatch().draw(pigg.texture, body.getPosition().x - pigg.width / 2, body.getPosition().y - pigg.height / 2, pigg.width / 2, pigg.height / 2, pigg.width, pigg.height, 1.0f, 1.0f, (float) Math.toDegrees(body.getAngle()));
         }
+
         stage.getBatch().end();
         stage.draw();
         batch.end();
         debugRenderer1.render(world,camera.combined);
+        if(pigs_array.isEmpty()){
+            System.out.println("pigs_array==null");
+            main.setScreen(new Completed_Level(main,1));
+        }
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();
