@@ -133,7 +133,7 @@ public class Menu_page extends ScreenAdapter {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new Level_selector(main));
+                main.setScreen(new StoryPage(main));
             }
         });
 //        unlockedBirdButton.addListener(new ClickListener(){

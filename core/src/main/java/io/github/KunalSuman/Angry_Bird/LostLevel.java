@@ -93,12 +93,12 @@ public class LostLevel extends ScreenAdapter{
             camera.update();
             renderer.setView(camera);
             renderer.render();
-//            batch.begin();
-//
-//            batch.draw(lost_level_texture,100,100,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-//            batch.draw(next_Level_texture, nbX, nbY, nbW, nbH);
-//            batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
-//            batch.end();
+            batch.begin();
+
+            batch.draw(lost_level_texture,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),700,600);
+            batch.draw(next_Level_texture, nbX, nbY, nbW, nbH);
+            batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
+            batch.end();
             // Render the stage (buttons, if any)
             stage.act(delta);
             stage.draw();

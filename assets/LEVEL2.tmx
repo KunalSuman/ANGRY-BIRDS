@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="13" nextobjectid="41">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="13" nextobjectid="43">
  <tileset firstgid="1" source="INGAME_BLOCKS_1.tsx"/>
  <tileset firstgid="47971" source="INGAME_BIRDS_1.tsx"/>
  <tileset firstgid="88308" source="GOLDEN_EGGS_SHEET_1.tsx"/>
@@ -544,9 +544,11 @@
     <property name="texture" value="BASE"/>
    </properties>
   </object>
-  <object id="23" x="330.5" y="463" width="88" height="140.5"/>
+  <object id="23" x="346.5" y="463" width="88" height="140.5"/>
   <object id="26" x="1315.33" y="665.333" width="177.333" height="57.3333"/>
   <object id="37" x="-14" y="-22" width="1974" height="42"/>
+  <object id="41" x="174" y="610" width="266" height="86"/>
+  <object id="42" x="244" y="-312"/>
  </objectgroup>
  <objectgroup id="11" name="PIGS">
   <object id="33" x="1344" y="269.333" width="92" height="92">

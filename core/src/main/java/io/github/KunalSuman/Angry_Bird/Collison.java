@@ -13,53 +13,48 @@ public class Collison implements ContactListener {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
-        Object propertiesB =fixtureB.getBody().getUserData();
         Object propertiesA =fixtureA.getBody().getUserData();
-
         io.github.KunalSuman.Angry_Bird.Levels.Properties pA = (io.github.KunalSuman.Angry_Bird.Levels.Properties) propertiesA;
+        Object propertiesB =fixtureB.getBody().getUserData();
         io.github.KunalSuman.Angry_Bird.Levels.Properties pB = (io.github.KunalSuman.Angry_Bird.Levels.Properties) propertiesB;
         if (fixtureA.getUserData() == null || fixtureB.getUserData() == null) {
             return;
         }if (fixtureA == null || fixtureB == null) {
             return;
         }
-        if (pA.type==2 && pB.type==1) {
+        if(fixtureA.getUserData().equals(fixtureB.getUserData()) && fixtureA.getBody().getLinearVelocity().y>50 && fixtureA.getBody().getLinearVelocity().y<-50){
+            pA.health = pA.health-1;
+        }
+        if (fixtureA.getUserData().equals(fixtureB.getUserData()) && fixtureA.getBody().getLinearVelocity().y<30 ) {
+            return;
+        }
+        if(pA.type==2 && pB.type==0 &&fixtureA.getBody().getLinearVelocity().y>30 && fixtureA.getBody().getLinearVelocity().y<-30){
+            pA.health = pA.health-1;
+        }
+
+        if (pB.health>0 && pB.isBird && pB.damage>pA.health) {
+            pB.health=pB.health-pA.health;
             bodiesToRemove.add(fixtureA.getBody());
-            return;
+        }if (fixtureA.getBody().getLinearVelocity().len()>fixtureB.getBody().getLinearVelocity().len()) {
+
         }
-        if(pB.type==2 && pA.type==1) {
-            bodiesToRemove.add(fixtureB.getBody());
-            return;
-        }
-        if(pA.type==1 && pB.type==0) {
-            bodiesToRemove.add(fixtureB.getBody());
-            return;
-        }
-        if(pB.type==1 && pA.type==0) {
+        if(pA.type==2 && pA.health<=0){
             bodiesToRemove.add(fixtureA.getBody());
-            return;
+        }
+        if (pB.type == 1 && pB.health <=0){
+            bodiesToRemove.add(fixtureB.getBody());
+        }
+        if (pA.type == 1 && pA.health <=0){
+            bodiesToRemove.add(fixtureA.getBody());
         }
         if(pB.type==3){
             bodiesToRemove.add(fixtureA.getBody());
+            return;
         }
         if(pA.type==3){
             bodiesToRemove.add(fixtureB.getBody());
-        }
-        else{
             return;
         }
-//        if(fixtureA.getUserData().equals(fixtureB.getUserData()) && fixtureA.getBody().getLinearVelocity().y<50 && fixtureA.getBody().getLinearVelocity().y>-50){
-//            pA.health = pA.health-1;
-//        }
-//        if (fixtureA.getUserData().equals(fixtureB.getUserData()) && fixtureA.getBody().getLinearVelocity().y<30 ) {
-//            return;
-//        }
-//        if (pB.health>0) {
-//            pB.health=pB.health-pA.health;
-//            bodiesToRemove.add(fixtureA.getBody());
-//        }if (fixtureA.getBody().getLinearVelocity().len()>fixtureB.getBody().getLinearVelocity().len()) {
-//            System.out.println("Lmao Lmao!!");
-//        }
 
     }
 

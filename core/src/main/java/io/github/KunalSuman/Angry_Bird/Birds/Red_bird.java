@@ -26,7 +26,7 @@ public class Red_bird extends Birds_schema implements Birds{
     }
     public void relocateBirdBody(){
         world.destroyBody(birdBody);
-        Vector2 newPosition = new Vector2(325,690);
+        Vector2 newPosition = new Vector2(335,695);
         bodyDef.position.set(newPosition);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         this.birdBody = world.createBody(bodyDef);
@@ -44,7 +44,7 @@ public class Red_bird extends Birds_schema implements Birds{
         birdFixture.shape = circleShape ;
         birdFixture.density = 0.15f ;
         birdFixture.restitution = 0.5f ;
-        birdBody.createFixture(birdFixture).setUserData("Red_bird");
+        birdBody.createFixture(birdFixture).setUserData("Bird");
     }
     public Vector2 getPosition(){
         return birdBody.getPosition();

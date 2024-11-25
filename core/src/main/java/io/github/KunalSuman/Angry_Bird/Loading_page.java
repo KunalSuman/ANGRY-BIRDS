@@ -81,6 +81,7 @@ public class Loading_page extends ScreenAdapter{
         }
         stage.act(delta);
         stage.draw();
+        System.out.println(delta);
         Batch.end();
     }
     public void dispose() {
