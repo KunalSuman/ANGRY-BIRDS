@@ -80,7 +80,6 @@ public class Level_selector extends ScreenAdapter {
 
         Load_button1.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                int l;
                 ArrayList<Integer> s;
                 try {
                     s = savedGamesList.loadArray();
@@ -89,13 +88,34 @@ public class Level_selector extends ScreenAdapter {
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                l = s.get(0);
+                int l = s.get(s.size()-1);
                 try {
+                    if (l==2){
+                        Level2 l3 = Level2.loadGame(main);
+                        System.out.println("Loading save file");
+                        main.setScreen(l3);
+                    }
                     if (l==3) {
                         Level3 l3 = Level3.loadGame(main);
                         System.out.println("Loading save file");
                         main.setScreen(l3);
                     }
+                    if (l==1) {
+                        Level1 l3 = Level1.loadGame(main);
+                        System.out.println("Loading save file");
+                        main.setScreen(l3);
+                    }
+                    if (l==4) {
+                        Level4 l4 = Level4.loadGame(main);
+                        System.out.println("Loading save file");
+                        main.setScreen(l4);
+                    }
+                    if (l==5) {
+                        Level5 l3 = Level5.loadGame(main);
+                        System.out.println("Loading save file");
+                        main.setScreen(l3);
+                    }
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 } catch (ClassNotFoundException e) {

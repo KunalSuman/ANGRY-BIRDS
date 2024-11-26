@@ -95,7 +95,7 @@ public class LostLevel extends ScreenAdapter{
             renderer.render();
             batch.begin();
 
-            batch.draw(lost_level_texture,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight(),700,600);
+            batch.draw(lost_level_texture,400,200,1100,800);
             batch.draw(next_Level_texture, nbX, nbY, nbW, nbH);
             batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
             batch.end();

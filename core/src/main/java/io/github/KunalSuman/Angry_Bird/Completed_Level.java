@@ -104,7 +104,7 @@ public class Completed_Level extends ScreenAdapter {
         camera.update();
         renderer.render();
         batch.begin();
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());// Draw the button
+        batch.draw(background, 400, 200,1100 ,800);// Draw the button
         batch.draw(next_Level_texture, nbX, nbY, nbW, nbH);
         batch.draw(backButtonTexture, bbX, bbY, bbW, bbH);
         batch.end();

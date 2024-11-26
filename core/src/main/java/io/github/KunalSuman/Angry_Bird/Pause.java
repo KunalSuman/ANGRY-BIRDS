@@ -160,8 +160,15 @@ public class Pause extends ScreenAdapter {
         Save_quit_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 try {
-
-                    if (return_number == 3){
+                    if (return_number == 1){
+                        level1.saveGame();
+                    }else if (return_number == 2){
+                        level2.saveGame();
+                    }else if (return_number == 4){
+                        level4.saveGame();
+                    }else if (return_number == 5){
+                        level5.saveGame();
+                    }else if (return_number == 3){
                         level3.saveGame();
                     }
                 } catch (IOException e) {
@@ -195,23 +202,23 @@ public class Pause extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("done");
-//                if(return_number == 1){
-//                    main.setScreen(level1);
-//                    level1.setPauseStageTrue();
-//                }
-//                if(return_number == 2){
-//                    main.setScreen(level2);
-//                    level2.setPauseStageTrue();
-//                }
+                if(return_number == 1){
+                    main.setScreen(level1);
+                    level1.setPauseStageTrue();
+                }
+                if(return_number == 2){
+                    main.setScreen(level2);
+                    level2.setPauseStageTrue();
+                }
                 if(return_number == 3){
                     main.setScreen(level3);
                     level3.setPauseStageTrue();
                 }
                 if(return_number == 4){
-                    main.setScreen(new Level4(main));
+                    main.setScreen(level4);
                 }
                 if(return_number == 5){
-                    main.setScreen(new Level5(main));
+                    main.setScreen(level5);
                 }
             }
         });
