@@ -1,15 +1,54 @@
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-eclipse.project.name = appName + '-core'
+apply plugin: 'java'
+
+sourceSets {
+  main {
+    java.srcDirs = ["src/main/java/"]
+    resources.srcDirs = ["assets"]
+  }
+  test {
+    java.srcDirs = ["src/test/java/"]
+  }
+}
 
 dependencies {
+  // Main libGDX dependencies
   api "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
   api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   api "com.github.tommyettinger:colorful:$colorfulVersion"
   api "de.golfgl.gdxcontrollerutils:gdx-controllerutils-scene2d:$controllerScene2DVersion"
-  sourceSets.main.resources.srcDirs = ['assets']
 
-  if(enableGraalNative == 'true') {
+  // JUnit 5 dependencies
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+  // libGDX desktop natives for testing
+  testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+  // Optional Graal Native dependencies
+  if (enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+  }
+}
+
+compileJava {
+  options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+  options.encoding = 'UTF-8'
+}
+
+test {
+  useJUnitPlatform()
+  jvmArgs += [
+    "-Djava.library.path=${configurations.testRuntimeClasspath.files.find { it.name.contains('natives-desktop') }}"
+  ]
+}
+
+
+eclipse {
+  project {
+    name = appName + '-core'
   }
 }

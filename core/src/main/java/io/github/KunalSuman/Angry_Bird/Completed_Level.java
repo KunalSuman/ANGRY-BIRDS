@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.*;
-import io.github.KunalSuman.Angry_Bird.Main;
-import io.github.KunalSuman.Angry_Bird.Menu_page;
 
 public class Completed_Level extends ScreenAdapter {
     public Texture background;
@@ -30,6 +28,7 @@ public class Completed_Level extends ScreenAdapter {
     public OrthographicCamera camera;
     public int currentLevel ;
     public OrthogonalTiledMapRenderer renderer ;
+    public int V1 = 0 ;
     public Completed_Level(Main main,int currentLevel) {
         this.main = main;
         this.currentLevel = currentLevel;
@@ -51,52 +50,56 @@ public class Completed_Level extends ScreenAdapter {
         nbH = 100;
         nbX = Gdx.graphics.getWidth()-nbW;
         nbY = 0;
-        if (currentLevel==1){
+        if(End_level_helper_class.CCL(currentLevel)==1) {
+            if (currentLevel == 1) {
 
-            renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL1.tmx"));
+                renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL1.tmx"));
 
-        }else if (currentLevel==2){
+            } else if (currentLevel == 2) {
 
-            renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL2.tmx"));
+                renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL2.tmx"));
 
-        }else if (currentLevel==3){
+            } else if (currentLevel == 3) {
 
-            renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL3.tmx"));
+                renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL3.tmx"));
 
-        }else if (currentLevel==4){
+            } else if (currentLevel == 4) {
 
-            renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL4.tmx"));
+                renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL4.tmx"));
 
-        }else if (currentLevel==5){
+            } else if (currentLevel == 5) {
 
-            renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL5.tmx"));
+                renderer = new OrthogonalTiledMapRenderer(new TmxMapLoader().load("LEVEL5.tmx"));
 
-        }
-        stage.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                float adjustedY = Gdx.graphics.getHeight() - y;
+            } else {
+                V1 = 1;
+            }
+            stage.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    float adjustedY = Gdx.graphics.getHeight() - y;
 //                if (x>=pbX && x<=pbX+pW && y>=pbY && y<=pbY+pH){
 //                    main.setScreen(new Level_selector(main));}
-                if (x>=bbX && x<=bbX+bbW && adjustedY>=bbY && y<=bbY+bbH){
-                    main.setScreen(new Menu_page(main));
-                }else if (x>=nbX && x<=nbX+nbW && adjustedY>=nbY && y<=nbY+nbH){
-                    if (currentLevel == 1){
-                        main.setScreen(new Level2(main));
-                    }else if (currentLevel == 2){
-                        main.setScreen(new Level3(main));
-                    }else if (currentLevel == 3){
-                        main.setScreen(new Level4(main));
-                    } else if (currentLevel == 4) {
-                        main.setScreen(new Level5(main));
-                    }else if (currentLevel == 5){
-                        main.setScreen(new Level4(main));
+                    if (x >= bbX && x <= bbX + bbW && adjustedY >= bbY && y <= bbY + bbH) {
+                        main.setScreen(new Menu_page(main));
+                    } else if (x >= nbX && x <= nbX + nbW && adjustedY >= nbY && y <= nbY + nbH) {
+                        if (currentLevel == 1) {
+                            main.setScreen(new Level2(main));
+                        } else if (currentLevel == 2) {
+                            main.setScreen(new Level3(main));
+                        } else if (currentLevel == 3) {
+                            main.setScreen(new Level4(main));
+                        } else if (currentLevel == 4) {
+                            main.setScreen(new Level5(main));
+                        } else if (currentLevel == 5) {
+                            main.setScreen(new Level4(main));
+                        }
                     }
                 }
-            }
-        });
-
+            });
+        }
     }
+
     public void render(float delta) {
         camera.update();
         renderer.render();

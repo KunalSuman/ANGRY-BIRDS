@@ -160,7 +160,10 @@ public class Pause extends ScreenAdapter {
         Save_quit_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 try {
-                    level2.saveGame();
+
+                    if (return_number == 3){
+                        level3.saveGame();
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -196,12 +199,13 @@ public class Pause extends ScreenAdapter {
 //                    main.setScreen(level1);
 //                    level1.setPauseStageTrue();
 //                }
-                if(return_number == 2){
-                    main.setScreen(level2);
-                    level2.setPauseStageTrue();
-                }
+//                if(return_number == 2){
+//                    main.setScreen(level2);
+//                    level2.setPauseStageTrue();
+//                }
                 if(return_number == 3){
-                    main.setScreen(new Level3(main));
+                    main.setScreen(level3);
+                    level3.setPauseStageTrue();
                 }
                 if(return_number == 4){
                     main.setScreen(new Level4(main));

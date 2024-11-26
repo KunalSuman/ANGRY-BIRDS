@@ -91,10 +91,10 @@ public class Level_selector extends ScreenAdapter {
                 }
                 l = s.get(0);
                 try {
-                    if (l==2) {
-                        Level2 l2 = Level2.loadGame(main);
+                    if (l==3) {
+                        Level3 l3 = Level3.loadGame(main);
                         System.out.println("Loading save file");
-                        main.setScreen(l2);
+                        main.setScreen(l3);
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -128,9 +128,9 @@ public class Level_selector extends ScreenAdapter {
                 }else if (x>=l2X && x<=l2X+l2W && adjustedY>=l2Y && adjustedY<=l2Y+l2H){
                     if (GameSaver.level2Saved){
                         try {
-                            Level2 l2= Level2.loadGame(main);
+                            Level3 l3= Level3.loadGame(main);
                             System.out.println("Loading save file");
-                            main.setScreen(l2);
+                            main.setScreen(l3);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         } catch (ClassNotFoundException e) {

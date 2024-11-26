@@ -31,15 +31,20 @@ public class Collison implements ContactListener {
         if(pA.type==2 && pB.type==0 &&fixtureA.getBody().getLinearVelocity().y>30 && fixtureA.getBody().getLinearVelocity().y<-30){
             pA.health = pA.health-1;
         }
-
+        if(pA.type == 2 && pA.health<=0){
+            bodiesToRemove.add(fixtureA.getBody());
+        }
+        if(pB.type == 2 && pB.health<=0){
+            bodiesToRemove.add(fixtureB.getBody());
+        }
         if (pB.health>0 && pB.isBird && pB.damage>pA.health) {
             pB.health=pB.health-pA.health;
             bodiesToRemove.add(fixtureA.getBody());
         }if (fixtureA.getBody().getLinearVelocity().len()>fixtureB.getBody().getLinearVelocity().len()) {
 
         }
-        if(pA.type==2 && pA.health<=0){
-            bodiesToRemove.add(fixtureA.getBody());
+        if(pA.type==2 && pB.type ==0){
+            pA.health = pA.health-1;
         }
         if (pB.type == 1 && pB.health <=0){
             bodiesToRemove.add(fixtureB.getBody());
@@ -54,6 +59,9 @@ public class Collison implements ContactListener {
         if(pA.type==3){
             bodiesToRemove.add(fixtureB.getBody());
             return;
+        }
+        if(pA.health<=0){
+            bodiesToRemove.add(fixtureA.getBody());
         }
 
     }

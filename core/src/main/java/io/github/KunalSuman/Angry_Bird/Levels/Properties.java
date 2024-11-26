@@ -33,8 +33,9 @@ public class Properties implements Serializable {
         this.health = health;
         this.type = 0;
     }
-    public Properties(Texture texture, float height, float width, int health , boolean dead) {
+    public Properties(Texture texture, float height, float width, int health , boolean dead,int objectId) {
         this.texture = new TextureRegion(texture);
+        this.objectId = objectId;
         this.height = height;
         this.width = width;
         this.health = health;
