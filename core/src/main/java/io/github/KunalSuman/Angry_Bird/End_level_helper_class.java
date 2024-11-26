@@ -17,5 +17,20 @@ public class End_level_helper_class {
             return 0;
         }
     }
+    public static int returnNumberChecker(int return_number){
+        if (return_number == 1){
+            return 1;
+        }else if (return_number ==2){
+            return 2;
+        }else if (return_number == 3){
+            return 3;
+        }else if (return_number == 4){
+            return 4;
+        }else if (return_number ==5){
+            return 5;
+        }else{
+            return 0;
+        }
+    }
 
 }

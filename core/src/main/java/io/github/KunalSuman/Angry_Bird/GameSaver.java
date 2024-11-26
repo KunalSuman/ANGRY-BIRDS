@@ -15,6 +15,7 @@ public class GameSaver implements Serializable {
     public HashMap<Integer,Float> piggyPositionX;
     public HashMap<Integer,Float> piggyPositionY;
     public int currentBird;
+    public boolean gameCompleted;
     public static boolean level1Saved = false;
     public static boolean level2Saved = false;
     public static boolean level3Saved = false;
@@ -34,7 +35,8 @@ public class GameSaver implements Serializable {
         System.out.println("Lol");
     }
     public GameSaver(int score,HashMap<Integer,Integer> piggyHealth,ArrayList<Float> birdSpeedX,ArrayList<Float> birdSpeedY, ArrayList<Float> birdPositionX,ArrayList<Float> birdPositionY,
-                     HashMap<Integer,ArrayList<Float>> piggySpeed,HashMap<Integer,ArrayList<Float>> objectSpeed,HashMap<Integer,Float> piggyPositionX,HashMap<Integer,Float> piggyPositionY, ArrayList<Integer> birdHealth, int currentBird, HashMap<Integer,Float> objectPositionsX, HashMap<Integer,Float> objectPositionsY, HashMap<Integer,Properties> p1,HashMap<Integer,Properties> p2,int Levelcalled) {
+                     HashMap<Integer,ArrayList<Float>> piggySpeed,HashMap<Integer,ArrayList<Float>> objectSpeed,HashMap<Integer,Float> piggyPositionX,HashMap<Integer,Float> piggyPositionY, ArrayList<Integer> birdHealth, int currentBird, HashMap<Integer,Float> objectPositionsX, HashMap<Integer,Float> objectPositionsY, HashMap<Integer,Properties> p1,HashMap<Integer,Properties> p2,int Levelcalled,
+                     Boolean gameCompleted) {
         this.score = score;
         this.piggyHealth = piggyHealth;
         this.objectSpeed = objectSpeed;
@@ -43,6 +45,7 @@ public class GameSaver implements Serializable {
         this.piggySpeed = piggySpeed;
         this.birdSpeedX = birdSpeedX;
         this.birdSpeedY = birdSpeedY;
+        this.gameCompleted = gameCompleted;
         this.p1 = p1;
         this.p2 = p2;
         this.piggyPositionX = piggyPositionX;

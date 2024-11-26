@@ -216,14 +216,17 @@ public class Pause extends ScreenAdapter {
                 }
                 if(return_number == 4){
                     main.setScreen(level4);
+                    level4.setPauseStageTrue();
                 }
                 if(return_number == 5){
                     main.setScreen(level5);
+                    level5.setPauseStageTrue();
                 }
             }
         });
 
     }
+
     public void render(float delta) {
         super.render(delta);
         camera.update();

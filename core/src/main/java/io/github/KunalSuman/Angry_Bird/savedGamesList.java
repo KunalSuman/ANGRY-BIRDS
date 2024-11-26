@@ -9,20 +9,25 @@ public class savedGamesList implements Serializable {
     public savedGamesList(){
 
     }
-    public void setLevel1(){
+    public int setLevel1(){
         completedLevel.add(1);
+        return 1;
     }
-    public void setLevel2(){
+    public int setLevel2(){
         completedLevel.add(2);
+        return 2;
     }
-    public void setLevel3(){
+    public int setLevel3(){
         completedLevel.add(3);
+        return 3;
     }
-    public void setLevel4(){
+    public int setLevel4(){
         completedLevel.add(4);
+        return 4;
     }
-    public void setLevel5(){
+    public int setLevel5(){
         completedLevel.add(5);
+        return 5;
     }
     public void saveArray() throws IOException {
         FileOutputStream fileOut = new FileOutputStream("SaveArray.ser");

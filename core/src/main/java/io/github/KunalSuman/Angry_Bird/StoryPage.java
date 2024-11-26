@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.KunalSuman.Angry_Bird.Levels.Level_selector;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class StoryPage extends ScreenAdapter{
     Texture Loading_page;
     public SpriteBatch Batch;
@@ -26,31 +29,49 @@ public class StoryPage extends ScreenAdapter{
     public Texture progresabarsa ;
     public Texture Loadingbar1 ;
     public Texture Loadingbar2 ;
-    Texture firstPage;
-    Texture secondPage;
+    ArrayList<Texture> storypagesarray = new ArrayList<>();
     public int time=0;
+    public int loadedframes =0;
+    int framesLoaded = 0;
 
     public StoryPage(Main main) {
         this.main = main;
-        firstPage = new Texture(("BOMB.png"));
-        secondPage = new Texture(("Loading_screen.jpg"));
+
+         Texture firstPage = new Texture(("BOMB.png"));
+        storypagesarray.add(firstPage);
+        loadedframes++;
+        Texture secondPage = new Texture(("Loading_screen.jpg"));
+        storypagesarray.add(secondPage);
+        loadedframes++;
         Batch = new SpriteBatch();
         assetManager = new AssetManager();
         assetManager.load(("Loading_screen.jpg"), Texture.class);
         assetManager.load(("Levels_page.png"), Texture.class);
     }
+    public static boolean numberOfFramesLoaded(int frames1,int frames2){
+        if (frames1 == frames2){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public void render(float delta) {
         Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
         if (time<=50){
             Batch.begin();
-            Batch.draw(firstPage,0,0);
+            Batch.draw(storypagesarray.get(0),0,0);
             Batch.end();
         }else if (time >50 && time<=100){
             Batch.begin();
-            Batch.draw(secondPage,0,0);
+            Batch.draw(storypagesarray.get(1),0,0);
             Batch.end();
         }else{
+            System.out.println(framesLoaded+"loaded lmao gods");
+            System.out.println(loadedframes+"frames godspeed");
             main.setScreen(new Level_selector(main));
+
+
+
         }
         System.out.println(time);
 

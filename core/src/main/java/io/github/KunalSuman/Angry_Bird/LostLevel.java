@@ -69,8 +69,8 @@ public class LostLevel extends ScreenAdapter{
 
             }
             //background = new Texture("BACKGROUNDS_GE_1.png");
-            next_Level_texture = new Texture("next_level_button.png");
-            backButtonTexture = new Texture("backButton.png");
+            next_Level_texture = new Texture("Restart_button.png");
+            backButtonTexture = new Texture("Menu_button.png");
             batch = new SpriteBatch();
             stage = new Stage();
             Gdx.input.setInputProcessor(stage);
@@ -84,7 +84,17 @@ public class LostLevel extends ScreenAdapter{
                     if (x>=bbX && x<=bbX+bbW && adjustedY>=bbY && y<=bbY+bbH){
                         main.setScreen(new Menu_page(main));
                     }else if (x>=nbX && x<=nbX+nbW && adjustedY>=nbY && y<=nbY+nbH){
-                        main.setScreen(new Level1(main));
+                        if(currentLevel==1) {
+                            main.setScreen(new Level1(main));
+                        }else if (currentLevel==2) {
+                            main.setScreen(new Level2(main));
+                        }  else if (currentLevel==3) {
+                            main.setScreen(new Level3(main));
+                        }  else if (currentLevel==4) {
+                            main.setScreen(new Level4(main));
+                        }  else if (currentLevel==5) {
+                            main.setScreen(new Level5(main));
+                        }
                     }
                 }
             });
@@ -106,14 +116,14 @@ public class LostLevel extends ScreenAdapter{
         @Override
         public void resize(int width, int height) {
             stage.getViewport().update(width, height, true);
-            bbW = 100;
+            bbW = 200;
             bbH = 100;
-            bbX= 0;
-            bbY = 0;
-            nbW = 400;
+            bbX= 740;
+            bbY = 320;
+            nbW = 200;
             nbH = 100;
-            nbX = Gdx.graphics.getWidth()-nbW;
-            nbY = 0;
+            nbX = 970;
+            nbY = 320;
         }
         public void dispose() {
             stage.dispose();

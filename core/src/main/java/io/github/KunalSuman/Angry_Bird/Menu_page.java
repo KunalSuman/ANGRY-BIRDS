@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import io.github.KunalSuman.Angry_Bird.Levels.Level1;
 import io.github.KunalSuman.Angry_Bird.Levels.Level_selector;
 
 import static com.badlogic.gdx.graphics.g3d.particles.ParticleShader.AlignMode.Screen;
@@ -133,7 +134,7 @@ public class Menu_page extends ScreenAdapter {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                main.setScreen(new StoryPage(main));
+                    main.setScreen(new StoryPage(main));
             }
         });
 //        unlockedBirdButton.addListener(new ClickListener(){
