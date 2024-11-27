@@ -300,7 +300,7 @@ public class Level1 extends ScreenAdapter {
             Nextlevel = new Texture("Next_level_button.png");
             PauseButtonTexture = new Texture("pauseButton.png");
             backButtonTexture = new Texture("backButton.png");
-            map = new TmxMapLoader().load("Level1.tmx");
+            map = new TmxMapLoader().load("LEVEL1.tmx");
             renderer = new OrthogonalTiledMapRenderer(map);
             camera = new OrthographicCamera();
             camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -619,7 +619,7 @@ public class Level1 extends ScreenAdapter {
             properties.put(p.objectId,p);
             objectSpeed.put(p.objectId,speed);
         }
-        GameSaver g1 = new GameSaver(score,piggyHealth,birdSpeedX,birdSpeedY,birdPositionX,birdPositionY,piggySpeed,objectSpeed,piggyPositionX,piggyPositionY,birdHealth,currentBird,objectPositionsX,objectPositionsY,properties,propertiesPiggies,4,gameCompleted);
+        GameSaver g1 = new GameSaver(score,piggyHealth,birdSpeedX,birdSpeedY,birdPositionX,birdPositionY,piggySpeed,objectSpeed,piggyPositionX,piggyPositionY,birdHealth,currentBird,objectPositionsX,objectPositionsY,properties,propertiesPiggies,1,gameCompleted);
         g1.saveGame();
         s.saveArray();
         GameSaver.level1Saved=true;

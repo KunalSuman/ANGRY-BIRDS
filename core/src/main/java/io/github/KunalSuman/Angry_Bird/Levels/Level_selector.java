@@ -133,7 +133,10 @@ public class Level_selector extends ScreenAdapter {
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-                int l = s.get(s.size()-2);
+                int l = 0;
+                if (s.size()>2){
+                    l = s.get(1);
+                }
 
                 try {
                     if(s.size()-2>=0){
