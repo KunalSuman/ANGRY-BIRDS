@@ -10,6 +10,8 @@ import java.util.ArrayList;
 public class Birds_body {
     Texture Red_bird = new Texture("Red.png");
     Texture empty = new Texture("empty_png.png");
+    Texture Bomb_bird = new Texture("bomb_bird.png");
+    Texture Fat_bird = new Texture("blue_fat_bird.png");
     BodyDef bodyDef = new BodyDef();
     Body body2;
     World world;
@@ -41,13 +43,12 @@ public class Birds_body {
             }else if(i ==  1){
                 birdBodyProperty = new Properties(empty,400,30,30,100,true);
             }else if(i ==  2){
-                birdBodyProperty = new Properties(Red_bird,400,30,30,100,true);
+                birdBodyProperty = new Properties(Bomb_bird,400,30,30,100,true);
             }else if(i == 3){
                 birdBodyProperty = new Properties(empty,400,30,30,100,true);
             }else if(i ==  4){
-                birdBodyProperty = new Properties(Red_bird,400,30,30,100,true);
-            }
-            else if(i == 5){
+                birdBodyProperty = new Properties(Fat_bird,400,30,30,100,true);
+            } else if(i == 5){
                 birdBodyProperty = new Properties(empty,400,30,30,100,true);
             }
             body2.setUserData(birdBodyProperty);

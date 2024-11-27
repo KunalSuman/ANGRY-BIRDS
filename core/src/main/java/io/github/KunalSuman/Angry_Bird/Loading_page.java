@@ -67,7 +67,7 @@ public class Loading_page extends ScreenAdapter{
         progressBar.setValue(progress);
 
         if(x==1){
-            main.setScreen(new Menu_page(main));
+            main.setScreen(new StoryPage(main));
         }
         else {
             Batch.draw(Loading_page,0, 0);
@@ -77,7 +77,7 @@ public class Loading_page extends ScreenAdapter{
             x =1 ;
         }
         if (assetManager.update() && progress == 1f) {
-            main.setScreen(new Menu_page(main));
+            main.setScreen(new StoryPage(main));
         }
         stage.act(delta);
         stage.draw();

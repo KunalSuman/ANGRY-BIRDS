@@ -37,15 +37,15 @@ public class Pigs_body {
             pig_fixture_def.shape = pig_shape;
             pig_body.createFixture(pig_fixture_def).setUserData("Pig");
             if(object1.getProperties().get("pig").equals("king_pig" )) {
-                properties = new Properties(king_pig, pigs.height, pigs.width ,25,false,objectIdpigs);
+                properties = new Properties(king_pig, pigs.height, pigs.width ,15,false,objectIdpigs);
                 objectIdpigs++;
                 pig_body.setUserData(properties);
             } else if (object1.getProperties().get("pig").equals("small_pig")) {
-                properties = new Properties( small_pig, pigs.height, pigs.width , 15,false,objectIdpigs);
+                properties = new Properties( small_pig, pigs.height, pigs.width , 10,false,objectIdpigs);
                 objectIdpigs++;
                 pig_body.setUserData(properties);
             }else if (object1.getProperties().get("pig").equals("helmet_pig" )) {
-                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 15,false,objectIdpigs);
+                properties = new Properties( helmet_pig,  pigs.height, pigs.width , 10,false,objectIdpigs);
                 objectIdpigs++;
                 pig_body.setUserData(properties);
             }

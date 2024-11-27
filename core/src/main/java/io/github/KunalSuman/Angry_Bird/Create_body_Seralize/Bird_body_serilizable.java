@@ -13,6 +13,8 @@ public class Bird_body_serilizable {
     FixtureDef fixture2 = new FixtureDef();
     Texture Red_bird = new Texture("Red.png");
     Texture empty = new Texture("empty_png.png");
+    Texture Bomb_bird = new Texture("bomb_bird.png");
+    Texture Fat_bird = new Texture("blue_fat_bird.png");
     ArrayList<Body> birds_array = new ArrayList<>();
     public Bird_body_serilizable(World world, GameSaver g1) {
         int n = g1.birdPositionX.size();
@@ -44,13 +46,13 @@ public class Bird_body_serilizable {
                 birdBodyProperty = new Properties(empty,400,30,30,g1.birdHealth.get(i),true);
                 body2.setLinearVelocity(g1.birdSpeedX.get(i),g1.birdSpeedY.get(i));
             }else if(i ==  2){
-                birdBodyProperty = new Properties(Red_bird,400,30,30,g1.birdHealth.get(i),true);
+                birdBodyProperty = new Properties(Bomb_bird,400,30,30,g1.birdHealth.get(i),true);
                 body2.setLinearVelocity(g1.birdSpeedX.get(i),g1.birdSpeedY.get(i));
             }else if(i == 3){
                 birdBodyProperty = new Properties(empty,400,30,30,g1.birdHealth.get(i),true);
                 body2.setLinearVelocity(g1.birdSpeedX.get(i),g1.birdSpeedY.get(i));
             }else if(i ==  4){
-                birdBodyProperty = new Properties(Red_bird,400,30,30,g1.birdHealth.get(i),true);
+                birdBodyProperty = new Properties(Fat_bird,400,30,30,g1.birdHealth.get(i),true);
                 body2.setLinearVelocity(g1.birdSpeedX.get(i),g1.birdSpeedY.get(i));
             }
             else if(i == 5){

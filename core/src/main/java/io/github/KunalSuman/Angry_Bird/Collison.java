@@ -28,8 +28,11 @@ public class Collison implements ContactListener {
         if (fixtureA.getUserData().equals(fixtureB.getUserData()) && fixtureA.getBody().getLinearVelocity().y<30 ) {
             return;
         }
-        if(pA.type==2 && pB.type==0 &&fixtureA.getBody().getLinearVelocity().y>30 && fixtureA.getBody().getLinearVelocity().y<-30){
+        if(pA.type==2 && pB.type==0 && (fixtureB.getBody().getLinearVelocity().y>=15 || fixtureA.getBody().getLinearVelocity().x<=15)){
             pA.health = pA.health-1;
+        }
+        if(pB.type==2 && pA.type==0 ){
+            pB.health = pB.health-1;
         }
         if(pA.type == 2 && pA.health<=0){
             bodiesToRemove.add(fixtureA.getBody());
