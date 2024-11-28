@@ -130,6 +130,7 @@ public class StoryPage extends ScreenAdapter{
             if (framesLoaded ==6){
                 framesLoaded++;
             }
+
         }
         else if(time>350 && time<=400) {
             Batch.begin();

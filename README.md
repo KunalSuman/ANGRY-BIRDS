@@ -25,6 +25,12 @@ Refrences  =>   Brent Aureli Codes       : [Youtube series](https://www.youtube.
                 Background Music         : [LibGDX Documentation](https://libgdx.com/wiki/audio/streaming-music)
                 OrthographicCamera       : [GameFromScratch.com](https://gamefromscratch.com/libgdx-tutorial-part-16-cameras/)
                 TiledMaploader           : [GameFromScratch.com](https://gamefromscratch.com/libgdx-tutorial-11-tiled-maps-part-1-simple-orthogonal-maps/)
+                Box2D Video              : [The Coding Train ](https://youtube.com/watch?v=MsRROjQJxuo&list=PLRqwX-V7Uu6Zy4FyZtCHsZc_K0BrXzxfE&ab_channel=TheCodingTrain)
+                Box2D Documentation      : [LibGdx Documentation](https://libgdx.com/wiki/extensions/physics/box2d)
+                Physics youtube          : [dermetfan](https://www.youtube.com/playlist?list=PLXY8okVWvwZ2Ph9LKWiNBZ1GRAc_TyDru)
+                Tiled 2D                 : [ForeignGuyMike](https://www.youtube.com/playlist?list=PLFqMllUBmHbhAGghZeZUp1mlrtsR7040T)
+                User Inputs              : [Gamefromscratch](https://www.youtube.com/watch?v=Huifd-C2KrI&list=PLS9MbmO_ssyCZ9Tjfay2tOQoaOVoG59Iy&ab_channel=Gamefromscratch)
+                
 
 Resources =>    Adobe Premier && pixlr   : for textures creation and editing images
                 AngryBirds apk file      : for assets and background music 
@@ -32,42 +38,75 @@ Resources =>    Adobe Premier && pixlr   : for textures creation and editing ima
 
 Our Final Directory at the end of this assignment
     └── Angry_Bird
-    ├── Birds
-    │    ├── Birds.java
-    │    ├── Birds_schema.java
-    │    ├── Black_bird.java
-    │    ├── Blue_bird.java
-    │    ├── Red_bird.java
-    │    └── Yellow_bird.java
-    │
-    ├── Button.java
-    ├── Catapult.java
-    ├── Completed_Level.java
-    │
-    ├── Levels
-    │    ├── Level1.java
-    │    ├── Level2.java
-    │    ├── Level3.java
-    │    ├── Level4.java
-    │    ├── Level5.java
-    │    └── Level_selector.java
-    │
-    ├── Loading_page.java
-    ├── LostLevel.java
-    ├── Main.java
-    ├── Menu_page.java
-    ├── New_pause.java
-    │
-    ├── PIGS
-    │    ├── Helmet_pig.java
-    │    ├── King_pig.java
-    │    ├── Old_pig.java
-    │    ├── Pigs.java
-    │    ├── Pigs_schema.java
-    │    └── Small_pig.java
-    │
-    ├── Pause.java
-    ├── Quit.java
-    ├── Save_quit.java
-    ├── Settings_page.java
-    └── Unlocked_birds_page.java
+    └── src
+    ├── main
+    │ └── java
+    │     └── io
+    │         └── github
+    │             └── KunalSuman
+    │                 └── Angry_Bird
+    │                     ├── Birds
+    │                     │   ├── Birds.java
+    │                     │   ├── Birds_schema.java
+    │                     │   ├── Black_bird.java
+    │                     │   ├── Blue_bird.java
+    │                     │   ├── Red_bird.java
+    │                     │   └── Yellow_bird.java
+    │                     ├── Button.java
+    │                     ├── Catapult.java
+    │                     ├── Collison.java
+    │                     ├── Completed_Level.java
+    │                     ├── Create_Bodies
+    │                     │   ├── Birds_body.java
+    │                     │   ├── Border_body.java
+    │                     │   ├── Objects_body.java
+    │                     │   ├── Pigs_body.java
+    │                     │   └── Structure_body.java
+    │                     ├── Create_body_Seralize
+    │                     │   ├── Bird_body_serilizable.java
+    │                     │   ├── Border_body_serilizable.java
+    │                     │   ├── Object_body_seiralize.java
+    │                     │   ├── Pigs_body_serilizable.java
+    │                     │   └── Structure_body_serilizable.java
+    │                     ├── End_level_helper_class.java
+    │                     ├── Exceptions
+    │                     │   ├── Load_Exception.java
+    │                     │   ├── Login_Exception.java
+    │                     │   └── Texture_Exception.java
+    │                     ├── GameSaver.java
+    │                     ├── Levels
+    │                     │   ├── Level1.java
+    │                     │   ├── Level2.java
+    │                     │   ├── Level3.java
+    │                     │   ├── Level4.java
+    │                     │   ├── Level5.java
+    │                     │   ├── Level_selector.java
+    │                     │   └── Properties.java
+    │                     ├── Loading_page.java
+    │                     ├── LostLevel.java
+    │                     ├── Main.java
+    │                     ├── Menu_page.java
+    │                     ├── New_pause.java
+    │                     ├── PIGS
+    │                     │    ├── Helmet_pig.java
+    │                     │    ├── King_pig.java
+    │                     │    ├── Old_pig.java
+    │                     │    ├── Pigs.java
+    │                     │    ├── Pigs_schema.java
+    │                     │    └── Small_pig.java
+    │                     ├── Pause.java
+    │                     ├── Physics_Engine.java
+    │                     ├── Quit.java
+    │                     ├── Save_quit.java
+    │                     ├── Settings_page.java
+    │                     ├── StoryPage.java
+    │                     ├── Unlocked_birds_page.java
+    │                     └── savedGamesList.java
+    └── test
+        └── java
+            └── tests
+                ├── Test1.java
+                ├── Test2.java
+                ├── Test3.java
+                ├── Test4.java
+                └── Test5.java
