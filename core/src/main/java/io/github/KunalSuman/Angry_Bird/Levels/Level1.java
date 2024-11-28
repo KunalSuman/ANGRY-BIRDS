@@ -43,6 +43,7 @@ import java.util.HashMap;
 public class Level1 extends ScreenAdapter {
     private  InputMultiplexer multiplexer = new InputMultiplexer();
     private InputAdapter birdAdapter;
+    private InputAdapter birdAdapterAbility;
     public Main main ;
     public SpriteBatch batch ;
     public Texture background;
@@ -105,6 +106,7 @@ public class Level1 extends ScreenAdapter {
     public boolean BL = false ;
     public float TSL = 0;
     int count_bids0 = 0 ;
+    public boolean birdSpecialAbilityUsed=false;
     public Texture empty ;
     public Level1(Main main){
         this.main = main;
@@ -149,7 +151,9 @@ public class Level1 extends ScreenAdapter {
         ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
         ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
-        Birds_body B1 = new Birds_body(world);
+        int bird_pos_x =330;
+        int bird_pos_y =590;
+        Birds_body B1 = new Birds_body(world , bird_pos_x , bird_pos_y);
         birds_array = B1.return_array();
         Structure_body STB1 = new Structure_body(world , map);
         rectangles1 = STB1.return_array();
@@ -210,16 +214,14 @@ public class Level1 extends ScreenAdapter {
             }
         });
         pauseTexture = new Texture("Pause_menu.png");
-        InputAdapter birdAdapterAbility = new InputAdapter() {
+        birdAdapterAbility = new InputAdapter() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if (button == Input.Buttons.LEFT){
-                    startPosition.set(screenX,screenY,0);
+                if (button == Input.Buttons.LEFT) {
+                    startPosition.set(screenX, screenY, 0);
                     camera.unproject(startPosition);
                     isDragging = true;
                     return true;
-
-
                 }
                 return false;
 
@@ -227,44 +229,44 @@ public class Level1 extends ScreenAdapter {
 
             @Override
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                if (button == Input.Buttons.LEFT){
-                    endPosition.set(screenX,screenY,0);
+                if (button == Input.Buttons.LEFT) {
+                    endPosition.set(screenX, screenY, 0);
                     camera.unproject(endPosition);
 
                     //for applying force
                     float launchMultiplier = 5.5f;
                     double distance = Math.sqrt(((startPosition.x - endPosition.x) * (startPosition.x - endPosition.x)) + ((startPosition.y - endPosition.y) * (startPosition.y - endPosition.y)));
                     Body CB = birds_array.get(CBI);
-                    if (currentBird == 0){
-                        Vector2 launchDirection = new Vector2(-2000,0);
+                    if (currentBird == 0) {
+                        Vector2 launchDirection = new Vector2(-2000, 0);
                         CB.setLinearVelocity(launchDirection);
                         currentBird = 1;
-                    }else if (currentBird == 2){
-                        currentBird = 3;
-                        Vector2 launchDirection = new Vector2(0,-2000);
+                    }else if (currentBird ==1){
+                        Vector2 launchDirection = new Vector2(0, -2000);
                         CB.setLinearVelocity(launchDirection);
+                        currentBird = 2;
+
+                    }
+                    else if (currentBird == 2) {
+                        currentBird = 3;
+
                     }
 
-                    isDragging = false;
                     multiplexer.removeProcessor(this);
-                    TSL = 0 ;
+                    birdSpecialAbilityUsed = true;
+                    TSL = 0;
                     return true;
 
                 }
                 return false;
             }
+
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if (isDragging){
-                    endPosition.set(screenX,screenY,0);
+                if (isDragging) {
+                    endPosition.set(screenX, screenY, 0);
                     camera.unproject(endPosition);
 
-
-
-//                    Vector2 currentPosition = new Vector2(endPosition.x,endPosition.y);
-//                    if (currentPosition.x>-100 && currentPosition.y>-100) {
-//                        body2.setTransform(currentPosition, body2.getAngle());
-//                    }
                     return true;
                 }
                 return false;
@@ -319,13 +321,6 @@ public class Level1 extends ScreenAdapter {
                     endPosition.set(screenX,screenY,0);
                     camera.unproject(endPosition);
 
-
-
-//                    Vector2 currentPosition = new Vector2(endPosition.x,endPosition.y);
-//                    if (currentPosition.x>-100 && currentPosition.y>-100) {
-//                        body2.setTransform(currentPosition, body2.getAngle());
-//                    }
-
                     Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
                     Vector2 calculatedLinearVelocity=birds_array.get(0).getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/birds_array.get(0).getMass()));
@@ -335,7 +330,6 @@ public class Level1 extends ScreenAdapter {
                 return false;
             }
         };
-
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(birdAdapter);
         Gdx.input.setInputProcessor(multiplexer);
@@ -443,7 +437,7 @@ public class Level1 extends ScreenAdapter {
                 }
             });
             pauseTexture = new Texture("Pause_menu.png");
-            birdAdapter = new InputAdapter() {
+            birdAdapterAbility = new InputAdapter() {
                 @Override
                 public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                     if (button == Input.Buttons.LEFT) {
@@ -461,20 +455,31 @@ public class Level1 extends ScreenAdapter {
                     if (button == Input.Buttons.LEFT) {
                         endPosition.set(screenX, screenY, 0);
                         camera.unproject(endPosition);
+
+                        //for applying force
                         float launchMultiplier = 5.5f;
                         double distance = Math.sqrt(((startPosition.x - endPosition.x) * (startPosition.x - endPosition.x)) + ((startPosition.y - endPosition.y) * (startPosition.y - endPosition.y)));
-                        Vector2 launchDirection = new Vector2((float) (((startPosition.x - endPosition.x)) * launchMultiplier), (float) (((startPosition.y - endPosition.y)) * launchMultiplier));
-                        System.out.println(launchDirection.x);
-                        System.out.println(launchDirection.y);
-                        System.out.println(CBI);
                         Body CB = birds_array.get(CBI);
-                        CB.setLinearVelocity(launchDirection);
-                        BL = true;
-                        pointsOfTrajectory.clear();
-                        isDragging = false;
+                        if (currentBird == 0) {
+                            Vector2 launchDirection = new Vector2(-2000, 0);
+                            CB.setLinearVelocity(launchDirection);
+                            currentBird = 1;
+                        }else if (currentBird ==1){
+                            Vector2 launchDirection = new Vector2(0, -2000);
+                            CB.setLinearVelocity(launchDirection);
+                            currentBird = 2;
+
+                        }
+                        else if (currentBird == 2) {
+                            currentBird = 3;
+
+                        }
+
                         multiplexer.removeProcessor(this);
+                        birdSpecialAbilityUsed = true;
                         TSL = 0;
                         return true;
+
                     }
                     return false;
                 }
@@ -484,10 +489,65 @@ public class Level1 extends ScreenAdapter {
                     if (isDragging) {
                         endPosition.set(screenX, screenY, 0);
                         camera.unproject(endPosition);
-                        Vector2 launchDirection = new Vector2(startPosition.x - endPosition.x, startPosition.y - endPosition.y);
+
+                        return true;
+                    }
+                    return false;
+                }
+            };
+            birdAdapter =new InputAdapter(){
+                @Override
+                public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                    if (button == Input.Buttons.LEFT){
+                        startPosition.set(screenX,screenY,0);
+                        camera.unproject(startPosition);
+                        isDragging = true;
+                        return true;
+
+
+                    }
+                    return false;
+
+                }
+
+                @Override
+                public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                    if (button == Input.Buttons.LEFT){
+                        endPosition.set(screenX,screenY,0);
+                        camera.unproject(endPosition);
+
+                        //for applying force
+                        float launchMultiplier = 5.5f;
                         double distance = Math.sqrt(((startPosition.x - endPosition.x) * (startPosition.x - endPosition.x)) + ((startPosition.y - endPosition.y) * (startPosition.y - endPosition.y)));
-                        Vector2 calculatedLinearVelocity = birds_array.get(0).getLinearVelocity().cpy().add(launchDirection.scl((float) distance * 10f).scl(1 / birds_array.get(0).getMass()));
-                        calculatePath(pointsOfTrajectory, startPosition, calculatedLinearVelocity);
+                        Vector2 launchDirection = new Vector2((float) (((startPosition.x - endPosition.x))*launchMultiplier), (float) (((startPosition.y - endPosition.y)) *launchMultiplier));
+                        System.out.println(launchDirection.x);
+                        System.out.println(launchDirection.y);
+                        System.out.println(CBI);
+                        Body CB = birds_array.get(CBI);
+                        CB.setLinearVelocity(launchDirection);
+
+                        BL = true ;
+                        //body2.applyLinearImpulse(launchDirection.scl((float) distance*100f), body2.getWorldCenter(), true);
+                        pointsOfTrajectory.clear();
+                        isDragging = false;
+                        multiplexer.removeProcessor(this);
+                        multiplexer.addProcessor(birdAdapterAbility);
+                        TSL = 0 ;
+                        return true;
+
+                    }
+                    return false;
+                }
+                @Override
+                public boolean touchDragged(int screenX, int screenY, int pointer) {
+                    if (isDragging){
+                        endPosition.set(screenX,screenY,0);
+                        camera.unproject(endPosition);
+
+                        Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
+                        double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
+                        Vector2 calculatedLinearVelocity=birds_array.get(0).getLinearVelocity().cpy().add(launchDirection.scl((float) distance*10f).scl(1/birds_array.get(0).getMass()));
+                        calculatePath(pointsOfTrajectory,startPosition,calculatedLinearVelocity);
                         return true;
                     }
                     return false;
@@ -552,9 +612,14 @@ public class Level1 extends ScreenAdapter {
                     BL = false ;
                     if(CBI < birds_array.size()){
                         Body NB = birds_array.get(CBI);
+                        if (!birdSpecialAbilityUsed){
+                            currentBird++;
+                        }
+                        birdSpecialAbilityUsed = false;
 
-                        NB.setActive(true);
                         multiplexer.addProcessor(birdAdapter);
+                        multiplexer.removeProcessor(birdAdapterAbility);
+                        NB.setActive(true);
                     }else{
                         if (pigs_array.isEmpty()){
                             main.setScreen(new Completed_Level(main,1));
@@ -573,7 +638,6 @@ public class Level1 extends ScreenAdapter {
             }
         }
         collisonListener.getBodiesToRemove().clear();
-
         stage.act(Gdx.graphics.getDeltaTime());
         stage.getBatch().setProjectionMatrix(camera.combined);
         stage.getBatch().begin();
@@ -588,15 +652,15 @@ public class Level1 extends ScreenAdapter {
 
         }
         if(pigs_array.isEmpty()){
-            main.setScreen(new Completed_Level(main,2));
+            main.setScreen(new Completed_Level(main,1));
             gameCompleted = true;
         }
         if(birds_array.isEmpty()){
             if (pigs_array.isEmpty()){
-                main.setScreen(new Completed_Level(main,2));
+                main.setScreen(new Completed_Level(main,1));
             }
             else {
-                main.setScreen(new LostLevel(main,2));
+                main.setScreen(new LostLevel(main,1));
             }
         }
         else{
@@ -609,7 +673,6 @@ public class Level1 extends ScreenAdapter {
         stage.getBatch().end();
         stage.draw();
         batch.end();
-        debugRenderer.render(world,camera.combined);
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();

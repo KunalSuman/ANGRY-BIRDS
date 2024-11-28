@@ -69,7 +69,7 @@ public class Completed_Level extends ScreenAdapter{
 
         }
         //background = new Texture("BACKGROUNDS_GE_1.png");
-        next_Level_texture = new Texture("Restart_button.png");
+        next_Level_texture = new Texture("Next_level_button.png");
         backButtonTexture = new Texture("Menu_button.png");
         batch = new SpriteBatch();
         stage = new Stage();
@@ -85,15 +85,18 @@ public class Completed_Level extends ScreenAdapter{
                     main.setScreen(new Menu_page(main));
                 }else if (x>=nbX && x<=nbX+nbW && adjustedY>=nbY && y<=nbY+nbH){
                     if(currentLevel==1) {
-                        main.setScreen(new Level1(main));
-                    }else if (currentLevel==2) {
                         main.setScreen(new Level2(main));
-                    }  else if (currentLevel==3) {
+                    }else if (currentLevel==2) {
                         main.setScreen(new Level3(main));
-                    }  else if (currentLevel==4) {
+                    }  else if (currentLevel==3) {
                         main.setScreen(new Level4(main));
-                    }  else if (currentLevel==5) {
+                    }  else if (currentLevel==4) {
                         main.setScreen(new Level5(main));
+                    }  else if (currentLevel==5) {
+                        main.setScreen(new Level1(main));
+                        Main.music.stop();
+                        Main.music = Gdx.audio.newMusic(Gdx.files.internal("Background_music.mp3"));
+                        Main.music.play();
                     }
                 }
             }

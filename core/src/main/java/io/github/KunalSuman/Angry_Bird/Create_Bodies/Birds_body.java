@@ -18,14 +18,14 @@ public class Birds_body {
     FixtureDef fixture2 = new FixtureDef();
     ArrayList<Body> birds_array = new ArrayList<>();
 
-    public Birds_body(World world) {
+    public Birds_body(World world,int pos_x , int pos_y) {
         this.world = world;
         for(int i = 0 ; i < 6 ; i ++){
             bodyDef.type = BodyDef.BodyType.DynamicBody;
             if(i==0){
-                bodyDef.position.set(500 ,690);
+                bodyDef.position.set(pos_x ,pos_y);
             }else{
-                bodyDef.position.set(400,490);
+                bodyDef.position.set(pos_x,pos_y);
             }
 
             body2 = world.createBody(bodyDef);
@@ -39,17 +39,17 @@ public class Birds_body {
             body2.createFixture(fixture2).setUserData("Bird");
             Properties birdBodyProperty = null;
             if(i ==  0){
-                birdBodyProperty = new Properties(Red_bird,400,30,30,100,true);
+                birdBodyProperty = new Properties(Red_bird,400,30,30,75,true);
             }else if(i ==  1){
                 birdBodyProperty = new Properties(empty,400,30,30,100,true);
             }else if(i ==  2){
-                birdBodyProperty = new Properties(Bomb_bird,400,30,30,100,true);
+                birdBodyProperty = new Properties(Bomb_bird,400,30,30,110,true);
             }else if(i == 3){
                 birdBodyProperty = new Properties(empty,400,30,30,100,true);
             }else if(i ==  4){
                 birdBodyProperty = new Properties(Fat_bird,400,30,30,100,true);
             } else if(i == 5){
-                birdBodyProperty = new Properties(empty,400,30,30,100,true);
+                birdBodyProperty = new Properties(empty,400,30,30,150,true);
             }
             body2.setUserData(birdBodyProperty);
             if(i>0){

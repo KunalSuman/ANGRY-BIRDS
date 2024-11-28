@@ -32,5 +32,12 @@ public class End_level_helper_class {
             return 0;
         }
     }
+    public static int setPiggyDamage(int k){
+        if (k<50) {
+            return k;
+        }else{
+            return 30;
+        }
+    }
 
 }

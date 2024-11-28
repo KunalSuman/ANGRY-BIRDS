@@ -137,23 +137,6 @@ public class Menu_page extends ScreenAdapter {
                     main.setScreen(new Level_selector(main));
             }
         });
-//        unlockedBirdButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                if (birdnumber<=4) {
-//                    birdnumber++;
-//                }
-//                if (birdnumber == 1){
-//                    background = new Texture("BACKGROUNDS_GE_1.png");
-//                }else if (birdnumber == 2){
-//                    background = new Texture("BACKGROUNDS_GE_1.png");
-//                }else if (birdnumber == 3){
-//                    background = new Texture("BACKGROUNDS_GE_1.png");
-//                }else if (birdnumber == 4){
-//                    background = new Texture("BACKGROUNDS_GE_1.png");
-//                }
-//            }
-//        });
     }
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

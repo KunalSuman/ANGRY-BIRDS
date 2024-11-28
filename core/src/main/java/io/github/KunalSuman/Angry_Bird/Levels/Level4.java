@@ -149,7 +149,7 @@ public class Level4 extends ScreenAdapter {
         ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
         ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
-        Birds_body B1 = new Birds_body(world);
+        Birds_body B1 = new Birds_body(world,480,390);
         birds_array = B1.return_array();
         Structure_body STB1 = new Structure_body(world , map);
         rectangles1 = STB1.return_array();
@@ -548,7 +548,6 @@ public class Level4 extends ScreenAdapter {
         stage.getBatch().end();
         stage.draw();
         batch.end();
-        debugRenderer.render(world,camera.combined);
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();

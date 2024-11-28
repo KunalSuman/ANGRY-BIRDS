@@ -43,6 +43,7 @@ import java.util.HashMap;
 public class Level2 extends ScreenAdapter {
     private  InputMultiplexer multiplexer = new InputMultiplexer();
     private InputAdapter birdAdapter;
+    private InputAdapter birdAdapterAbility;
     public Main main ;
     public SpriteBatch batch ;
     public Texture background;
@@ -106,6 +107,7 @@ public class Level2 extends ScreenAdapter {
     public float TSL = 0;
     int count_bids0 = 0 ;
     public Texture empty ;
+    public boolean birdSpecialAbilityUsed=false;
     public Level2(Main main){
         this.main = main;
         this.batch = new SpriteBatch();
@@ -149,7 +151,7 @@ public class Level2 extends ScreenAdapter {
         ImageButton Menubutton = Button.createButton(MenuButtonTexture,winStage,390,170,550 ,170);
         ImageButton Nextbutton = Button.createButton(Nextlevel,winStage,400,180,1000 ,70);
 
-        Birds_body B1 = new Birds_body(world);
+        Birds_body B1 = new Birds_body(world,360,690);
         birds_array = B1.return_array();
         Structure_body STB1 = new Structure_body(world , map);
         rectangles1 = STB1.return_array();
@@ -210,6 +212,64 @@ public class Level2 extends ScreenAdapter {
             }
         });
         pauseTexture = new Texture("Pause_menu.png");
+        birdAdapterAbility = new InputAdapter() {
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if (button == Input.Buttons.LEFT) {
+                    startPosition.set(screenX, screenY, 0);
+                    camera.unproject(startPosition);
+                    isDragging = true;
+                    return true;
+                }
+                return false;
+
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                if (button == Input.Buttons.LEFT) {
+                    endPosition.set(screenX, screenY, 0);
+                    camera.unproject(endPosition);
+
+                    //for applying force
+                    float launchMultiplier = 5.5f;
+                    double distance = Math.sqrt(((startPosition.x - endPosition.x) * (startPosition.x - endPosition.x)) + ((startPosition.y - endPosition.y) * (startPosition.y - endPosition.y)));
+                    Body CB = birds_array.get(CBI);
+                    if (currentBird == 0) {
+                        Vector2 launchDirection = new Vector2(-2000, 0);
+                        CB.setLinearVelocity(launchDirection);
+                        currentBird = 1;
+                    }else if (currentBird ==1){
+                        Vector2 launchDirection = new Vector2(0, -2000);
+                        CB.setLinearVelocity(launchDirection);
+                        currentBird = 2;
+
+                    }
+                    else if (currentBird == 2) {
+                        currentBird = 3;
+
+                    }
+
+                    multiplexer.removeProcessor(this);
+                    birdSpecialAbilityUsed = true;
+                    TSL = 0;
+                    return true;
+
+                }
+                return false;
+            }
+
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                if (isDragging) {
+                    endPosition.set(screenX, screenY, 0);
+                    camera.unproject(endPosition);
+
+                    return true;
+                }
+                return false;
+            }
+        };
         birdAdapter =new InputAdapter(){
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -246,6 +306,7 @@ public class Level2 extends ScreenAdapter {
                     pointsOfTrajectory.clear();
                     isDragging = false;
                     multiplexer.removeProcessor(this);
+                    multiplexer.addProcessor(birdAdapterAbility);
                     TSL = 0 ;
                     return true;
 
@@ -257,13 +318,6 @@ public class Level2 extends ScreenAdapter {
                 if (isDragging){
                     endPosition.set(screenX,screenY,0);
                     camera.unproject(endPosition);
-
-
-
-//                    Vector2 currentPosition = new Vector2(endPosition.x,endPosition.y);
-//                    if (currentPosition.x>-100 && currentPosition.y>-100) {
-//                        body2.setTransform(currentPosition, body2.getAngle());
-//                    }
 
                     Vector2 launchDirection = new Vector2(startPosition.x-endPosition.x, startPosition.y-endPosition.y);
                     double distance = Math.sqrt(((startPosition.x-endPosition.x)*(startPosition.x-endPosition.x))+((startPosition.y-endPosition.y)*(startPosition.y-endPosition.y)));
@@ -491,9 +545,14 @@ public class Level2 extends ScreenAdapter {
                     BL = false ;
                     if(CBI < birds_array.size()){
                         Body NB = birds_array.get(CBI);
+                        if (!birdSpecialAbilityUsed){
+                            currentBird++;
+                        }
+                        birdSpecialAbilityUsed = false;
 
-                        NB.setActive(true);
                         multiplexer.addProcessor(birdAdapter);
+                        multiplexer.removeProcessor(birdAdapterAbility);
+                        NB.setActive(true);
                     }else{
                         if (pigs_array.isEmpty()){
                             main.setScreen(new Completed_Level(main,2));
@@ -548,7 +607,6 @@ public class Level2 extends ScreenAdapter {
         stage.getBatch().end();
         stage.draw();
         batch.end();
-        debugRenderer.render(world,camera.combined);
     }
     public void calculatePath(ArrayList<Vector2> pointsOfTrajectory, Vector3 startPosition, Vector2 Velocity){
         pointsOfTrajectory.clear();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="9" nextobjectid="59">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="384" height="216" tilewidth="5" tileheight="5" infinite="0" nextlayerid="9" nextobjectid="60">
  <tileset firstgid="1" source="INGAME_BLOCKS_1.tsx"/>
  <tileset firstgid="47971" source="INGAME_BIRDS_1.tsx"/>
  <tileset firstgid="88308" source="INGAME_BLOCKS_2.tsx"/>
@@ -464,17 +464,12 @@
     <property name="texture" value="S_L_H"/>
    </properties>
   </object>
-  <object id="11" x="1240.67" y="480.273" width="16.6667" height="92.394">
-   <properties>
-    <property name="texture" value="S_S_V"/>
-   </properties>
-  </object>
   <object id="12" x="1241.71" y="593.144" width="16" height="72.5">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="13" x="1180" y="593" width="18.6667" height="108.667">
+  <object id="13" x="1186.5" y="593.5" width="18.6667" height="108.667">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
@@ -494,17 +489,17 @@
     <property name="texture" value="G_S_V"/>
    </properties>
   </object>
-  <object id="21" x="1341.33" y="480.091" width="18" height="92.2424">
+  <object id="21" x="1244.78" y="480.273" width="18" height="92.2424">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="22" x="1340.67" y="375.394" width="18.6667" height="81.4545">
+  <object id="22" x="1340.67" y="375.394" width="18.6667" height="82.1818">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
   </object>
-  <object id="23" x="1241.33" y="376" width="19.3333" height="80.8485">
+  <object id="23" x="1241.33" y="375" width="19.3333" height="82.1212">
    <properties>
     <property name="texture" value="S_S_V"/>
    </properties>
@@ -557,6 +552,11 @@
   <object id="44" x="1153.59" y="720.322" width="75.4771" height="71.3552">
    <properties>
     <property name="texture" value="W_B"/>
+   </properties>
+  </object>
+  <object id="59" x="1341.55" y="480.061" width="18" height="92.2424">
+   <properties>
+    <property name="texture" value="S_S_V"/>
    </properties>
   </object>
  </objectgroup>

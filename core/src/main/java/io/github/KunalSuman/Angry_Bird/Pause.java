@@ -181,7 +181,7 @@ public class Pause extends ScreenAdapter {
         retry_button_val.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if(return_number == 1){
-                    main.setScreen(level1);
+                    main.setScreen(new Level1(main));
                 }
                 if(return_number == 2){
                     main.setScreen(new Level2(main));
