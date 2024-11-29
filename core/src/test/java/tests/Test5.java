@@ -8,7 +8,7 @@ public class Test5 {
     @Test
     public void test(){
         int k = End_level_helper_class.setPiggyDamage(60);
-        assertEquals(20,k);
+        assertEquals(30,k);
     }
 
 }

@@ -2,7 +2,6 @@ To run the program type ./build.sh in terminal [UBUNTU OR OTHER LINUX DISTRO] in
 if it throws error try 'chmod +x build.sh' if error still exists type 'chmod +x gradlew'. If error still persists open it in **IDEA** and run 
 the Lwjgl3Launcher file in lwjgl3 directory. 
 
-To quit the game press "ESC" 
 
 Press "ENTER" to simulate completing a level in the levels page and "SPACE" to simulate losing a level 
 Rest, the button which will guide you through the application 

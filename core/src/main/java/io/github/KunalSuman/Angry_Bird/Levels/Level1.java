@@ -743,7 +743,7 @@ public class Level1 extends ScreenAdapter {
             properties.put(p.objectId,p);
             objectSpeed.put(p.objectId,speed);
         }
-        GameSaver g1 = new GameSaver(score,piggyHealth,birdSpeedX,birdSpeedY,birdPositionX,birdPositionY,piggySpeed,objectSpeed,piggyPositionX,piggyPositionY,birdHealth,currentBird,objectPositionsX,objectPositionsY,properties,propertiesPiggies,1,gameCompleted);
+        GameSaver g1 = new GameSaver(score,piggyHealth,birdSpeedX,birdSpeedY,birdPositionX,birdPositionY,piggySpeed,objectSpeed,piggyPositionX,piggyPositionY,birdHealth,currentBird,objectPositionsX,objectPositionsY,properties,propertiesPiggies,1,gameCompleted,CBI);
         g1.saveGame();
         s.saveArray();
         GameSaver.level1Saved=true;

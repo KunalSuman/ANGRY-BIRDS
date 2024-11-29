@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class GameSaver implements Serializable {
     public int score;
+    public int CBI;
     public ArrayList<Float> birdPositionX;
     public ArrayList<Float> birdPositionY;
     public HashMap<Integer,Float> piggyPositionX;
@@ -36,8 +37,9 @@ public class GameSaver implements Serializable {
     }
     public GameSaver(int score,HashMap<Integer,Integer> piggyHealth,ArrayList<Float> birdSpeedX,ArrayList<Float> birdSpeedY, ArrayList<Float> birdPositionX,ArrayList<Float> birdPositionY,
                      HashMap<Integer,ArrayList<Float>> piggySpeed,HashMap<Integer,ArrayList<Float>> objectSpeed,HashMap<Integer,Float> piggyPositionX,HashMap<Integer,Float> piggyPositionY, ArrayList<Integer> birdHealth, int currentBird, HashMap<Integer,Float> objectPositionsX, HashMap<Integer,Float> objectPositionsY, HashMap<Integer,Properties> p1,HashMap<Integer,Properties> p2,int Levelcalled,
-                     Boolean gameCompleted) {
+                     Boolean gameCompleted,int CBI) {
         this.score = score;
+        this.CBI = CBI;
         this.piggyHealth = piggyHealth;
         this.objectSpeed = objectSpeed;
         this.levelCalled = Levelcalled;
